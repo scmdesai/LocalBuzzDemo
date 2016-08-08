@@ -1,8 +1,3 @@
-var Contact = Contact || {};
-if (!Contact.controller) Contact.controller = {};
-if (!Contact.model) Contact.model = {};
-if (!Contact.store) Contact.store = {};
-if (!Contact.view) Contact.view = {};
 var Ext = Ext || {};
 if (!Ext.app) Ext.app = {};
 if (!Ext.behavior) Ext.behavior = {};
@@ -46,6 +41,11 @@ if (!Ext.util.paintmonitor) Ext.util.paintmonitor = {};
 if (!Ext.util.sizemonitor) Ext.util.sizemonitor = {};
 if (!Ext.util.translatable) Ext.util.translatable = {};
 if (!Ext.viewport) Ext.viewport = {};
+var LocalBuzzDemo = LocalBuzzDemo || {};
+if (!LocalBuzzDemo.controller) LocalBuzzDemo.controller = {};
+if (!LocalBuzzDemo.model) LocalBuzzDemo.model = {};
+if (!LocalBuzzDemo.store) LocalBuzzDemo.store = {};
+if (!LocalBuzzDemo.view) LocalBuzzDemo.view = {};
 var dealPicture = dealPicture || {};
 /* 
  * Helper code for compiler optimization
@@ -63936,7 +63936,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.Contact', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.Contact', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -63990,7 +63990,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'Contact'
 ], 0));
 
@@ -64008,7 +64008,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.Deal', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.Deal', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64071,7 +64071,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'Deal'
 ], 0));
 
@@ -64089,7 +64089,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.UserPreferences', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.UserPreferences', Ext.data.Model, {
     config: {
         idProperty: '',
         fields: [
@@ -64105,7 +64105,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'UserPreferences'
 ], 0));
 
@@ -64123,7 +64123,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.MapMarkerPosition', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.MapMarkerPosition', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64135,7 +64135,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'MapMarkerPosition'
 ], 0));
 
@@ -64153,7 +64153,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.storesNearBy', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.storesNearBy', Ext.data.Model, {
     config: {
         useCache: false,
         fields: [
@@ -64164,7 +64164,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'storesNearBy'
 ], 0));
 
@@ -64182,7 +64182,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.UserLocation', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.UserLocation', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64194,7 +64194,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'UserLocation'
 ], 0));
 
@@ -64212,7 +64212,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.ContactStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.ContactStore', Ext.data.Store, {
     config: {
         autoLoad: true,
         autoSync: true,
@@ -64280,7 +64280,7 @@ Ext.define('Ext.direct.Manager', {
         ],
         groupDir: 'ASC',
         groupField: 'category',
-        model: 'Contact.model.Contact',
+        model: 'LocalBuzzDemo.model.Contact',
         storeId: 'ContactStore',
         proxy: {
             type: 'localstorage'
@@ -64301,7 +64301,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'ContactStore'
 ], 0));
 
@@ -64319,11 +64319,11 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.MyJsonPStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.MyJsonPStore', Ext.data.Store, {
     config: {
         autoLoad: true,
         groupField: 'category',
-        model: 'Contact.model.Contact',
+        model: 'LocalBuzzDemo.model.Contact',
         storeId: 'MyJsonPStore',
         sorters: {
             property: 'distance'
@@ -64343,7 +64343,7 @@ Ext.define('Ext.direct.Manager', {
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'MyJsonPStore'
 ], 0));
 
@@ -64361,10 +64361,10 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.MyDealsStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.MyDealsStore', Ext.data.Store, {
     config: {
         autoLoad: true,
-        model: 'Contact.model.Deal',
+        model: 'LocalBuzzDemo.model.Deal',
         storeId: 'MyDealsStore',
         proxy: {
             type: 'jsonp',
@@ -64392,7 +64392,7 @@ Ext.define('Ext.direct.Manager', {
         var test = Ext.Date.add(date, Ext.Date.DAY, 3);
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'MyDealsStore'
 ], 0));
 
@@ -64410,12 +64410,12 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.UserPreferences', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.UserPreferences', Ext.data.Store, {
     config: {
         autoLoad: true,
         autoSync: true,
         clearOnPageLoad: false,
-        model: 'Contact.model.UserPreferences',
+        model: 'LocalBuzzDemo.model.UserPreferences',
         remoteFilter: true,
         storeId: 'UserPreferences',
         proxy: {
@@ -64425,7 +64425,7 @@ Ext.define('Ext.direct.Manager', {
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'UserPreferences'
 ], 0));
 
@@ -64443,13 +64443,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.LocalStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.LocalStore', Ext.data.Store, {
     config: {
-        model: 'Contact.model.Deal',
+        model: 'LocalBuzzDemo.model.Deal',
         storeId: 'LocalStore'
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'LocalStore'
 ], 0));
 
@@ -64467,16 +64467,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.MapMarkerPositionStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.MapMarkerPositionStore', Ext.data.Store, {
     config: {
-        model: 'Contact.model.MapMarkerPosition',
+        model: 'LocalBuzzDemo.model.MapMarkerPosition',
         storeId: 'MapMarkerPositionStore',
         proxy: {
             type: 'localstorage'
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'MapMarkerPositionStore'
 ], 0));
 
@@ -64494,13 +64494,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.calculateDistances', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.calculateDistances', Ext.data.Store, {
     config: {
-        model: 'Contact.model.storesNearBy',
+        model: 'LocalBuzzDemo.model.storesNearBy',
         storeId: 'calculateDistances'
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'calculateDistances'
 ], 0));
 
@@ -64518,16 +64518,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.UserLocation', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.UserLocation', Ext.data.Store, {
     config: {
-        model: 'Contact.model.UserLocation',
+        model: 'LocalBuzzDemo.model.UserLocation',
         storeId: 'UserLocation',
         proxy: {
             type: 'localstorage'
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'UserLocation'
 ], 0));
 
@@ -64545,7 +64545,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.WelcomeScreen', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.Panel, {
     config: {
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
@@ -64739,7 +64739,7 @@ Ext.define('Ext.direct.Manager', {
     "container": true,
     "panel": true
 }, 0, 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'WelcomeScreen'
 ], 0));
 
@@ -64757,7 +64757,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealPicture', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealPicture', Ext.Panel, {
     alternateClassName: [
         'dealPicture'
     ],
@@ -65121,7 +65121,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.dealpicture"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealPicture',
     0,
     'dealPicture'
@@ -65141,7 +65141,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Info', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
         height: '100%',
@@ -65521,7 +65521,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactinfo"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Info'
 ], 0));
 
@@ -65539,7 +65539,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.List', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzzDemo.view.List', Ext.dataview.List, {
     config: {
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registed with Local Buzz here!</h4>',
@@ -65567,7 +65567,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactlist"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'List'
 ], 0));
 
@@ -65585,7 +65585,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.ListOfDeals', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzzDemo.view.ListOfDeals', Ext.dataview.List, {
     config: {
         height: '100%',
         html: '',
@@ -65731,7 +65731,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.listofdeals"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'ListOfDeals'
 ], 0));
 
@@ -65749,7 +65749,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.controller.LocalBuzz', Ext.app.Controller, {
+(Ext.cmd.derive('LocalBuzzDemo.controller.LocalBuzz', Ext.app.Controller, {
     config: {
         stores: [
             'MyJsonPStore',
@@ -66061,7 +66061,7 @@ Ext.define('Ext.direct.Manager', {
         store.load();
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.controller,
+    LocalBuzzDemo.controller,
     'LocalBuzz'
 ], 0));
 
@@ -66079,7 +66079,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Picture', Ext.Container, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Picture', Ext.Container, {
     config: {
         overflow: 'hidden',
         height: '100%',
@@ -66110,7 +66110,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactpic"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Picture'
 ], 0));
 
@@ -66128,7 +66128,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.LatestBuzz', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz', Ext.dataview.DataView, {
     config: {
         height: '100%',
         html: '',
@@ -66251,7 +66251,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.latestbuzz"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
 
@@ -66269,7 +66269,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.FavoriteView', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
         style: 'background:#fff;',
@@ -66299,7 +66299,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.favoriteview"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'FavoriteView'
 ], 0));
 
@@ -66317,7 +66317,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Main', Ext.tab.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Main', Ext.tab.Panel, {
     config: {
         cls: 'toolbar-icon-color',
         height: '100%',
@@ -66350,7 +66350,8 @@ Ext.define('Ext.direct.Manager', {
                         html: '<h1 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px">Local Buzz</h1>'
                     },
                     {
-                        xtype: 'latestbuzz'
+                        xtype: 'latestbuzz',
+                        styleHtmlContent: false
                     }
                 ]
             },
@@ -67127,7 +67128,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.Main"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Main'
 ], 0));
 /* Ext.getCmp('mymap').hide();
@@ -67149,7 +67150,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealsPanel', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel',
@@ -67266,7 +67267,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealsPanel'
 ], 0));
 
@@ -67284,7 +67285,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealsPanel1', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel1', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel1',
@@ -67401,7 +67402,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel1"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealsPanel1'
 ], 0));
 
@@ -67419,7 +67420,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealImage', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealImage', Ext.Panel, {
     config: {
         height: '70%',
         id: 'DealImage',
@@ -67496,7 +67497,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealImage"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealImage'
 ], 0));
 
@@ -67554,7 +67555,7 @@ Ext.application({
         'LocalBuzz'
     ],
     icon: 'icon.png',
-    name: 'Contact',
+    name: 'LocalBuzzDemo',
     launch: function() {
         var postalCode;
         var store = Ext.getStore('MyDealsStore');
@@ -67714,12 +67715,12 @@ Ext.application({
 
 
             }*/
-        Ext.create('Contact.view.WelcomeScreen', {
+        Ext.create('LocalBuzzDemo.view.WelcomeScreen', {
             fullscreen: true
         });
     }
 });
 
 // @tag full-page
-// @require H:\Apps\Sencha Architect Apps\AnroidBackButton\app.js
+// @require H:\Apps\Sencha Architect Apps\LocaBuzzDemo\app.js
 
