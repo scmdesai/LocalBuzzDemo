@@ -64561,6 +64561,11 @@ Ext.define('Ext.direct.Manager', {
                 style: 'border:1px solid black',
                 top: '27%',
                 width: '60%',
+                component: {
+                    xtype: 'input',
+                    type: 'number',
+                    fastFocus: true
+                },
                 clearIcon: false,
                 name: 'zipcodeLookUp',
                 placeHolder: '       Enter Zipcode'
