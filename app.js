@@ -66350,8 +66350,7 @@ Ext.define('Ext.direct.Manager', {
                         html: '<h1 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px">Local Buzz</h1>'
                     },
                     {
-                        xtype: 'latestbuzz',
-                        styleHtmlContent: false
+                        xtype: 'latestbuzz'
                     }
                 ]
             },
@@ -66573,6 +66572,11 @@ Ext.define('Ext.direct.Manager', {
             {
                 fn: 'onMyMapRender',
                 event: 'maprender',
+                delegate: '#mymap'
+            },
+            {
+                fn: 'onMymapHiddenChange',
+                event: 'hiddenchange',
                 delegate: '#mymap'
             },
             {
@@ -66920,6 +66924,9 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     //   Ext.getCmp('BuzzNearMe').fireEvent('activate', this);
+    onMymapHiddenChange: function(component, value, oldValue, eOpts) {
+        console.log('Map Hidden change');
+    },
     onBuzzNearMeActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         Ext.getStore('MyJsonPStore').clearFilter();
         Ext.getStore('MyJsonPStore').load();
