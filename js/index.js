@@ -32,6 +32,7 @@ var app = {
 		 try{
 		 
 		 window.analytics.startTrackerWithId('UA-67469655-6');
+		 
 		 var push = PushNotification.init({
             "android": {
                 "senderID": "226322216862"
@@ -46,7 +47,13 @@ var app = {
         });
 		StatusBar.overlaysWebView(false);
 		
-        
+        var latitude;
+		var longitude;
+		navigator.geolocation.getCurrentPosition(function showLocation(position) {
+				 latitude = position.coords.latitude;
+				 longitude = position.coords.longitude;
+				
+			 });
         
         push.on('registration', function(data) {
             console.log("registration event: " + data.registrationId);
@@ -71,7 +78,7 @@ var app = {
 					console.log(json.success + ", " + json.msg) ;
 				}
 			}
-			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'"}';
+			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"'+latitude+','+longitude+'"}';
 			xhr.send(data);
         });
 
