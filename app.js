@@ -66644,23 +66644,19 @@ Ext.define('Ext.direct.Manager', {
                             longitude: long
                         });
               });*/
-        //var store = Ext.getStore('MyJsonPStore');
-        ///store.clearFilter();
+        var store = Ext.getStore('MyJsonPStore');
+        store.clearFilter();
         var store = Ext.getStore('StoresNearby');
-        //var stores = [];
-        /*store1.each(function(record){
+        var stores = [];
+        store1.each(function(record) {
             //stores.push(record.get('customerId'));
-            Ext.Array.include(stores,record.get('customerId'));
-
-
+            Ext.Array.include(stores, record.get('customerId'));
         });
         console.log(stores.length);
-
-        store.filterBy(function(record){
+        store.filterBy(function(record) {
             return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-        }, this);*/
-        if (store.getCount() === 0) {
+        }, this);
+        if (store1.getCount() === 0) {
             Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
         // store.clearFilter();
