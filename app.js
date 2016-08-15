@@ -64630,7 +64630,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.Panel, {
     config: {
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
@@ -64817,13 +64817,11 @@ Ext.define('Ext.direct.Manager', {
 }, 0, 0, [
     "component",
     "container",
-    "panel",
-    "formpanel"
+    "panel"
 ], {
     "component": true,
     "container": true,
-    "panel": true,
-    "formpanel": true
+    "panel": true
 }, 0, 0, [
     LocalBuzzDemo.view,
     'WelcomeScreen'
