@@ -64500,7 +64500,7 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.store.StoresNearby', Ext.data.Store, {
     config: {
-        model: 'LocalBuzzDemo.model.storesNearBy',
+        model: 'LocalBuzzDemo.model.Contact',
         storeId: 'StoresNearby'
     }
 }, 0, 0, 0, 0, 0, 0, [
