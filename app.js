@@ -66651,6 +66651,7 @@ Ext.define('Ext.direct.Manager', {
         store1.each(function(record) {
             //stores.push(record.get('customerId'));
             Ext.Array.include(stores, record.get('customerId'));
+            console.log(record.get('address'));
         });
         console.log(stores.length);
         store.filterBy(function(record) {
