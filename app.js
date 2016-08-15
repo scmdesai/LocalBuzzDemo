@@ -64595,6 +64595,7 @@ Ext.define('Ext.direct.Manager', {
                                 'longitude': longitude.toString(),
                                 'zipcode': zipcode.toString()
                             });
+                            console.log('Zipcode is : ' + userLocationStore.getAt(0).get('zipcode'));
                             // Ext.Viewport.getActiveItem().destroy();
                             var view = Ext.Viewport.add({
                                     xtype: 'Main'
