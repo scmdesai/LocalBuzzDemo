@@ -63956,6 +63956,10 @@ Ext.define('Ext.direct.Manager', {
                 type: 'string'
             },
             {
+                name: 'loginEmail',
+                type: 'string'
+            },
+            {
                 name: 'address',
                 type: 'string'
             },
@@ -64545,7 +64549,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
@@ -64557,13 +64561,18 @@ Ext.define('Ext.direct.Manager', {
                 id: 'zipcodeLookUp',
                 itemId: 'zipcodeLookUp',
                 left: '18%',
-                padding: '5 5 5 5',
+                margin: '',
+                padding: '0 0 0 ',
                 style: 'border:1px solid black',
                 top: '27%',
                 width: '60%',
+                component: {
+                    xtype: 'input',
+                    type: 'tel',
+                    fastFocus: true
+                },
                 clearIcon: false,
-                name: 'zipcodeLookUp',
-                placeHolder: '       Enter Zipcode'
+                name: 'zipcodeLookUp'
             },
             {
                 xtype: 'button',
@@ -64575,7 +64584,7 @@ Ext.define('Ext.direct.Manager', {
                         var store = Ext.getStore('MyDealsStore');
                         var stores = [];
                         var storesNearBy = Ext.getStore('calculateDistances');
-                        //userLocationStore.removeAt(0);
+                        userLocationStore.removeAt(0);
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
@@ -64596,21 +64605,19 @@ Ext.define('Ext.direct.Manager', {
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                                 store.clearFilter();
                                 store.load();
-                                var store1 = Ext.getStore('calculateDistances');
-                                Ext.Array.erase(stores, 0, stores.length);
-                                store1.each(function(record) {
-                                    Ext.Array.include(stores, record.get('customerId'));
-                                });
-                                var rec = userLocationStore.getAllCount();
+                                //  var store1 = Ext.getStore('calculateDistances');
+                                //Ext.Array.erase(stores,0,stores.length);
+                                /*   store1.each(function(record){
+                                Ext.Array.include(stores,record.get('customerId'));
+
+
+                                });*/
+                                /* var rec = userLocationStore.getAllCount();
                                 console.log('Store count' + rec);
-                                console.log(stores.length);
-                                store.filterBy(function(record) {
-                                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                                }, this);
+                                console.log(stores.length);*/
                                 var distance = json.rows[0].elements[0].distance.value;
                                 console.log(record.get('businessName') + distance);
-                                if (distance <= 80468) /*40234*/
-                                {
+                                if (distance <= 40234) {
                                     storesNearBy.add({
                                         'customerId': record.get('customerId')
                                     });
@@ -64618,6 +64625,9 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                }, this);
                             });
                         });
                     }, onError, {
@@ -64637,7 +64647,7 @@ Ext.define('Ext.direct.Manager', {
                             });*/
                 height: '9vh',
                 left: '20%',
-                style: 'font-size:5vw;font-family:Arial',
+                style: 'font-size:5vw;font-family:Arial:color',
                 top: '1%',
                 ui: 'action',
                 width: '60%',
@@ -64718,7 +64728,7 @@ Ext.define('Ext.direct.Manager', {
                     }, this);
                     var distance = json.rows[0].elements[0].distance.value;
                     console.log(record.get('businessName') + distance);
-                    if (distance <= 80468) {
+                    if (distance <= 40234) {
                         storesNearBy.add({
                             'customerId': record.get('customerId')
                         });
@@ -64733,11 +64743,13 @@ Ext.define('Ext.direct.Manager', {
 }, 0, 0, [
     "component",
     "container",
-    "panel"
+    "panel",
+    "formpanel"
 ], {
     "component": true,
     "container": true,
-    "panel": true
+    "panel": true,
+    "formpanel": true
 }, 0, 0, [
     LocalBuzzDemo.view,
     'WelcomeScreen'
