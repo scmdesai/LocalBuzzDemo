@@ -67605,7 +67605,7 @@ Ext.application({
         for (var i = 0; i < storesNearBy.getAllCount(); i++) {
             storesNearBy.removeAt(i);
         }
-        var userLocation = Ext.getStore('UserLocatin');
+        var userLocation = Ext.getStore('UserLocation');
         for (var i = 0; i < userLocation.getAllCount(); i++) {
             userLocation.removeAt(i);
         }
