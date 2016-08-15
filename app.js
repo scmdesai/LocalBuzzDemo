@@ -64568,7 +64568,7 @@ Ext.define('Ext.direct.Manager', {
                 width: '60%',
                 component: {
                     xtype: 'input',
-                    type: 'tel',
+                    type: 'number',
                     fastFocus: true
                 },
                 clearIcon: false,
