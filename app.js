@@ -65849,7 +65849,7 @@ Ext.define('Ext.direct.Manager', {
         ds.clearFilter();
     },
     onListOfDealsItemTap: function(dataview, index, target, record, e, eOpts) {
-        var pic = this.getDealpicture();
+        //var pic = this.getDealpicture();
         /*console.log("Data View is: ") ;
         console.log(dataview) ;
         console.log("Index is: " + index) ;
