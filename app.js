@@ -66879,6 +66879,16 @@ Ext.define('Ext.direct.Manager', {
         // Ext.getStore('MyJsonPStore').load();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
+            var userLocationStore = Ext.getStore('UserLocation');
+            var userLocationStore = Ext.getStore('UserLocation');
+            userLocationStore.load();
+            var lat = userLocationStore.getAt(0).get('latitude');
+            var long = userLocationStore.getAt(0).get('longitude');
+            map.mapTypeControl = false;
+            Ext.getCmp('mymap').setMapCenter({
+                latitude: lat,
+                longitude: long
+            });
             /* var store = Ext.getStore('MyJsonPStore');
 
 
