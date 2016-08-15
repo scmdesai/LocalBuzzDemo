@@ -64682,7 +64682,7 @@ Ext.define('Ext.direct.Manager', {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
             //userLocationStore.removeAt(0);
-            console.log(latitude, longitude);
+            console.log(postalCode);
             userLocationStore.add({
                 'latitude': latitude.toString(),
                 'longitude': longitude.toString(),
@@ -67604,6 +67604,10 @@ Ext.application({
         var storesNearBy = Ext.getStore('StoresNearby');
         for (var i = 0; i < storesNearBy.getAllCount(); i++) {
             storesNearBy.removeAt(i);
+        }
+        var userLocation = Ext.getStore('UserLocatin');
+        for (var i = 0; i < userLocation.getAllCount(); i++) {
+            userLocation.removeAt(i);
         }
         if (Ext.os.is('Android')) {
             var BackButtonPanel;
