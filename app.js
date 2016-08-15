@@ -66178,12 +66178,13 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onLatestbuzzItemTap: function(dataview, index, target, record, e, eOpts) {},
-    /*if(e.target==='favDealBtn'){
+    onLatestbuzzItemTap: function(dataview, index, target, record, e, eOpts) {
+        /*if(e.target==='favDealBtn'){
             Ext.get('favDealBtn').setHtml('New Value') ;
-        }
-
-        /*var pic = Ext.Viewport.add({xtype:'dealpicture'});
+        }*/
+        var pic = Ext.Viewport.add({
+                xtype: 'dealpicture'
+            });
         /*console.log("Data View is: ") ;
         console.log(dataview) ;
         console.log("Index is: " + index) ;
@@ -66193,41 +66194,35 @@ Ext.define('Ext.direct.Manager', {
         console.log(e) ;
         console.log("Event Options is: ") ;
         console.log(eOpts) ;*/
-    /*pic.setRecord(record);
-
+        pic.setRecord(record);
         Ext.getStore('LocalStore').add(record);
         //Ext.Viewport.add(pic);
-        Ext.Viewport.setActiveItem(pic);*/
-    //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
-    //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
-    //var showPosition;
-    //if (navigator.geolocation) {
-    //if you have the geolocation, run the showPosition function
-    //navigator.geolocation.getCurrentPosition(function showPosition(position) {
-    /* var userLocationStore = Ext.getStore('UserLocation');
-                  userLocationStore.load();
-                  var latitude = userLocationStore.getAt(0).get('latitude');
-                  var longitude = userLocationStore.getAt(0).get('longitude');
-                  var zipcode =  userLocationStore.getAt(0).get('zipcode');
-
-                console.log('LatestBuzz View Analytics' + latitude + "," + longitude+","+zipcode);
-
-
-                // api call for postal code and track event
-                //$.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-                    //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
-
-                    //analytics.addCustomDimension('1', record.get('customerId'));
-
-                    analytics.trackEvent(record.get('dealName'),zipcode,record.get('customerId'));
-              //  });
-          //  });
-        /*} else {
+        Ext.Viewport.setActiveItem(pic);
+        //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
+        //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
+        //var showPosition;
+        if (navigator.geolocation) {
+            //if you have the geolocation, run the showPosition function
+            //navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            var userLocationStore = Ext.getStore('UserLocation');
+            userLocationStore.load();
+            var latitude = userLocationStore.getAt(0).get('latitude');
+            var longitude = userLocationStore.getAt(0).get('longitude');
+            var zipcode = userLocationStore.getAt(0).get('zipcode');
+            console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+            // api call for postal code and track event
+            //$.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+            //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+            //analytics.addCustomDimension('1', record.get('customerId'));
+            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+        } else //  });
+        //  });
+        {
             //geolocation not happening
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
-        */
+    },
     onLatestbuzzPainted: function(element, eOpts) {
         var store = Ext.getStore('MyDealsStore');
         //store.clearFilter();
