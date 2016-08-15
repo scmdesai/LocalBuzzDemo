@@ -66622,6 +66622,7 @@ Ext.define('Ext.direct.Manager', {
         var lat, long;
         var infoWindow;
         var latitude, longitude;
+        console.log('Rendering map');
         var userLocationStore = Ext.getStore('UserLocation');
         userLocationStore.load();
         var lat = userLocationStore.getAt(0).get('latitude');
@@ -66666,6 +66667,7 @@ Ext.define('Ext.direct.Manager', {
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         var check_if_markers_visible = false;
         store.each(function(record) {
+            console.log('Placing map markers on the map');
             var address = record.get('address');
             $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                 lat = json.results[0].geometry.location.lat;
