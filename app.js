@@ -64586,15 +64586,14 @@ Ext.define('Ext.direct.Manager', {
                         longitude = position.coords.longitude;
                         var store = Ext.getStore('MyDealsStore');
                         var storesNearBy = Ext.getStore('StoresNearby');
-                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json1) {
-                            zipcode = json1.results[0].address_components[7].short_name;
-                            var postalCode = zipcode.split("\"");
+                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                            zipcode = json.results[0].address_components[7].short_name;
                             console.log('Zipcode is : ' + zipcode);
                             //userLocationStore.removeAt(0);
                             userLocationStore.add({
                                 'latitude': latitude.toString(),
                                 'longitude': longitude.toString(),
-                                'zipcode': postalCode[1]
+                                'zipcode': zipcode.toString()
                             });
                             // Ext.Viewport.getActiveItem().destroy();
                             var view = Ext.Viewport.add({
@@ -64681,12 +64680,13 @@ Ext.define('Ext.direct.Manager', {
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
+            zipcode = json.results[0].address_components[0].short_name;
             //userLocationStore.removeAt(0);
             console.log(postalCode);
             userLocationStore.add({
                 'latitude': latitude.toString(),
                 'longitude': longitude.toString(),
-                'zipcode': postalCode
+                'zipcode': zipcode.toString()
             });
             console.log('Store count is : ' + userLocationStore.getAllCount());
             // Ext.Viewport.getActiveItem().destroy();
