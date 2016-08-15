@@ -66646,7 +66646,7 @@ Ext.define('Ext.direct.Manager', {
               });*/
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        var store = Ext.getStore('StoresNearby');
+        var store1 = Ext.getStore('StoresNearby');
         var stores = [];
         store1.each(function(record) {
             //stores.push(record.get('customerId'));
@@ -66656,15 +66656,13 @@ Ext.define('Ext.direct.Manager', {
         store.filterBy(function(record) {
             return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
         }, this);
-        if (store1.getCount() === 0) {
+        if (store.getCount() === 0) {
             Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
-        // store.clearFilter();
+        store.clearFilter();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         var check_if_markers_visible = false;
         store.each(function(record) {
-            console.log('Placing map markers on the map');
-            console.log(record.get('businessName'));
             var address = record.get('address');
             $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                 lat = json.results[0].geometry.location.lat;
