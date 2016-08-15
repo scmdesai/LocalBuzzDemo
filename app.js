@@ -66624,13 +66624,9 @@ Ext.define('Ext.direct.Manager', {
         var latitude, longitude;
         console.log('Rendering map');
         var userLocationStore = Ext.getStore('UserLocation');
-        var userLocationStore = Ext.getStore('UserLocation');
         userLocationStore.load();
-        userLocationStore.each(function(record) {
-            //stores.push(record.get('customerId'));
-            lat = record.get('latitude');
-            long = record.get('longitude');
-        });
+        var lat = userLocationStore.getAt(0).get('latitude');
+        var long = userLocationStore.getAt(0).get('longitude');
         map.mapTypeControl = false;
         Ext.getCmp('mymap').setMapCenter({
             latitude: lat,
