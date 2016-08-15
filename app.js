@@ -66888,7 +66888,7 @@ Ext.define('Ext.direct.Manager', {
             userLocationStore.load();
             var lat = userLocationStore.getAt(0).get('latitude');
             var long = userLocationStore.getAt(0).get('longitude');
-            map.mapTypeControl = false;
+            console.log(lat + ',' + long);
             Ext.getCmp('mymap').setMapCenter({
                 latitude: lat,
                 longitude: long
@@ -66957,7 +66957,7 @@ Ext.define('Ext.direct.Manager', {
             userLocationStore.load();
             var lat = userLocationStore.getAt(0).get('latitude');
             var long = userLocationStore.getAt(0).get('longitude');
-            map.mapTypeControl = false;
+            // map.mapTypeControl = false;
             Ext.getCmp('mymap').setMapCenter({
                 latitude: lat,
                 longitude: long
