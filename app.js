@@ -66879,6 +66879,7 @@ Ext.define('Ext.direct.Manager', {
         // Ext.getStore('MyJsonPStore').load();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
+            console.log('Buzz Near me tab activated');
             var userLocationStore = Ext.getStore('UserLocation');
             var userLocationStore = Ext.getStore('UserLocation');
             userLocationStore.load();
