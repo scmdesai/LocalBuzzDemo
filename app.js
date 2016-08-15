@@ -66668,6 +66668,7 @@ Ext.define('Ext.direct.Manager', {
         var check_if_markers_visible = false;
         store.each(function(record) {
             console.log('Placing map markers on the map');
+            console.log(record.get('businessName'));
             var address = record.get('address');
             $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                 lat = json.results[0].geometry.location.lat;
