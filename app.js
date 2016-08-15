@@ -64586,8 +64586,8 @@ Ext.define('Ext.direct.Manager', {
                         longitude = position.coords.longitude;
                         var store = Ext.getStore('MyDealsStore');
                         var storesNearBy = Ext.getStore('StoresNearby');
-                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                            zipcode = json.results[0].address_components[7].short_name;
+                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json1?address=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json1) {
+                            zipcode = json1.results[0].address_components[7].short_name;
                             console.log('Zipcode is : ' + zipcode);
                             //userLocationStore.removeAt(0);
                             userLocationStore.add({
