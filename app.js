@@ -66640,26 +66640,29 @@ Ext.define('Ext.direct.Manager', {
                             longitude: long
                         });
               });*/
-        var store = Ext.getStore('MyJsonPStore');
-        store.clearFilter();
-        var store1 = Ext.getStore('StoresNearby');
-        var stores = [];
-        store1.each(function(record) {
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores, record.get('customerId'));
-            console.log(record.get('address'));
-        });
-        console.log(stores.length);
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
+        //var store = Ext.getStore('MyJsonPStore');
+        // store.clearFilter();
+        var store = Ext.getStore('StoresNearby');
+        //var stores = [];
+        // store1.each(function(record){
+        //stores.push(record.get('customerId'));
+        /* Ext.Array.include(stores,record.get('customerId'));
+                    console.log(record.get('address'));
+
+                });
+                console.log(stores.length);
+
+                store.filterBy(function(record){
+                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+
+                }, this);*/
         if (store.getCount() === 0) {
             Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
-        store.clearFilter();
+        //store.clearFilter();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         var check_if_markers_visible = false;
-        store1.each(function(record) {
+        store.each(function(record) {
             var address = record.get('address');
             $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                 lat = json.results[0].geometry.location.lat;
