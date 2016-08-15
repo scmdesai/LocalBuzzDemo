@@ -64590,7 +64590,7 @@ Ext.define('Ext.direct.Manager', {
                             zipcode = json1.results[0].address_components[7].short_name;
                             console.log('Zipcode is : ' + zipcode);
                             //userLocationStore.removeAt(0);
-                            console.log(latitude, longitude, zipcode);
+                            console.log(latitude, longitude + ',' + zipcode);
                             userLocationStore.add({
                                 'latitude': latitude.toString(),
                                 'longitude': longitude.toString(),
