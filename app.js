@@ -1,8 +1,3 @@
-var Contact = Contact || {};
-if (!Contact.controller) Contact.controller = {};
-if (!Contact.model) Contact.model = {};
-if (!Contact.store) Contact.store = {};
-if (!Contact.view) Contact.view = {};
 var Ext = Ext || {};
 if (!Ext.app) Ext.app = {};
 if (!Ext.behavior) Ext.behavior = {};
@@ -46,6 +41,11 @@ if (!Ext.util.paintmonitor) Ext.util.paintmonitor = {};
 if (!Ext.util.sizemonitor) Ext.util.sizemonitor = {};
 if (!Ext.util.translatable) Ext.util.translatable = {};
 if (!Ext.viewport) Ext.viewport = {};
+var LocalBuzzDemo = LocalBuzzDemo || {};
+if (!LocalBuzzDemo.controller) LocalBuzzDemo.controller = {};
+if (!LocalBuzzDemo.model) LocalBuzzDemo.model = {};
+if (!LocalBuzzDemo.store) LocalBuzzDemo.store = {};
+if (!LocalBuzzDemo.view) LocalBuzzDemo.view = {};
 var dealPicture = dealPicture || {};
 /* 
  * Helper code for compiler optimization
@@ -60003,178 +60003,6 @@ Ext.define('Ext.direct.Manager', {
 ], 0));
 
 /**
- * The Number field creates an HTML5 number input and is usually created inside a form. Because it creates an HTML
- * number input field, most browsers will show a specialized virtual keyboard for entering numbers. The Number field
- * only accepts numerical input and also provides additional spinner UI that increases or decreases the current value
- * by a configured {@link #stepValue step value}. Here's how we might use one in a form:
- *
- *     @example
- *     Ext.create('Ext.form.Panel', {
- *         fullscreen: true,
- *         items: [
- *             {
- *                 xtype: 'fieldset',
- *                 title: 'How old are you?',
- *                 items: [
- *                     {
- *                         xtype: 'numberfield',
- *                         label: 'Age',
- *                         minValue: 18,
- *                         maxValue: 150,
- *                         name: 'age'
- *                     }
- *                 ]
- *             }
- *         ]
- *     });
- *
- * Or on its own, outside of a form:
- *
- *     Ext.create('Ext.field.Number', {
- *         label: 'Age',
- *         value: '26'
- *     });
- *
- * ## minValue, maxValue and stepValue
- *
- * The {@link #minValue} and {@link #maxValue} configurations are self-explanatory and simply constrain the value
- * entered to the range specified by the configured min and max values. The other option exposed by this component
- * is {@link #stepValue}, which enables you to set how much the value changes every time the up and down spinners
- * are tapped on. For example, to create a salary field that ticks up and down by $1,000 each tap we can do this:
- *
- *     @example
- *     Ext.create('Ext.form.Panel', {
- *         fullscreen: true,
- *         items: [
- *             {
- *                 xtype: 'fieldset',
- *                 title: 'Are you rich yet?',
- *                 items: [
- *                     {
- *                         xtype: 'numberfield',
- *                         label: 'Salary',
- *                         value: 30000,
- *                         minValue: 25000,
- *                         maxValue: 50000,
- *                         stepValue: 1000
- *                     }
- *                 ]
- *             }
- *         ]
- *     });
- *
- * This creates a field that starts with a value of $30,000, steps up and down in $1,000 increments and will not go
- * beneath $25,000 or above $50,000.
- *
- * Because number field inherits from {@link Ext.field.Text textfield} it gains all of the functionality that text
- * fields provide, including getting and setting the value at runtime, validations and various events that are fired as
- * the user interacts with the component. Check out the {@link Ext.field.Text} docs to see the additional functionality
- * available.
- *
- * For more information regarding forms and fields, please review [Using Forms in Sencha Touch Guide](../../../components/forms.html)
- */
-(Ext.cmd.derive('Ext.field.Number', Ext.field.Text, {
-    alternateClassName: 'Ext.form.Number',
-    config: {
-        /**
-         * @cfg
-         * @inheritdoc
-         */
-        component: {
-            type: 'number'
-        },
-        /**
-         * @cfg
-         * @inheritdoc
-         */
-        ui: 'number'
-    },
-    proxyConfig: {
-        /**
-         * @cfg {Number} minValue The minimum value that this Number field can accept
-         * @accessor
-         */
-        minValue: null,
-        /**
-         * @cfg {Number} maxValue The maximum value that this Number field can accept
-         * @accessor
-         */
-        maxValue: null,
-        /**
-         * @cfg {Number} stepValue The amount by which the field is incremented or decremented each time the spinner is tapped.
-         * Defaults to undefined, which means that the field goes up or down by 1 each time the spinner is tapped
-         * @accessor
-         */
-        stepValue: null
-    },
-    applyPlaceHolder: function(value) {
-        // Android 4.1 & lower require a hack for placeholder text in number fields when using the Stock Browser
-        // details here https://code.google.com/p/android/issues/detail?id=24626
-        this._enableNumericPlaceHolderHack = ((!Ext.feature.has.NumericInputPlaceHolder) && (!Ext.isEmpty(value)));
-        return value;
-    },
-    onFocus: function(e) {
-        if (this._enableNumericPlaceHolderHack) {
-            this.getComponent().input.dom.setAttribute("type", "number");
-        }
-        Ext.field.Text.prototype.onFocus.apply(this, arguments);
-    },
-    onBlur: function(e) {
-        if (this._enableNumericPlaceHolderHack) {
-            this.getComponent().input.dom.setAttribute("type", "text");
-        }
-        Ext.field.Text.prototype.onBlur.apply(this, arguments);
-    },
-    doInitValue: function() {
-        var value = this.getInitialConfig().value;
-        if (value) {
-            value = this.applyValue(value);
-        }
-        this.originalValue = value;
-    },
-    applyValue: function(value) {
-        var minValue = this.getMinValue(),
-            maxValue = this.getMaxValue();
-        if (Ext.isNumber(minValue) && Ext.isNumber(value)) {
-            value = Math.max(value, minValue);
-        }
-        if (Ext.isNumber(maxValue) && Ext.isNumber(value)) {
-            value = Math.min(value, maxValue);
-        }
-        value = parseFloat(value);
-        return (isNaN(value)) ? '' : value;
-    },
-    getValue: function() {
-        var value = parseFloat((arguments.callee.$previous || Ext.field.Text.prototype.getValue).call(this), 10);
-        return (isNaN(value)) ? null : value;
-    },
-    doClearIconTap: function(me, e) {
-        me.getComponent().setValue('');
-        me.getValue();
-        me.hideClearIcon();
-    }
-}, 0, [
-    "numberfield"
-], [
-    "component",
-    "field",
-    "textfield",
-    "numberfield"
-], {
-    "component": true,
-    "field": true,
-    "textfield": true,
-    "numberfield": true
-}, [
-    "widget.numberfield"
-], 0, [
-    Ext.field,
-    'Number',
-    Ext.form,
-    'Number'
-], 0));
-
-/**
  * The Form panel presents a set of form fields and provides convenient ways to load and save data. Usually a form
  * panel just contains the set of fields you want to display, ordered inside the items configuration like this:
  *
@@ -64108,7 +63936,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.Contact', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.Contact', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64160,21 +63988,21 @@ Ext.define('Ext.direct.Manager', {
                 name: 'distance'
             },
             {
-                name: 'planType'
+                name: 'PlanType'
             },
             {
-                name: 'signupStatus'
+                name: 'SignupStatus'
             },
             {
-                name: 'startDate'
+                name: 'StartDate'
             },
             {
-                name: 'endDate'
+                name: 'EndDate'
             }
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'Contact'
 ], 0));
 
@@ -64192,7 +64020,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.Deal', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.Deal', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64255,7 +64083,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'Deal'
 ], 0));
 
@@ -64273,7 +64101,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.UserPreferences', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.UserPreferences', Ext.data.Model, {
     config: {
         idProperty: '',
         fields: [
@@ -64289,7 +64117,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'UserPreferences'
 ], 0));
 
@@ -64307,7 +64135,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.MapMarkerPosition', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.MapMarkerPosition', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64319,7 +64147,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'MapMarkerPosition'
 ], 0));
 
@@ -64337,7 +64165,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.storesNearBy', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.storesNearBy', Ext.data.Model, {
     config: {
         useCache: false,
         fields: [
@@ -64348,7 +64176,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'storesNearBy'
 ], 0));
 
@@ -64366,7 +64194,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.model.UserLocation', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzzDemo.model.UserLocation', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64378,7 +64206,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.model,
+    LocalBuzzDemo.model,
     'UserLocation'
 ], 0));
 
@@ -64396,7 +64224,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.ContactStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.ContactStore', Ext.data.Store, {
     config: {
         autoLoad: true,
         autoSync: true,
@@ -64464,7 +64292,7 @@ Ext.define('Ext.direct.Manager', {
         ],
         groupDir: 'ASC',
         groupField: 'category',
-        model: 'Contact.model.Contact',
+        model: 'LocalBuzzDemo.model.Contact',
         storeId: 'ContactStore',
         proxy: {
             type: 'localstorage'
@@ -64485,8 +64313,50 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'ContactStore'
+], 0));
+
+/*
+ * File: app/store/MyJsonPStore.js
+ *
+ * This file was generated by Sencha Architect version 3.2.0.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.4.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+(Ext.cmd.derive('LocalBuzzDemo.store.MyJsonPStore', Ext.data.Store, {
+    config: {
+        autoLoad: true,
+        groupField: 'category',
+        model: 'LocalBuzzDemo.model.Contact',
+        storeId: 'MyJsonPStore',
+        sorters: {
+            property: 'distance'
+        },
+        proxy: {
+            type: 'jsonp',
+            url: 'http://services.appsonmobile.com/demoStores',
+            reader: {
+                type: 'json'
+            }
+        },
+        grouper: {
+            groupFn: function(item) {
+                return record.get('category');
+            },
+            sortProperty: 'category'
+        }
+    }
+}, 0, 0, 0, 0, 0, 0, [
+    LocalBuzzDemo.store,
+    'MyJsonPStore'
 ], 0));
 
 /*
@@ -64503,16 +64373,15 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.MyDealsStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.MyDealsStore', Ext.data.Store, {
     config: {
         autoLoad: true,
-        model: 'Contact.model.Deal',
+        model: 'LocalBuzzDemo.model.Deal',
         storeId: 'MyDealsStore',
         proxy: {
             type: 'jsonp',
             simpleSortMode: true,
             sortParam: '{dealEndDate:DESC}',
-            timeout: 300000,
             url: 'http://services.appsonmobile.com/demoDeals',
             reader: {
                 type: 'json'
@@ -64535,7 +64404,7 @@ Ext.define('Ext.direct.Manager', {
         var test = Ext.Date.add(date, Ext.Date.DAY, 3);
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'MyDealsStore'
 ], 0));
 
@@ -64553,12 +64422,12 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.UserPreferences', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.UserPreferences', Ext.data.Store, {
     config: {
         autoLoad: true,
         autoSync: true,
         clearOnPageLoad: false,
-        model: 'Contact.model.UserPreferences',
+        model: 'LocalBuzzDemo.model.UserPreferences',
         remoteFilter: true,
         storeId: 'UserPreferences',
         proxy: {
@@ -64568,7 +64437,7 @@ Ext.define('Ext.direct.Manager', {
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'UserPreferences'
 ], 0));
 
@@ -64586,13 +64455,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.LocalStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.LocalStore', Ext.data.Store, {
     config: {
-        model: 'Contact.model.Deal',
+        model: 'LocalBuzzDemo.model.Deal',
         storeId: 'LocalStore'
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'LocalStore'
 ], 0));
 
@@ -64610,16 +64479,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.MapMarkerPositionStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.MapMarkerPositionStore', Ext.data.Store, {
     config: {
-        model: 'Contact.model.MapMarkerPosition',
+        model: 'LocalBuzzDemo.model.MapMarkerPosition',
         storeId: 'MapMarkerPositionStore',
         proxy: {
             type: 'localstorage'
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'MapMarkerPositionStore'
 ], 0));
 
@@ -64637,13 +64506,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.calculateDistances', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.calculateDistances', Ext.data.Store, {
     config: {
-        model: 'Contact.model.storesNearBy',
+        model: 'LocalBuzzDemo.model.storesNearBy',
         storeId: 'calculateDistances'
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'calculateDistances'
 ], 0));
 
@@ -64661,61 +64530,17 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.store.UserLocation', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.store.UserLocation', Ext.data.Store, {
     config: {
-        model: 'Contact.model.UserLocation',
+        model: 'LocalBuzzDemo.model.UserLocation',
         storeId: 'UserLocation',
         proxy: {
             type: 'localstorage'
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.store,
+    LocalBuzzDemo.store,
     'UserLocation'
-], 0));
-
-/*
- * File: app/store/MyJsonPStore.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('Contact.store.MyJsonPStore', Ext.data.Store, {
-    config: {
-        autoLoad: true,
-        model: 'Contact.model.Contact',
-        storeId: 'MyJsonPStore',
-        proxy: {
-            type: 'jsonp',
-            timeout: 300000,
-            url: 'http://services.appsonmobile.com/demoStores',
-            reader: {
-                type: 'json'
-            }
-        },
-        grouper: {
-            groupFn: function(item) {
-                return record.get('category');
-            },
-            sortProperty: 'category'
-        },
-        sorters: {
-            property: 'distance'
-        }
-    }
-}, 0, 0, 0, 0, [
-    "store.MyJsonPStore"
-], 0, [
-    Contact.store,
-    'MyJsonPStore'
 ], 0));
 
 /*
@@ -64732,31 +64557,30 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.WelcomeScreen', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
         items: [
             {
-                xtype: 'numberfield',
+                xtype: 'textfield',
                 cls: 'searchfield',
                 height: '9vh',
-                html: '',
                 id: 'zipcodeLookUp',
                 itemId: 'zipcodeLookUp',
                 left: '18%',
-                padding: '5 5 5 5',
+                margin: '',
+                padding: '0 0 0 ',
                 style: 'border:1px solid black',
                 top: '27%',
                 width: '60%',
                 component: {
                     xtype: 'input',
-                    type: 'number',
+                    type: 'tel',
                     fastFocus: true
                 },
                 clearIcon: false,
-                name: 'zipcodeLookUp',
-                placeHolder: '      Enter zipcode'
+                name: 'zipcodeLookUp'
             },
             {
                 xtype: 'button',
@@ -64765,16 +64589,10 @@ Ext.define('Ext.direct.Manager', {
                     navigator.geolocation.getCurrentPosition(function showPosition(position) {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
-                        console.log(latitude + "," + longitude);
                         var store = Ext.getStore('MyDealsStore');
                         var stores = [];
                         var storesNearBy = Ext.getStore('calculateDistances');
-                        store.clearFilter();
-                        store.load();
-                        // var store1 = Ext.getStore('calculateDistances');
-                        Ext.Array.erase(stores, 0, stores.length);
-                        userLocationStore.removeAll();
-                        storesNearBy.removeAll();
+                        //userLocationStore.removeAt(0);
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
@@ -64793,9 +64611,23 @@ Ext.define('Ext.direct.Manager', {
                             var address = record.get('address');
                             var customerId;
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                store.clearFilter();
+                                store.load();
+                                var store1 = Ext.getStore('calculateDistances');
+                                Ext.Array.erase(stores, 0, stores.length);
+                                store1.each(function(record) {
+                                    Ext.Array.include(stores, record.get('customerId'));
+                                });
+                                var rec = userLocationStore.getAllCount();
+                                console.log('Store count' + rec);
+                                console.log(stores.length);
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                                }, this);
                                 var distance = json.rows[0].elements[0].distance.value;
                                 console.log(record.get('businessName') + distance);
-                                if (distance <= 40234) {
+                                if (distance <= 80468) /*40234*/
+                                {
                                     storesNearBy.add({
                                         'customerId': record.get('customerId')
                                     });
@@ -64803,9 +64635,6 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
-                                store.filterBy(function(record) {
-                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-                                }, this);
                             });
                         });
                     }, onError, {
@@ -64825,7 +64654,7 @@ Ext.define('Ext.direct.Manager', {
                             });*/
                 height: '9vh',
                 left: '20%',
-                style: 'font-size:5vw',
+                style: 'font-size:5vw;font-family:Arial:color',
                 top: '1%',
                 ui: 'action',
                 width: '60%',
@@ -64852,18 +64681,6 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt3',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
                 styleHtmlContent: true
-            },
-            {
-                xtype: 'button',
-                docked: 'top',
-                height: '7%',
-                hidden: true,
-                margin: '0 5 0 15',
-                style: 'font-family:Arial;font-size:5vw',
-                top: '45%',
-                ui: 'confirm',
-                width: '90%',
-                text: 'Get The Latest Buzz!'
             }
         ],
         listeners: [
@@ -64918,7 +64735,7 @@ Ext.define('Ext.direct.Manager', {
                     }, this);
                     var distance = json.rows[0].elements[0].distance.value;
                     console.log(record.get('businessName') + distance);
-                    if (distance <= 40234) {
+                    if (distance <= 80468) {
                         storesNearBy.add({
                             'customerId': record.get('customerId')
                         });
@@ -64941,7 +64758,7 @@ Ext.define('Ext.direct.Manager', {
     "panel": true,
     "formpanel": true
 }, 0, 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'WelcomeScreen'
 ], 0));
 
@@ -64959,7 +64776,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealPicture', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealPicture', Ext.Panel, {
     alternateClassName: [
         'dealPicture'
     ],
@@ -65323,7 +65140,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.dealpicture"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealPicture',
     0,
     'dealPicture'
@@ -65343,7 +65160,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Info', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
         height: '100%',
@@ -65723,7 +65540,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactinfo"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Info'
 ], 0));
 
@@ -65741,12 +65558,12 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.List', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzzDemo.view.List', Ext.dataview.List, {
     config: {
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registed with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
-        grouped: false,
+        grouped: true,
         itemTpl: [
             '<div style="font-family:Arial;font-size:5vw">{businessName}</div>',
             ''
@@ -65769,7 +65586,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactlist"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'List'
 ], 0));
 
@@ -65787,7 +65604,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.ListOfDeals', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzzDemo.view.ListOfDeals', Ext.dataview.List, {
     config: {
         height: '100%',
         html: '',
@@ -65933,7 +65750,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.listofdeals"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'ListOfDeals'
 ], 0));
 
@@ -65951,7 +65768,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.controller.LocalBuzz', Ext.app.Controller, {
+(Ext.cmd.derive('LocalBuzzDemo.controller.LocalBuzz', Ext.app.Controller, {
     config: {
         stores: [
             'MyJsonPStore',
@@ -66263,7 +66080,7 @@ Ext.define('Ext.direct.Manager', {
         store.load();
     }
 }, 0, 0, 0, 0, 0, 0, [
-    Contact.controller,
+    LocalBuzzDemo.controller,
     'LocalBuzz'
 ], 0));
 
@@ -66281,7 +66098,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Picture', Ext.Container, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Picture', Ext.Container, {
     config: {
         overflow: 'hidden',
         height: '100%',
@@ -66312,7 +66129,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactpic"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Picture'
 ], 0));
 
@@ -66330,7 +66147,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.LatestBuzz', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz', Ext.dataview.DataView, {
     config: {
         height: '100%',
         html: '',
@@ -66453,7 +66270,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.latestbuzz"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
 
@@ -66471,12 +66288,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.FavoriteView', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
         style: 'background:#fff;',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
+        store: 'MyJsonPStore',
         itemTpl: [
             '<div style= "margin:5px 5px 5px 5px;padding:5px 5px 5px 5px;border:2px groove #C0C0C0"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100" height="120px"  /></div>',
             '<div style="width:120px;color:black;font-size:2.8vw;text-align:center; ">{businessName}</div>',
@@ -66500,7 +66318,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.favoriteview"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'FavoriteView'
 ], 0));
 
@@ -66518,7 +66336,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.Main', Ext.tab.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Main', Ext.tab.Panel, {
     config: {
         cls: 'toolbar-icon-color',
         height: '100%',
@@ -66776,6 +66594,11 @@ Ext.define('Ext.direct.Manager', {
                 delegate: '#mymap'
             },
             {
+                fn: 'onMymapHiddenChange',
+                event: 'hiddenchange',
+                delegate: '#mymap'
+            },
+            {
                 fn: 'onBuzzNearMeActivate',
                 event: 'activate',
                 delegate: '#BuzzNearMe'
@@ -66883,30 +66706,16 @@ Ext.define('Ext.direct.Manager', {
 
                         }*/
         map.mapTypeControl = false;
-        var userLocationStore = Ext.getStore('UserLocation');
-        userLocationStore.load();
-        console.log('UserLocationStore.getCount() is : ' + userLocationStore.getCount());
-        if (userLocationStore.getCount() !== 0) {
-            record = userLocationStore.getAt(0);
-            latitude = record.get('latitude');
-            longitude = record.get('longitude');
-            console.log(latitude + ',' + longitude);
+        var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
+        console.log(postalCode);
+        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+            lat = json.results[0].geometry.location.lat;
+            long = json.results[0].geometry.location.lng;
             Ext.getCmp('mymap').setMapCenter({
-                latitude: latitude,
-                longitude: longitude
+                latitude: lat,
+                longitude: long
             });
-        } else {
-            var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-            console.log(postalCode);
-            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                lat = json.results[0].geometry.location.lat;
-                long = json.results[0].geometry.location.lng;
-                Ext.getCmp('mymap').setMapCenter({
-                    latitude: lat,
-                    longitude: long
-                });
-            });
-        }
+        });
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
         var store1 = Ext.getStore('calculateDistances');
@@ -67134,6 +66943,9 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     //   Ext.getCmp('BuzzNearMe').fireEvent('activate', this);
+    onMymapHiddenChange: function(component, value, oldValue, eOpts) {
+        console.log('Map Hidden change');
+    },
     onBuzzNearMeActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         Ext.getStore('MyJsonPStore').clearFilter();
         Ext.getStore('MyJsonPStore').load();
@@ -67342,7 +67154,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.Main"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'Main'
 ], 0));
 /* Ext.getCmp('mymap').hide();
@@ -67364,7 +67176,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealsPanel', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel',
@@ -67481,7 +67293,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealsPanel'
 ], 0));
 
@@ -67499,7 +67311,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealsPanel1', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel1', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel1',
@@ -67616,7 +67428,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel1"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealsPanel1'
 ], 0));
 
@@ -67634,7 +67446,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('Contact.view.DealImage', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.DealImage', Ext.Panel, {
     config: {
         height: '70%',
         id: 'DealImage',
@@ -67711,7 +67523,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealImage"
 ], 0, [
-    Contact.view,
+    LocalBuzzDemo.view,
     'DealImage'
 ], 0));
 
@@ -67743,13 +67555,13 @@ Ext.application({
     ],
     stores: [
         'ContactStore',
+        'MyJsonPStore',
         'MyDealsStore',
         'UserPreferences',
         'LocalStore',
         'MapMarkerPositionStore',
         'calculateDistances',
-        'UserLocation',
-        'MyJsonPStore'
+        'UserLocation'
     ],
     views: [
         'Picture',
@@ -67769,7 +67581,7 @@ Ext.application({
         'LocalBuzz'
     ],
     icon: 'icon.png',
-    name: 'Contact',
+    name: 'LocalBuzzDemo',
     launch: function() {
         var postalCode;
         var store = Ext.getStore('MyDealsStore');
@@ -67929,12 +67741,12 @@ Ext.application({
 
 
             }*/
-        Ext.create('Contact.view.WelcomeScreen', {
+        Ext.create('LocalBuzzDemo.view.WelcomeScreen', {
             fullscreen: true
         });
     }
 });
 
 // @tag full-page
-// @require H:\Apps\Sencha Architect Apps\AnroidBackButton\app.js
+// @require H:\Apps\Sencha Architect Apps\LocaBuzzDemo\app.js
 
