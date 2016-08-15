@@ -66217,7 +66217,7 @@ Ext.define('Ext.direct.Manager', {
             var latitude = userLocationStore.getAt(0).get('latitude');
             var longitude = userLocationStore.getAt(0).get('longitude');
             var zipcode = userLocationStore.getAt(0).get('zipcode');
-            console.log(zipcode);
+            console.log(userLocationStore.getAt(0));
             console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
             // api call for postal code and track event
             //$.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
