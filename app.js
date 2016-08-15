@@ -65912,7 +65912,7 @@ Ext.define('Ext.direct.Manager', {
             // function(json){
             //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
             //analytics.addCustomDimension('1', record.get('customerId'));
-            analytics.trackEvent(record.get('dealName'), json.postalCodes[0].postalCode, record.get('customerId'));
+            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
         } else // });
         // });
         {
