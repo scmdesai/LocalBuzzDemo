@@ -66624,9 +66624,13 @@ Ext.define('Ext.direct.Manager', {
         var latitude, longitude;
         console.log('Rendering map');
         var userLocationStore = Ext.getStore('UserLocation');
+        var userLocationStore = Ext.getStore('UserLocation');
         userLocationStore.load();
-        var lat = userLocationStore.getAt(0).get('latitude');
-        var long = userLocationStore.getAt(0).get('longitude');
+        userLocationStore.each(function(record) {
+            //stores.push(record.get('customerId'));
+            lat = record.get('latitude');
+            long = record.get('longitude');
+        });
         map.mapTypeControl = false;
         Ext.getCmp('mymap').setMapCenter({
             latitude: lat,
@@ -66877,16 +66881,21 @@ Ext.define('Ext.direct.Manager', {
     },
     //   Ext.getCmp('BuzzNearMe').fireEvent('activate', this);
     onBuzzNearMeActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        console.log('Buzz Near me tab activated');
         //Ext.getStore('MyJsonPStore').clearFilter();
         // Ext.getStore('MyJsonPStore').load();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
-            console.log('Buzz Near me tab activated');
+            var latitude;
+            var longitude;
             var userLocationStore = Ext.getStore('UserLocation');
             var userLocationStore = Ext.getStore('UserLocation');
             userLocationStore.load();
-            var lat = userLocationStore.getAt(0).get('latitude');
-            var long = userLocationStore.getAt(0).get('longitude');
+            userLocationStore.each(function(record) {
+                //stores.push(record.get('customerId'));
+                lat = record.get('latitude');
+                long = record.get('longitude');
+            });
             map.mapTypeControl = false;
             Ext.getCmp('mymap').setMapCenter({
                 latitude: lat,
