@@ -66577,7 +66577,7 @@ Ext.define('Ext.direct.Manager', {
         var store = Ext.getStore('MyDealsStore');
         store.clearFilter();
         store.load();
-        var store1 = Ext.getStore('calculateDistances');
+        var store1 = Ext.getStore('StoresNearby');
         var stores = [];
         store1.each(function(record) {
             //stores.push(record.get('customerId'));
@@ -66651,7 +66651,7 @@ Ext.define('Ext.direct.Manager', {
         }
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        var store1 = Ext.getStore('calculateDistances');
+        var store1 = Ext.getStore('StoresNearby');
         var stores = [];
         store1.each(function(record) {
             //stores.push(record.get('customerId'));
@@ -66882,7 +66882,7 @@ Ext.define('Ext.direct.Manager', {
         if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
             var store = Ext.getStore('MyJsonPStore');
             store.clearFilter();
-            var store1 = Ext.getStore('calculateDistances');
+            var store1 = Ext.getStore('StoresNearby');
             var stores = [];
             store1.each(function(record) {
                 //stores.push(record.get('customerId'));
@@ -66960,7 +66960,7 @@ Ext.define('Ext.direct.Manager', {
                             });*/
                 var store = Ext.getStore('MyJsonPStore');
                 store.clearFilter();
-                var store1 = Ext.getStore('calculateDistances');
+                var store1 = Ext.getStore('StoresNearby');
                 var stores = [];
                 store1.each(function(record) {
                     //stores.push(record.get('customerId'));
