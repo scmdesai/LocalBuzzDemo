@@ -64562,12 +64562,12 @@ Ext.define('Ext.direct.Manager', {
                         Ext.Array.erase(stores, 0, stores.length);
                         userLocationStore.removeAll();
                         storesNearBy.removeAll();
-                        console.log('before: ' + userLocationStore.getAllCount());
+                        console.log('before: ' + storesNearBy.getAllCount());
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
                         });
-                        console.log('after :' + userLocationStore.getAllCount());
+                        // console.log('after :'+userLocationStore.getAllCount());
                         // Ext.Viewport.getActiveItem().destroy();
                         var view = Ext.Viewport.add({
                                 xtype: 'Main'
@@ -64586,6 +64586,7 @@ Ext.define('Ext.direct.Manager', {
                                     storesNearBy.add({
                                         'customerId': record.get('customerId')
                                     });
+                                    Ext.Array.include(stores, record.get('customerId'));
                                     return true;
                                 } else {
                                     return false;
@@ -64595,6 +64596,8 @@ Ext.define('Ext.direct.Manager', {
                     }, onError, {
                         timeout: 5000
                     });
+                    console.log('after: ' + storesNearBy.getAllCount());
+                    console.log('after: ' + stores.length);
                     store.filterBy(function(record) {
                         return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
                     }, this);
@@ -64692,6 +64695,7 @@ Ext.define('Ext.direct.Manager', {
                         storesNearBy.add({
                             'customerId': record.get('customerId')
                         });
+                        Ext.Array.include(stores, record.get('customerId'));
                         return true;
                     } else {
                         return false;
