@@ -64671,10 +64671,10 @@ Ext.define('Ext.direct.Manager', {
             storesNearBy.removeAll();
             console.log('before: ' + userLocationStore.getAllCount());
             userLocationStore.add({
-                'latitude': latitude,
-                'longitude': longitude
+                'latitude': latitude.toString(),
+                'longitude': longitude.toString()
             });
-            console.log(userLocationStore.getAt(0).latitude + ',' + userLocationStore.getAt(0).longitude);
+            console.log(userLocationStore.getAt(0).get('latitude') + ',' + userLocationStore.getAt(0).get('longitude'));
             // Ext.Viewport.getActiveItem().destroy();
             var view = Ext.Viewport.add({
                     xtype: 'Main'
