@@ -64587,20 +64587,18 @@ Ext.define('Ext.direct.Manager', {
                                         'customerId': record.get('customerId')
                                     });
                                     Ext.Array.include(stores, record.get('customerId'));
-                                    return true;
-                                } else {
-                                    return false;
                                 }
                             });
                         });
+                        // return true;
+                        console.log('after: ' + storesNearBy.getAllCount());
+                        console.log('after: ' + stores.length);
+                        store.filterBy(function(record) {
+                            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                        }, this);
                     }, onError, {
                         timeout: 5000
                     });
-                    console.log('after: ' + storesNearBy.getAllCount());
-                    console.log('after: ' + stores.length);
-                    store.filterBy(function(record) {
-                        return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                    }, this);
                     function onError() {
                         Ext.Msg.alert('Location service is disabled', 'Allow Local Buzz to access your location', null, null);
                     }
@@ -64696,16 +64694,16 @@ Ext.define('Ext.direct.Manager', {
                             'customerId': record.get('customerId')
                         });
                         Ext.Array.include(stores, record.get('customerId'));
-                        return true;
-                    } else {
-                        return false;
                     }
                 });
             });
+            // return true;
+            console.log('before: ' + stores.length);
+            console.log('after: ' + storesNearBy.getAllCount());
+            store.filterBy(function(record) {
+                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+            }, this);
         });
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
     }
 }, 0, 0, [
     "component",
