@@ -64775,22 +64775,22 @@ Ext.define('Ext.direct.Manager', {
                         handler: function(button, e) {
                             Ext.Viewport.getActiveItem().destroy();
                             Ext.getStore('LocalStore').removeAt(0);
-                            var store = Ext.getStore('MyDealsStore');
-                            store.clearFilter();
-                            store.load();
-                            var store1 = Ext.getStore('StoresNearby');
-                            var stores = [];
-                            store1.each(function(record) {
-                                //stores.push(record.get('customerId'));
-                                Ext.Array.include(stores, record.get('customerId'));
-                            });
-                            store.filterBy(function(record) {
-                                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                            }, this);
-                            //Ext.Array.erase(stores,0,stores.length);
                             if (Ext.Viewport.getComponent('DealsPanel')) {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                             } else {
+                                var store = Ext.getStore('MyDealsStore');
+                                store.clearFilter();
+                                store.load();
+                                var store1 = Ext.getStore('StoresNearby');
+                                var stores = [];
+                                store1.each(function(record) {
+                                    //stores.push(record.get('customerId'));
+                                    Ext.Array.include(stores, record.get('customerId'));
+                                });
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                                }, this);
+                                //Ext.Array.erase(stores,0,stores.length);
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
                             }
                         },
