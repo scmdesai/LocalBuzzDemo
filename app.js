@@ -66212,13 +66212,15 @@ Ext.define('Ext.direct.Manager', {
         store.clearFilter();
         store.load();
         var store1 = Ext.getStore('StoresNearby');
-        var filter1 = store.each(function(record) {
-                var customerId = record.get('customerId');
-                if (store1.findRecord('customerId') , customerId) {
-                    return record;
-                }
-                store.filter(filter1);
-            });
+        var stores = [];
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+        }, this);
+        Ext.Array.erase(stores, stores.length);
     }
 }, 0, [
     "latestbuzz"
@@ -66238,24 +66240,6 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
-/*var stores = [];
-
-
-                Ext.Array.erase(stores,stores.length);
-                store1.each(function(record){
-                    //stores.push(record.get('customerId'));
-                    Ext.Array.include(stores,record.get('customerId'));
-
-
-                });
-
-
-                store.filterBy(function(record){
-
-
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-                }, this);*/
 
 /*
  * File: app/view/FavoriteView.js
@@ -66588,32 +66572,16 @@ Ext.define('Ext.direct.Manager', {
         store.clearFilter();
         store.load();
         var store1 = Ext.getStore('StoresNearby');
-        var filter1 = store.each(function(record) {
-                var customerId = record.get('customerId');
-                if (store1.findRecord('customerId') , customerId) {
-                    return record;
-                }
-                store.filter(filter1);
-            });
+        var stores = [];
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+        }, this);
+        Ext.Array.erase(stores, stores.length);
     },
-    /*var stores = [];
-
-
-                Ext.Array.erase(stores,stores.length);
-                store1.each(function(record){
-                    //stores.push(record.get('customerId'));
-                    Ext.Array.include(stores,record.get('customerId'));
-
-
-                });
-
-
-                store.filterBy(function(record){
-
-
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-                }, this);*/
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
