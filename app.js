@@ -66212,20 +66212,18 @@ Ext.define('Ext.direct.Manager', {
         store.clearFilter();
         store.load();
         var store1 = Ext.getStore('StoresNearby');
-        /*var stores = [];
+        /* var stores = [];
 
 
 
-        store1.each(function(record){
-            Ext.Array.include(stores,record.get('customerId'));
+                store1.each(function(record){
+                    //stores.push(record.get('customerId'));
+                    Ext.Array.include(stores,record.get('customerId'));
 
 
-
-        });
-        console.log(stores.length);
-        */
+                });*/
         store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores1, record.get('customerId')) !== -1;
+            return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
         }, this);
     }
 }, 0, [
@@ -66578,14 +66576,16 @@ Ext.define('Ext.direct.Manager', {
         store.clearFilter();
         store.load();
         var store1 = Ext.getStore('StoresNearby');
-        var stores = [];
+        //var stores = [];
         console.log(store1.getCount());
-        store1.each(function(record) {
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores, record.get('customerId'));
-        });
+        /* store1.each(function(record){
+                    //stores.push(record.get('customerId'));
+                    Ext.Array.include(stores,record.get('customerId'));
+
+
+                });*/
         store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+            return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
         }, this);
     },
     onSearchfieldKeyup: function(textfield, e, eOpts) {
