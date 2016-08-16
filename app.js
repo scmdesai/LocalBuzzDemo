@@ -66579,6 +66579,7 @@ Ext.define('Ext.direct.Manager', {
         store.load();
         var store1 = Ext.getStore('StoresNearby');
         var stores = [];
+        console.log(store1.getCount());
         store1.each(function(record) {
             //stores.push(record.get('customerId'));
             Ext.Array.include(stores, record.get('customerId'));
