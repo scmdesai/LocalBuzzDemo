@@ -64656,6 +64656,8 @@ Ext.define('Ext.direct.Manager', {
         var postalCode = textfield.getValue();
         console.log(postalCode);
         var userLocationStore = Ext.getStore('UserLocation');
+        Ext.Array.erase(stores, 0, stores.length);
+        userLocationStore.removeAll();
         var store = Ext.getStore('MyDealsStore');
         var stores = [];
         var storesNearBy = Ext.getStore('StoresNearby');
@@ -64667,8 +64669,6 @@ Ext.define('Ext.direct.Manager', {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
             // var store1 = Ext.getStore('calculateDistances');
-            Ext.Array.erase(stores, 0, stores.length);
-            userLocationStore.removeAll();
             storesNearBy.removeAll();
             console.log('before: ' + userLocationStore.getAllCount());
             userLocationStore.add({
@@ -66958,17 +66958,15 @@ Ext.define('Ext.direct.Manager', {
             // Ext.getCmp('mymap').show();
             //Ext.getCmp('lookUpZipcode').hide();
             //Ext.getCmp('locationOffText').hide();
-            /* var userLocationStore = Ext.getStore('UserLocation');
-
-                            latitude = userLocationStore.getAt(0).get('latitude');
-                            longitude = userLocationStore.getAt(0).get('longitude');
-
-                            console.log(latitude+','+longitude);
-                            Ext.getCmp('mymap').setMapCenter({
-                                latitude: latitude,
-                                longitude: longitude
-                            });
-                          /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+            var userLocationStore = Ext.getStore('UserLocation');
+            latitude = userLocationStore.getAt(0).get('latitude');
+            longitude = userLocationStore.getAt(0).get('longitude');
+            console.log(latitude + ',' + longitude);
+            Ext.getCmp('mymap').setMapCenter({
+                latitude: latitude,
+                longitude: longitude
+            });
+            /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                                 var southWest = json.results[0].geometry.viewport.southwest;
                                 var northEast = json.results[0].geometry.viewport.northeast;
                                 var bounds = new google.maps.LatLngBounds(southWest, northEast);
