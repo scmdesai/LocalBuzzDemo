@@ -64576,12 +64576,12 @@ Ext.define('Ext.direct.Manager', {
                         var store1 = Ext.getStore('MyJsonPStore');
                         store1.load();
                         store1.clearFilter();
+                        store.load();
+                        store.clearFilter();
                         store1.each(function(record) {
                             var address = record.get('address');
                             var customerId;
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                                store.load();
-                                store.clearFilter();
                                 var distance = json.rows[0].elements[0].distance.value;
                                 //console.log(record.get('businessName') + distance);
                                 if (distance <= 40234) {
@@ -64592,11 +64592,11 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
-                                store.filterBy(function(record) {
-                                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                                }, this);
                             });
                         });
+                        store.filterBy(function(record) {
+                            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                        }, this);
                     }, onError, {
                         timeout: 5000
                     });
@@ -64683,12 +64683,12 @@ Ext.define('Ext.direct.Manager', {
             var store1 = Ext.getStore('MyJsonPStore');
             store1.load();
             store1.clearFilter();
+            store.load();
+            store.clearFilter();
             store1.each(function(record) {
                 var address = record.get('address');
                 var customerId;
                 $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                    store.load();
-                    store.clearFilter();
                     var distance = json.rows[0].elements[0].distance.value;
                     //console.log(record.get('businessName') + distance);
                     if (distance <= 40234) {
@@ -64699,11 +64699,11 @@ Ext.define('Ext.direct.Manager', {
                     } else {
                         return false;
                     }
-                    store.filterBy(function(record) {
-                        return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                    }, this);
                 });
             });
+            store.filterBy(function(record) {
+                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+            }, this);
         });
     }
 }, 0, 0, [
