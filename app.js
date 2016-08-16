@@ -64559,9 +64559,9 @@ Ext.define('Ext.direct.Manager', {
                         store.clearFilter();
                         store.load();
                         // var store1 = Ext.getStore('calculateDistances');
-                        // Ext.Array.erase(stores,0,stores.length);
+                        Ext.Array.erase(stores, 0, stores.length);
                         userLocationStore.removeAll();
-                        // storesNearBy.removeAll();
+                        storesNearBy.removeAll();
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
@@ -64590,13 +64590,12 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                }, this);
                             });
                         });
-                    }, /* store.filterBy(function(record){
-                                return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-
-                                }, this);*/
-                    onError, {
+                    }, onError, {
                         timeout: 5000
                     });
                     function onError() {
