@@ -64591,7 +64591,7 @@ Ext.define('Ext.direct.Manager', {
                                     return false;
                                 }
                                 store.filterBy(function(record) {
-                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
                                 }, this);
                             });
                         });
@@ -66592,7 +66592,7 @@ Ext.define('Ext.direct.Manager', {
         store.filterBy(function(record) {
             return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
         }, this);
-        Ext.Array.erase(stores, stores.length);
+        Ext.Array.erase(stores, 0, stores.length);
     },
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
