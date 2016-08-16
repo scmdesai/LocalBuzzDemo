@@ -64671,8 +64671,8 @@ Ext.define('Ext.direct.Manager', {
             storesNearBy.removeAll();
             console.log('before: ' + userLocationStore.getAllCount());
             userLocationStore.add({
-                'latitude': latitude.toString(),
-                'longitude': longitude.toString()
+                'latitude': latitude,
+                'longitude': longitude
             });
             console.log(userLocationStore.getAt(0).latitude + ',' + userLocationStore.getAt(0).longitude);
             // Ext.Viewport.getActiveItem().destroy();
