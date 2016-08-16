@@ -64581,7 +64581,7 @@ Ext.define('Ext.direct.Manager', {
                             var customerId;
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                                 var distance = json.rows[0].elements[0].distance.value;
-                                console.log(record.get('businessName') + distance);
+                                //console.log(record.get('businessName') + distance);
                                 if (distance <= 40234) {
                                     storesNearBy.add({
                                         'customerId': record.get('customerId')
@@ -66592,8 +66592,8 @@ Ext.define('Ext.direct.Manager', {
         store.filterBy(function(record) {
             return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
         }, this);
-        Ext.Array.erase(stores, 0, stores.length);
     },
+    //Ext.Array.erase(stores,0,stores.length);
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
