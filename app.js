@@ -64552,18 +64552,22 @@ Ext.define('Ext.direct.Manager', {
                     navigator.geolocation.getCurrentPosition(function showPosition(position) {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
+                        console.log(latitude + "," + longitude);
                         var store = Ext.getStore('MyDealsStore');
+                        var stores = [];
                         var storesNearBy = Ext.getStore('StoresNearby');
-                        // $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+latitude+","+longitude+"&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM",
-                        // function(json1){
-                        //  zipcode = json1.results[0].address_components[7].short_name;
-                        //  console.log('Zipcode is : ' + zipcode);
+                        store.clearFilter();
+                        store.load();
+                        // var store1 = Ext.getStore('calculateDistances');
+                        Ext.Array.erase(stores, 0, stores.length);
                         userLocationStore.removeAll();
+                        storesNearBy.removeAll();
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
                         });
-                        //console.log('Zipcode is : ' + userLocationStore.getAt(0).get('zipcode'));
+                        userLocationStore.sync();
+                        userLocationStore.load();
                         // Ext.Viewport.getActiveItem().destroy();
                         var view = Ext.Viewport.add({
                                 xtype: 'Main'
@@ -64576,12 +64580,12 @@ Ext.define('Ext.direct.Manager', {
                             var address = record.get('address');
                             var customerId;
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                                //store.clearFilter();
-                                //store.load();
                                 var distance = json.rows[0].elements[0].distance.value;
                                 console.log(record.get('businessName') + distance);
                                 if (distance <= 40234) {
-                                    storesNearBy.add(record);
+                                    storesNearBy.add({
+                                        'customerId': record.get('customerId')
+                                    });
                                     return true;
                                 } else {
                                     return false;
@@ -64591,14 +64595,21 @@ Ext.define('Ext.direct.Manager', {
                                 }, this);
                             });
                         });
-                    }, // });
-                    onError, {
+                    }, onError, {
                         timeout: 5000
                     });
                     function onError() {
                         Ext.Msg.alert('Location service is disabled', 'Allow Local Buzz to access your location', null, null);
                     }
                 },
+                /* Ext.Msg.show({
+                            title: 'Location service is disabled',
+                            message: 'Allow LocalBuzz to access your location',
+
+                            buttons: Ext.MessageBox.OK,
+                            iconCls: Ext.MessageBox.INFO
+
+                            });*/
                 height: '9vh',
                 left: '20%',
                 style: 'font-size:5vw;font-family:Arial:color',
@@ -64640,19 +64651,18 @@ Ext.define('Ext.direct.Manager', {
     },
     onZipcodeLookUpAction: function(textfield, e, eOpts) {
         var postalCode = textfield.getValue();
+        console.log(postalCode);
         var store = Ext.getStore('MyDealsStore');
         var userLocationStore = Ext.getStore('UserLocation');
+        var stores = [];
         var latitude;
         var longitude;
         var storesNearBy = Ext.getStore('StoresNearby');
-        /*for(var i=0;i<storesNearBy.getAllCount();i++){
-            storesNearBy.removeAt(i);
-        }*/
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
-            userLocationStore.removeAll();
-            console.log(postalCode);
+            //userLocationStore.removeAt(0);
+            console.log(latitude, longitude);
             userLocationStore.add({
                 'latitude': latitude.toString(),
                 'longitude': longitude.toString()
@@ -64673,17 +64683,24 @@ Ext.define('Ext.direct.Manager', {
                     store.clearFilter();
                     store.load();
                     var store1 = Ext.getStore('StoresNearby');
+                    Ext.Array.erase(stores, 0, stores.length);
+                    store1.each(function(record) {
+                        Ext.Array.include(stores, record.get('customerId'));
+                    });
+                    console.log(stores.length);
+                    store.filterBy(function(record) {
+                        return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                    }, this);
                     var distance = json.rows[0].elements[0].distance.value;
                     console.log(record.get('businessName') + distance);
                     if (distance <= 40234) {
-                        storesNearBy.add(record);
+                        storesNearBy.add({
+                            'customerId': record.get('customerId')
+                        });
                         return true;
                     } else {
                         return false;
                     }
-                    store.filterBy(function(record) {
-                        return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-                    }, this);
                 });
             });
         });
@@ -66190,7 +66207,27 @@ Ext.define('Ext.direct.Manager', {
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
     },
-    onLatestbuzzPainted: function(element, eOpts) {}
+    onLatestbuzzPainted: function(element, eOpts) {
+        var store = Ext.getStore('MyDealsStore');
+        store.clearFilter();
+        store.load();
+        var store1 = Ext.getStore('StoresNearby');
+        /*var stores = [];
+
+
+
+        store1.each(function(record){
+            Ext.Array.include(stores,record.get('customerId'));
+
+
+
+        });
+        console.log(stores.length);
+        */
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores1, record.get('customerId')) !== -1;
+        }, this);
+    }
 }, 0, [
     "latestbuzz"
 ], [
@@ -66209,30 +66246,6 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
-/*var store = Ext.getStore('MyDealsStore');
-        store.clearFilter();
-        store.load();
-
-
-        var store1 = Ext.getStore('StoresNearby');
-
-        /*var stores = [];
-
-
-
-        store1.each(function(record){
-            Ext.Array.include(stores,record.get('customerId'));
-
-
-
-        });
-        console.log(stores.length);
-        */
-/*store.filterBy(function(record){
-            return Ext.Array.indexOf(stores1, record.get('customerId')) !== -1;
-
-        }, this);
-        */
 
 /*
  * File: app/view/FavoriteView.js
@@ -66560,32 +66573,20 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onLatestBuzzActivate: function(newActiveItem, container, oldActiveItem, eOpts) {},
-    /*var dealStore = Ext.getStore('MyDealsStore');
-        dealStore.clearFilter();
-        dealStore.load();
-
-
-        var store1 = Ext.getStore('StoresNearby');
-
-        //var stores = [];
-
-
-
-        /*store1.each(function(record){
-
-            Ext.Array.include(stores,record.get('customerId'));
-
-
-        });*/
-    /*dealStore.filterBy(function(record){
-
-
-            return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
-
+    onLatestBuzzActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        var store = Ext.getStore('MyDealsStore');
+        store.clearFilter();
+        store.load();
+        var store1 = Ext.getStore('calculateDistances');
+        var stores = [];
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
         }, this);
-
-        */
+    },
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
@@ -66623,52 +66624,47 @@ Ext.define('Ext.direct.Manager', {
         }, this);
     },
     onMyMapRender: function(map, gmap, eOpts) {
-        var lat, long;
-        var infoWindow;
-        var latitude, longitude;
-        console.log('Rendering map');
+        map.mapTypeControl = false;
         var userLocationStore = Ext.getStore('UserLocation');
         userLocationStore.load();
-        var lat = userLocationStore.getAt(0).get('latitude');
-        var long = userLocationStore.getAt(0).get('longitude');
-        map.mapTypeControl = false;
-        Ext.getCmp('mymap').setMapCenter({
-            latitude: lat,
-            longitude: long
-        });
-        console.log(lat + ',' + long);
-        /* var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-
-
-                    console.log(postalCode);
-         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                        lat = json.results[0].geometry.location.lat;
-                        long = json.results[0].geometry.location.lng;
-                        Ext.getCmp('mymap').setMapCenter({
-                            latitude: lat,
-                            longitude: long
-                        });
-              });*/
-        //var store = Ext.getStore('MyJsonPStore');
-        // store.clearFilter();
-        var store = Ext.getStore('StoresNearby');
-        //var stores = [];
-        // store1.each(function(record){
-        //stores.push(record.get('customerId'));
-        /* Ext.Array.include(stores,record.get('customerId'));
-                    console.log(record.get('address'));
-
+        console.log('UserLocationStore.getCount() is : ' + userLocationStore.getCount());
+        if (userLocationStore.getCount() !== 0) {
+            record = userLocationStore.getAt(0);
+            latitude = record.get('latitude');
+            longitude = record.get('longitude');
+            console.log(latitude + ',' + longitude);
+            Ext.getCmp('mymap').setMapCenter({
+                latitude: latitude,
+                longitude: longitude
+            });
+        } else {
+            var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
+            console.log(postalCode);
+            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                lat = json.results[0].geometry.location.lat;
+                long = json.results[0].geometry.location.lng;
+                Ext.getCmp('mymap').setMapCenter({
+                    latitude: lat,
+                    longitude: long
                 });
-                console.log(stores.length);
-
-                store.filterBy(function(record){
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-                }, this);*/
+            });
+        }
+        var store = Ext.getStore('MyJsonPStore');
+        store.clearFilter();
+        var store1 = Ext.getStore('calculateDistances');
+        var stores = [];
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
+        console.log(stores.length);
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+        }, this);
         if (store.getCount() === 0) {
             Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
-        //store.clearFilter();
+        store.clearFilter();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         var check_if_markers_visible = false;
         store.each(function(record) {
@@ -66691,30 +66687,30 @@ Ext.define('Ext.direct.Manager', {
             window.open($(this).attr('href'), '_system', 'location=yes');
         });
         /* $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                        lat = json.results[0].geometry.location.lat;
-                        long = json.results[0].geometry.location.lng;
-                        Ext.getCmp('mymap').setMapCenter({
-                            latitude: lat,
-                            longitude: long
-                        });
-                        var southWest = json.results[0].geometry.viewport.southwest;
-                        var northEast = json.results[0].geometry.viewport.northeast;
-                        var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                        var check_if_markers_visible = false;
-                        mapMarkerPositionStore.each(function(rec) {
-                            var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
-                            console.log(rec.get('lat'), rec.get('long'));
-                            if (bounds.contains(pos)) {
-                                check_if_markers_visible = true;
-                            }
-                        });
-                        if (mapMarkerPositionStore.getAllCount() !== 0) {
-                            console.log(check_if_markers_visible);
-                            if (check_if_markers_visible === false) {
-                                Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-                            }
-                        }
-                    });*/
+                                lat = json.results[0].geometry.location.lat;
+                                long = json.results[0].geometry.location.lng;
+                                Ext.getCmp('mymap').setMapCenter({
+                                    latitude: lat,
+                                    longitude: long
+                                });
+                                var southWest = json.results[0].geometry.viewport.southwest;
+                                var northEast = json.results[0].geometry.viewport.northeast;
+                                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                                var check_if_markers_visible = false;
+                                mapMarkerPositionStore.each(function(rec) {
+                                    var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
+                                    console.log(rec.get('lat'), rec.get('long'));
+                                    if (bounds.contains(pos)) {
+                                        check_if_markers_visible = true;
+                                    }
+                                });
+                                if (mapMarkerPositionStore.getAllCount() !== 0) {
+                                    console.log(check_if_markers_visible);
+                                    if (check_if_markers_visible === false) {
+                                        Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
+                                    }
+                                }
+                            });*/
         var icons = {
                 "0": {
                     icon: 'resources/img/car.png'
@@ -66742,14 +66738,14 @@ Ext.define('Ext.direct.Manager', {
                 }
             };
         /*{
-                                        path: fontawesome.markers.SCISSORS,
-                                        scale: 0.4,
-                                        strokeWeight: 0.2,
-                                        strokeColor: 'black',
-                                        strokeOpacity: 1,
-                                        fillColor: '#1985d0',
-                                        fillOpacity: 1
-                                    }*/
+                                                path: fontawesome.markers.SCISSORS,
+                                                scale: 0.4,
+                                                strokeWeight: 0.2,
+                                                strokeColor: 'black',
+                                                strokeOpacity: 1,
+                                                fillColor: '#1985d0',
+                                                fillOpacity: 1
+                                            }*/
         function addMarker(feature, businessName, m, record) {
             var ds = Ext.getStore('MyDealsStore');
             ds.clearFilter();
@@ -66776,19 +66772,19 @@ Ext.define('Ext.direct.Manager', {
                 category = 7;
             }
             /* var marker = new MarkerWithLabel ({
-                            position: m,
-                            map: gmap,
-                            draggable: false,
-                            animation: google.maps.Animation.DROP,
-                            icon: icons[category].icon,
-                            labelContent: count.toString(),
-                            labelAnchor: new google.maps.Point(-10, 50),
-                            labelClass: "labels",
-                            labelStyle: {opacity: 1.0}
+                                    position: m,
+                                    map: gmap,
+                                    draggable: false,
+                                    animation: google.maps.Animation.DROP,
+                                    icon: icons[category].icon,
+                                    labelContent: count.toString(),
+                                    labelAnchor: new google.maps.Point(-10, 50),
+                                    labelClass: "labels",
+                                    labelStyle: {opacity: 1.0}
 
 
 
-                        });*/
+                                });*/
             var marker = new google.maps.Marker({
                     position: m,
                     map: gmap,
@@ -66799,10 +66795,10 @@ Ext.define('Ext.direct.Manager', {
         }
         function addInfoWindow(marker, content, record, businessName) {
             /*infoWindow = new google.maps.InfoWindow({
-                        content: content
+                                content: content
 
 
-                    });*/
+                            });*/
             google.maps.event.addListener(marker, 'mousedown', function() {
                 if (infoWindow) {
                     infoWindow.close();
@@ -66817,21 +66813,21 @@ Ext.define('Ext.direct.Manager', {
                     document.getElementById('labelStore').addEventListener('mousedown', function() {
                         /* console.log('Label Clicked ' + businessName);
 
-                               var store = Ext.getStore('MyDealsStore');
-                               store.clearFilter();
-                               store.load();
+                                       var store = Ext.getStore('MyDealsStore');
+                                       store.clearFilter();
+                                       store.load();
 
-                                store.filter('businessName',businessName);
+                                        store.filter('businessName',businessName);
 
-                                if(Ext.Viewport.getComponent('DealsPanel1')){
-                                    Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel1'));if(Ext.Viewport.getComponent('Info')){
-                                    }
-                                    else {
-                                    var view = Ext.Viewport.add({xtype:'DealsPanel1'});
-                                    Ext.Viewport.setActiveItem(view);
-                                    }
+                                        if(Ext.Viewport.getComponent('DealsPanel1')){
+                                            Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel1'));if(Ext.Viewport.getComponent('Info')){
+                                            }
+                                            else {
+                                            var view = Ext.Viewport.add({xtype:'DealsPanel1'});
+                                            Ext.Viewport.setActiveItem(view);
+                                            }
 
-                                    }*/
+                                            }*/
                         var view;
                         if (Ext.Viewport.getComponent('Info')) {
                             view = Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
@@ -66847,29 +66843,29 @@ Ext.define('Ext.direct.Manager', {
                     /* document.getElementById('labelStoreInfo').addEventListener('mousedown',function() {
 
 
-                                console.log('Label Clicked ' + businessName);
+                                        console.log('Label Clicked ' + businessName);
 
-                               var store = Ext.getStore('MyJsonPStore');
-                               store.clearFilter();
-                               //store.load();
+                                       var store = Ext.getStore('MyJsonPStore');
+                                       store.clearFilter();
+                                       //store.load();
 
-                                //store.filter('businessName',businessName);
-                                var record = store.findRecord('businessName',businessName);
+                                        //store.filter('businessName',businessName);
+                                        var record = store.findRecord('businessName',businessName);
 
-                                    var view;
-                                    if(Ext.Viewport.getComponent('Info')){
-                                    view = Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
+                                            var view;
+                                            if(Ext.Viewport.getComponent('Info')){
+                                            view = Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
+                                                view.setRecord(record);
+                                            }
+                                        else {
+
+                                        view = Ext.Viewport.add({xtype:'contactinfo'});
                                         view.setRecord(record);
-                                    }
-                                else {
+                                        Ext.Viewport.setActiveItem(view);
 
-                                view = Ext.Viewport.add({xtype:'contactinfo'});
-                                view.setRecord(record);
-                                Ext.Viewport.setActiveItem(view);
+                                        }
 
-                                }
-
-                            });*/
+                                    });*/
                     google.maps.event.addListener(gmap, 'click', function() {
                         if (infoWindow) {
                             infoWindow.close();
@@ -66879,144 +66875,104 @@ Ext.define('Ext.direct.Manager', {
             });
         }
     },
-    //   Ext.getCmp('BuzzNearMe').fireEvent('activate', this);
     onBuzzNearMeActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
-        console.log('Buzz Near me tab activated');
-        //Ext.getStore('MyJsonPStore').clearFilter();
-        // Ext.getStore('MyJsonPStore').load();
+        Ext.getStore('MyJsonPStore').clearFilter();
+        Ext.getStore('MyJsonPStore').load();
         var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
         if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
-            var latitude;
-            var longitude;
-            var userLocationStore = Ext.getStore('UserLocation');
-            userLocationStore.load();
-            var lat = userLocationStore.getAt(0).get('latitude');
-            var long = userLocationStore.getAt(0).get('longitude');
-            console.log(lat + ',' + long);
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
+            var store = Ext.getStore('MyJsonPStore');
+            store.clearFilter();
+            var store1 = Ext.getStore('calculateDistances');
+            var stores = [];
+            store1.each(function(record) {
+                //stores.push(record.get('customerId'));
+                Ext.Array.include(stores, record.get('customerId'));
             });
-            /* var store = Ext.getStore('MyJsonPStore');
-
-
-        store.clearFilter();*/
-            var store = Ext.getStore('StoresNearby');
-            /*var stores = [];
-
-
-
-        store1.each(function(record){
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores,record.get('customerId'));
-
-
-        });
-
-
-        store.filterBy(function(record){
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-        }, this);*/
+            store.filterBy(function(record) {
+                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+            }, this);
             if (store.getCount() === 0) {
                 Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
             }
         } else /* Ext.getStore('MyJsonPStore').clearFilter();
-                    Ext.getStore('MyJsonPStore').load();
-                    var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-                    console.log('Getting markers for map now');
+                            Ext.getStore('MyJsonPStore').load();
+                            var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
+                            console.log('Getting markers for map now');
 
-                   // Ext.getCmp('mymap').show();
-                    //Ext.getCmp('lookUpZipcode').hide();
-                    //Ext.getCmp('locationOffText').hide();
-                    console.log(postalCode);
-                    $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                        lat = json.results[0].geometry.location.lat;
-                        long = json.results[0].geometry.location.lng;
-                       /* Ext.getCmp('mymap').setMapCenter({
-                            latitude: lat,
-                            longitude: long
-                        });*/
+                           // Ext.getCmp('mymap').show();
+                            //Ext.getCmp('lookUpZipcode').hide();
+                            //Ext.getCmp('locationOffText').hide();
+                            console.log(postalCode);
+                            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                lat = json.results[0].geometry.location.lat;
+                                long = json.results[0].geometry.location.lng;
+                               /* Ext.getCmp('mymap').setMapCenter({
+                                    latitude: lat,
+                                    longitude: long
+                                });*/
         /*  var southWest = json.results[0].geometry.viewport.southwest;
-                        var northEast = json.results[0].geometry.viewport.northeast;
-                        var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                        var check_if_markers_visible = false;
-                        mapMarkerPositionStore.each(function(rec) {
-                            var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
-                            console.log(rec.get('lat'), rec.get('long'));
-                            if (bounds.contains(pos)) {
-                                check_if_markers_visible = true;
-                            }
-                        });
-                        if (mapMarkerPositionStore.getAllCount() !== 0) {
-                            console.log(check_if_markers_visible);
-                            if (check_if_markers_visible === false) {
-                                Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-                            }
-                        }
-                    });*/
+                                var northEast = json.results[0].geometry.viewport.northeast;
+                                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                                var check_if_markers_visible = false;
+                                mapMarkerPositionStore.each(function(rec) {
+                                    var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
+                                    console.log(rec.get('lat'), rec.get('long'));
+                                    if (bounds.contains(pos)) {
+                                        check_if_markers_visible = true;
+                                    }
+                                });
+                                if (mapMarkerPositionStore.getAllCount() !== 0) {
+                                    console.log(check_if_markers_visible);
+                                    if (check_if_markers_visible === false) {
+                                        Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
+                                    }
+                                }
+                            });*/
         {
-            // var userLocationStore = Ext.getStore('UserLocation');
-            var userLocationStore = Ext.getStore('UserLocation');
-            userLocationStore.load();
-            var lat = userLocationStore.getAt(0).get('latitude');
-            var long = userLocationStore.getAt(0).get('longitude');
-            // map.mapTypeControl = false;
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
+            navigator.geolocation.getCurrentPosition(function showPosition(position) {
+                // Ext.getCmp('mymap').show();
+                //Ext.getCmp('lookUpZipcode').hide();
+                //Ext.getCmp('locationOffText').hide();
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                Ext.getCmp('mymap').setMapCenter({
+                    latitude: latitude,
+                    longitude: longitude
+                });
+                /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                var southWest = json.results[0].geometry.viewport.southwest;
+                                var northEast = json.results[0].geometry.viewport.northeast;
+                                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                                var check_if_markers_visible = false;
+                                mapMarkerPositionStore.each(function(rec) {
+                                    var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
+                                    console.log(rec.get('lat'), rec.get('long'));
+                                    if (bounds.contains(pos)) {
+                                        check_if_markers_visible = true;
+                                    }
+                                });
+                                if (mapMarkerPositionStore.getAllCount() !== 0) {
+                                    console.log(check_if_markers_visible);
+                                    if (check_if_markers_visible === false) {
+                                        Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
+                                    }
+                                }
+                            });*/
+                var store = Ext.getStore('MyJsonPStore');
+                store.clearFilter();
+                var store1 = Ext.getStore('calculateDistances');
+                var stores = [];
+                store1.each(function(record) {
+                    //stores.push(record.get('customerId'));
+                    Ext.Array.include(stores, record.get('customerId'));
+                });
+                store.filterBy(function(record) {
+                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                }, this);
+                if (store.getCount() === 0) {
+                    Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
+                }
             });
-            /* navigator.geolocation.getCurrentPosition(function showPosition(position) {
-                   // Ext.getCmp('mymap').show();
-                    //Ext.getCmp('lookUpZipcode').hide();
-                    //Ext.getCmp('locationOffText').hide();
-                   /* latitude = position.coords.latitude;
-                    longitude = position.coords.longitude;
-                    Ext.getCmp('mymap').setMapCenter({
-                        latitude: latitude,
-                        longitude: longitude
-                    });*/
-            /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                        var southWest = json.results[0].geometry.viewport.southwest;
-                        var northEast = json.results[0].geometry.viewport.northeast;
-                        var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                        var check_if_markers_visible = false;
-                        mapMarkerPositionStore.each(function(rec) {
-                            var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
-                            console.log(rec.get('lat'), rec.get('long'));
-                            if (bounds.contains(pos)) {
-                                check_if_markers_visible = true;
-                            }
-                        });
-                        if (mapMarkerPositionStore.getAllCount() !== 0) {
-                            console.log(check_if_markers_visible);
-                            if (check_if_markers_visible === false) {
-                                Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-                            }
-                        }
-                    });*/
-            // var store = Ext.getStore('MyJsonPStore');
-            //store.clearFilter();
-            var store = Ext.getStore('StoresNearby');
-            /*var stores = [];
-
-
-
-        store1.each(function(record){
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores,record.get('customerId'));
-
-
-        });
-
-
-        store.filterBy(function(record){
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-        }, this);*/
-            if (store.getCount() === 0) {
-                Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
-            }
         }
     }
 }, 0, [
@@ -67037,99 +66993,98 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'Main'
 ], 0));
-// });
 /* function onError(error) {
-                    if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
-                        //Ext.getCmp('mymap').hide();
-                       // Ext.getCmp('locationOffText').show();
-                       // Ext.getCmp('lookUpZipcode').show();
-                        Ext.getStore('MyJsonPStore').clearFilter();
-                        Ext.getStore('MyJsonPStore').load();
-                        var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-                       // Ext.getCmp('mymap').show();
-                        //Ext.getCmp('lookUpZipcode').hide();
-                        //Ext.getCmp('locationOffText').hide();
-                        console.log(postalCode);
+                            if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
+                                //Ext.getCmp('mymap').hide();
+                               // Ext.getCmp('locationOffText').show();
+                               // Ext.getCmp('lookUpZipcode').show();
+                                Ext.getStore('MyJsonPStore').clearFilter();
+                                Ext.getStore('MyJsonPStore').load();
+                                var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
+                               // Ext.getCmp('mymap').show();
+                                //Ext.getCmp('lookUpZipcode').hide();
+                                //Ext.getCmp('locationOffText').hide();
+                                console.log(postalCode);
 
-                         var store = Ext.getStore('MyJsonPStore');
-
-
-        store.clearFilter();
+                                 var store = Ext.getStore('MyJsonPStore');
 
 
-
-        var store1 = Ext.getStore('calculateDistances');
-
-        var stores = [];
+                store.clearFilter();
 
 
 
-        store1.each(function(record){
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores,record.get('customerId'));
+                var store1 = Ext.getStore('calculateDistances');
+
+                var stores = [];
 
 
-        });
-        console.log(stores.length);
 
-        store.filterBy(function(record){
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-        }, this);
+                store1.each(function(record){
+                    //stores.push(record.get('customerId'));
+                    Ext.Array.include(stores,record.get('customerId'));
 
 
-             if(store.getCount()===0){
-               Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-             }
-               store.clearFilter();
-                var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
-                var check_if_markers_visible = false;
-                store.each(function(record) {
-                    var address = record.get('address');
-                    $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                        lat = json.results[0].geometry.location.lat;
-                        long = json.results[0].geometry.location.lng;
-                        //console.log(lat,long);
-                        var m = new google.maps.LatLng(lat, long);
-                        //businessName = record.get('businessName');
-                        addMarker(record.get('category'), record.get('businessName'), m, record);
-                        mapMarkerPositionStore.add({
-                            'lat': lat,
-                            'long': long
-                        });
-                    });
                 });
+                console.log(stores.length);
+
+                store.filterBy(function(record){
+                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+
+                }, this);
 
 
-
-
-                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                            lat = json.results[0].geometry.location.lat;
-                            long = json.results[0].geometry.location.lng;
-                            Ext.getCmp('mymap').setMapCenter({
-                                latitude: lat,
-                                longitude: long
+                     if(store.getCount()===0){
+                       Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
+                     }
+                       store.clearFilter();
+                        var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
+                        var check_if_markers_visible = false;
+                        store.each(function(record) {
+                            var address = record.get('address');
+                            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                lat = json.results[0].geometry.location.lat;
+                                long = json.results[0].geometry.location.lng;
+                                //console.log(lat,long);
+                                var m = new google.maps.LatLng(lat, long);
+                                //businessName = record.get('businessName');
+                                addMarker(record.get('category'), record.get('businessName'), m, record);
+                                mapMarkerPositionStore.add({
+                                    'lat': lat,
+                                    'long': long
+                                });
                             });
-                            var southWest = json.results[0].geometry.viewport.southwest;
-                            var northEast = json.results[0].geometry.viewport.northeast;
-                            var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                            var check_if_markers_visible = false;
-                            mapMarkerPositionStore.each(function(rec) {
-                                var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
-                                console.log(rec.get('lat'), rec.get('long'));
-                                if (bounds.contains(pos)) {
-                                    check_if_markers_visible = true;
-                                }
-                            });
-                            if (mapMarkerPositionStore.getAllCount() !== 0) {
-                                console.log(check_if_markers_visible);
-                                if (check_if_markers_visible === false) {
-                                    Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-                                }
-                            }
                         });
-                    }
-                }*/
+
+
+
+
+                                $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                    lat = json.results[0].geometry.location.lat;
+                                    long = json.results[0].geometry.location.lng;
+                                    Ext.getCmp('mymap').setMapCenter({
+                                        latitude: lat,
+                                        longitude: long
+                                    });
+                                    var southWest = json.results[0].geometry.viewport.southwest;
+                                    var northEast = json.results[0].geometry.viewport.northeast;
+                                    var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                                    var check_if_markers_visible = false;
+                                    mapMarkerPositionStore.each(function(rec) {
+                                        var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
+                                        console.log(rec.get('lat'), rec.get('long'));
+                                        if (bounds.contains(pos)) {
+                                            check_if_markers_visible = true;
+                                        }
+                                    });
+                                    if (mapMarkerPositionStore.getAllCount() !== 0) {
+                                        console.log(check_if_markers_visible);
+                                        if (check_if_markers_visible === false) {
+                                            Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
+                                        }
+                                    }
+                                });
+                            }
+                        }*/
 
 /*
  * File: app/view/DealsPanel.js
