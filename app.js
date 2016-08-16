@@ -64586,13 +64586,12 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                }, this);
                             });
                         });
-                    }, /* store.filterBy(function(record){
-                                return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-
-                                }, this);*/
-                    // });
+                    }, // });
                     onError, {
                         timeout: 5000
                     });
@@ -64646,6 +64645,9 @@ Ext.define('Ext.direct.Manager', {
         var latitude;
         var longitude;
         var storesNearBy = Ext.getStore('StoresNearby');
+        /*for(var i=0;i<storesNearBy.getAllCount();i++){
+            storesNearBy.removeAt(i);
+        }*/
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
@@ -66189,11 +66191,7 @@ Ext.define('Ext.direct.Manager', {
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
     },
-    onLatestbuzzPainted: function(element, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        //store.clearFilter();
-        store.load();
-    }
+    onLatestbuzzPainted: function(element, eOpts) {}
 }, 0, [
     "latestbuzz"
 ], [
@@ -66212,8 +66210,14 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
-//var store1 = Ext.getStore('StoresNearby');
-/*var stores = [];
+/*var store = Ext.getStore('MyDealsStore');
+        //store.clearFilter();
+        store.load();
+
+
+        var store1 = Ext.getStore('StoresNearby');
+
+        /*var stores = [];
 
 
 
@@ -66573,16 +66577,13 @@ Ext.define('Ext.direct.Manager', {
             Ext.Array.include(stores,record.get('customerId'));
 
 
-        });
-
-
-        dealStore.filterBy(function(record){
+        });*/
+    /*dealStore.filterBy(function(record){
 
 
             return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
 
-        }, this);
-        */
+        }, this);*/
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
