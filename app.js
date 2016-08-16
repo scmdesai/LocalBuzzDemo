@@ -66879,6 +66879,7 @@ Ext.define('Ext.direct.Manager', {
             store.clearFilter();
             var store1 = Ext.getStore('StoresNearby');
             var stores = [];
+            Ext.Array.erase(stores, stores.length);
             store1.each(function(record) {
                 //stores.push(record.get('customerId'));
                 Ext.Array.include(stores, record.get('customerId'));
@@ -66924,17 +66925,18 @@ Ext.define('Ext.direct.Manager', {
                                 }
                             });*/
         {
-            navigator.geolocation.getCurrentPosition(function showPosition(position) {
-                // Ext.getCmp('mymap').show();
-                //Ext.getCmp('lookUpZipcode').hide();
-                //Ext.getCmp('locationOffText').hide();
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
-                Ext.getCmp('mymap').setMapCenter({
-                    latitude: latitude,
-                    longitude: longitude
-                });
-                /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+            // navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            // Ext.getCmp('mymap').show();
+            //Ext.getCmp('lookUpZipcode').hide();
+            //Ext.getCmp('locationOffText').hide();
+            var userLocationStore = Ext.getStore('UserLocation');
+            latitude = userLocationStore.getAt(0).get('latitude');
+            longitude = userLocationStore.getAt(0).get('longitude');
+            Ext.getCmp('mymap').setMapCenter({
+                latitude: latitude,
+                longitude: longitude
+            });
+            /*  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
                                 var southWest = json.results[0].geometry.viewport.southwest;
                                 var northEast = json.results[0].geometry.viewport.northeast;
                                 var bounds = new google.maps.LatLngBounds(southWest, northEast);
@@ -66953,21 +66955,21 @@ Ext.define('Ext.direct.Manager', {
                                     }
                                 }
                             });*/
-                var store = Ext.getStore('MyJsonPStore');
-                store.clearFilter();
-                var store1 = Ext.getStore('StoresNearby');
-                var stores = [];
-                store1.each(function(record) {
-                    //stores.push(record.get('customerId'));
-                    Ext.Array.include(stores, record.get('customerId'));
-                });
-                store.filterBy(function(record) {
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                }, this);
-                if (store.getCount() === 0) {
-                    Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
-                }
+            var store = Ext.getStore('MyJsonPStore');
+            store.clearFilter();
+            var store1 = Ext.getStore('StoresNearby');
+            var stores = [];
+            Ext.Array.erase(stores, stores.length);
+            store1.each(function(record) {
+                //stores.push(record.get('customerId'));
+                Ext.Array.include(stores, record.get('customerId'));
             });
+            store.filterBy(function(record) {
+                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+            }, this);
+            if (store.getCount() === 0) {
+                Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
+            }
         }
     }
 }, 0, [
@@ -66988,6 +66990,7 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'Main'
 ], 0));
+// });
 /* function onError(error) {
                             if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
                                 //Ext.getCmp('mymap').hide();
