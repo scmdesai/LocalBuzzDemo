@@ -67606,9 +67606,36 @@ Ext.application({
                     Ext.getStore('LocalStore').removeAt(0);
                     if (Ext.Viewport.getComponent('DealsPanel')) {
                         Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
-                    } else if (Ext.Viewport.getComponent('DealsPanel')) {
+                        var storeds = Ext.getStore('MyDealsStore');
+                        storeds.clearFilter();
+                        storeds.load();
+                        var store1ds = Ext.getStore('StoresNearby');
+                        var storesds = [];
+                        store1ds.each(function(record) {
+                            //stores.push(record.get('customerId'));
+                            Ext.Array.include(storesds, record.get('customerId'));
+                        });
+                        storeds.filterBy(function(record) {
+                            return Ext.Array.indexOf(storesds, record.get('customerId')) !== -1;
+                        }, this);
+                    }
+                    //Ext.Array.erase(stores,0,stores.length);
+                    else if (Ext.Viewport.getComponent('DealsPanel')) {
                         Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel1'));
+                        var dealstore = Ext.getStore('MyDealsStore');
+                        dealstore.clearFilter();
+                        dealstore.load();
+                        var dealstore1 = Ext.getStore('StoresNearby');
+                        var dealstores = [];
+                        dealstore1.each(function(record) {
+                            //stores.push(record.get('customerId'));
+                            Ext.Array.include(dealstores, record.get('customerId'));
+                        });
+                        dealstore.filterBy(function(record) {
+                            return Ext.Array.indexOf(dealstores, record.get('customerId')) !== -1;
+                        }, this);
                     } else  {
+                        //Ext.Array.erase(stores,0,stores.length);
                         Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
                     }
                     
