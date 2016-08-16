@@ -64567,8 +64567,6 @@ Ext.define('Ext.direct.Manager', {
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
                         });
-                        //userLocationStore.sync();
-                        //userLocationStore.load();
                         console.log('after :' + userLocationStore.getAllCount());
                         // Ext.Viewport.getActiveItem().destroy();
                         var view = Ext.Viewport.add({
@@ -64582,6 +64580,8 @@ Ext.define('Ext.direct.Manager', {
                             var address = record.get('address');
                             var customerId;
                             $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                                store.load();
+                                store.clearFilter();
                                 var distance = json.rows[0].elements[0].distance.value;
                                 //console.log(record.get('businessName') + distance);
                                 if (distance <= 40234) {
