@@ -64586,13 +64586,12 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                }, this);
                             });
                         });
-                    }, /* store.filterBy(function(record){
-                                return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-
-                                }, this);*/
-                    // });
+                    }, // });
                     onError, {
                         timeout: 5000
                     });
