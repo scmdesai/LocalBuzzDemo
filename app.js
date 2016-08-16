@@ -64549,15 +64549,15 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'button',
                 handler: function(button, e) {
                     var userLocationStore = Ext.getStore('UserLocation');
+                    var store = Ext.getStore('MyDealsStore');
+                    var stores = [];
+                    var storesNearBy = Ext.getStore('StoresNearby');
+                    store.clearFilter();
+                    store.load();
                     navigator.geolocation.getCurrentPosition(function showPosition(position) {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
                         console.log(latitude + "," + longitude);
-                        var store = Ext.getStore('MyDealsStore');
-                        var stores = [];
-                        var storesNearBy = Ext.getStore('StoresNearby');
-                        store.clearFilter();
-                        store.load();
                         // var store1 = Ext.getStore('calculateDistances');
                         Ext.Array.erase(stores, 0, stores.length);
                         userLocationStore.removeAll();
@@ -64576,8 +64576,6 @@ Ext.define('Ext.direct.Manager', {
                         var store1 = Ext.getStore('MyJsonPStore');
                         store1.load();
                         store1.clearFilter();
-                        store.load();
-                        store.clearFilter();
                         store1.each(function(record) {
                             var address = record.get('address');
                             var customerId;
@@ -64594,12 +64592,12 @@ Ext.define('Ext.direct.Manager', {
                                 }
                             });
                         });
-                        store.filterBy(function(record) {
-                            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                        }, this);
                     }, onError, {
                         timeout: 5000
                     });
+                    store.filterBy(function(record) {
+                        return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                    }, this);
                     function onError() {
                         Ext.Msg.alert('Location service is disabled', 'Allow Local Buzz to access your location', null, null);
                     }
@@ -64655,16 +64653,16 @@ Ext.define('Ext.direct.Manager', {
         var postalCode = textfield.getValue();
         console.log(postalCode);
         var userLocationStore = Ext.getStore('UserLocation');
+        var store = Ext.getStore('MyDealsStore');
+        var stores = [];
+        var storesNearBy = Ext.getStore('StoresNearby');
+        store.clearFilter();
+        store.load();
         var latitude;
         var longitude;
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
-            var store = Ext.getStore('MyDealsStore');
-            var stores = [];
-            var storesNearBy = Ext.getStore('StoresNearby');
-            store.clearFilter();
-            store.load();
             // var store1 = Ext.getStore('calculateDistances');
             Ext.Array.erase(stores, 0, stores.length);
             userLocationStore.removeAll();
@@ -64683,8 +64681,7 @@ Ext.define('Ext.direct.Manager', {
             var store1 = Ext.getStore('MyJsonPStore');
             store1.load();
             store1.clearFilter();
-            store.load();
-            store.clearFilter();
+            // store.load();
             store1.each(function(record) {
                 var address = record.get('address');
                 var customerId;
@@ -64701,10 +64698,10 @@ Ext.define('Ext.direct.Manager', {
                     }
                 });
             });
-            store.filterBy(function(record) {
-                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-            }, this);
         });
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+        }, this);
     }
 }, 0, 0, [
     "component",
