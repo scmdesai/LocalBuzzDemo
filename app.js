@@ -66210,7 +66210,20 @@ Ext.define('Ext.direct.Manager', {
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
     },
-    onLatestbuzzPainted: function(element, eOpts) {}
+    onLatestbuzzPainted: function(element, eOpts) {
+        var store = Ext.getStore('MyDealsStore');
+        store.clearFilter();
+        store.load();
+        var store1 = Ext.getStore('StoresNearby');
+        var stores = [];
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
+        store.filterBy(function(record) {
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+        }, this);
+    }
 }, 0, [
     "latestbuzz"
 ], [
@@ -66229,32 +66242,7 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
-/*var store = Ext.getStore('MyDealsStore');
-                store.clearFilter();
-                store.load();
-
-
-                var store1 = Ext.getStore('StoresNearby');
-
-                var stores = [];
-
-
-
-                store1.each(function(record){
-                    //stores.push(record.get('customerId'));
-                    Ext.Array.include(stores,record.get('customerId'));
-
-
-                });
-
-
-                store.filterBy(function(record){
-
-
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-
-                }, this);
-                 Ext.Array.erase(stores,stores.length);*/
+//Ext.Array.erase(stores,0,stores.length);
 
 /*
  * File: app/view/FavoriteView.js
