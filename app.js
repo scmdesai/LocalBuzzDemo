@@ -64681,6 +64681,9 @@ Ext.define('Ext.direct.Manager', {
                     } else {
                         return false;
                     }
+                    store.filterBy(function(record) {
+                        return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                    }, this);
                 });
             });
         });
@@ -64699,10 +64702,6 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'WelcomeScreen'
 ], 0));
-/*   store.filterBy(function(record){
-                                  return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-
-                              }, this);*/
 
 /*
  * File: app/view/DealPicture.js
@@ -66560,30 +66559,22 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onLatestBuzzActivate: function(newActiveItem, container, oldActiveItem, eOpts) {},
-    /*var dealStore = Ext.getStore('MyDealsStore');
+    onLatestBuzzActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
+        var dealStore = Ext.getStore('MyDealsStore');
         dealStore.clearFilter();
         dealStore.load();
-
-
         var store1 = Ext.getStore('StoresNearby');
-
         //var stores = [];
-
-
-
         /*store1.each(function(record){
 
             Ext.Array.include(stores,record.get('customerId'));
 
 
         });*/
-    /*dealStore.filterBy(function(record){
-
-
+        dealStore.filterBy(function(record) {
             return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
-
-        }, this);*/
+        }, this);
+    },
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
