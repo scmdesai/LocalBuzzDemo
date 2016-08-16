@@ -64586,13 +64586,12 @@ Ext.define('Ext.direct.Manager', {
                                 } else {
                                     return false;
                                 }
+                                store.filterBy(function(record) {
+                                    return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
+                                }, this);
                             });
                         });
-                    }, /* store.filterBy(function(record){
-                                return Ext.Array.indexOf(storesNearBy, record.get('customerId')) !== -1;
-
-                                }, this);*/
-                    // });
+                    }, // });
                     onError, {
                         timeout: 5000
                     });
@@ -64646,6 +64645,9 @@ Ext.define('Ext.direct.Manager', {
         var latitude;
         var longitude;
         var storesNearBy = Ext.getStore('StoresNearby');
+        for (var i = 0; i < storesNearBy.getAllCount(); i++) {
+            storesNearBy.removeAt(i);
+        }
         $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
             latitude = json.results[0].geometry.location.lat;
             longitude = json.results[0].geometry.location.lng;
