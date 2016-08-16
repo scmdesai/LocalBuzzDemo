@@ -64567,8 +64567,8 @@ Ext.define('Ext.direct.Manager', {
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
                         });
-                        userLocationStore.sync();
-                        userLocationStore.load();
+                        //userLocationStore.sync();
+                        //userLocationStore.load();
                         console.log('after :' + userLocationStore.getAllCount());
                         // Ext.Viewport.getActiveItem().destroy();
                         var view = Ext.Viewport.add({
