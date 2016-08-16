@@ -66212,18 +66212,14 @@ Ext.define('Ext.direct.Manager', {
         store.clearFilter();
         store.load();
         var store1 = Ext.getStore('StoresNearby');
-        /* var stores = [];
-
-
-
-                store1.each(function(record){
-                    //stores.push(record.get('customerId'));
-                    Ext.Array.include(stores,record.get('customerId'));
-
-
-                });*/
+        var stores = [];
+        Ext.Array.erase(stores, stores.length);
+        store1.each(function(record) {
+            //stores.push(record.get('customerId'));
+            Ext.Array.include(stores, record.get('customerId'));
+        });
         store.filterBy(function(record) {
-            return Ext.Array.indexOf(store1, record.get('customerId')) !== -1;
+            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
         }, this);
     }
 }, 0, [
