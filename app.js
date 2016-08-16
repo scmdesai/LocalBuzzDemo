@@ -64559,9 +64559,9 @@ Ext.define('Ext.direct.Manager', {
                         store.clearFilter();
                         store.load();
                         // var store1 = Ext.getStore('calculateDistances');
-                        Ext.Array.erase(stores, 0, stores.length);
+                        // Ext.Array.erase(stores,0,stores.length);
                         userLocationStore.removeAll();
-                        storesNearBy.removeAll();
+                        // storesNearBy.removeAll();
                         userLocationStore.add({
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
