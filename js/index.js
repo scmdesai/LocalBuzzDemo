@@ -52,16 +52,8 @@ var app = {
 			}, 
             "windows": {} 
         });
-			
-		 });
-		 });
-		 
-		 
-		StatusBar.overlaysWebView(false);
 		
-        
-        
-        push.on('registration', function(data) {
+		    push.on('registration', function(data) {
             console.log("registration event: " + data.registrationId);
 			console.log("Device platform is: " + device.platform) ;
 			console.log("Device Cordova is: " + device.cordova) ;
@@ -110,6 +102,16 @@ var app = {
             console.log("Error received");
 			console.log("Error Message is: " + e.message) ;				
         });
+			
+		 });
+		 });
+		 
+		 
+		StatusBar.overlaysWebView(false);
+		
+        
+        
+    
 		}
 		catch (e){
 		alert(e);
