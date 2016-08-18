@@ -79,7 +79,7 @@ var app = {
 		 $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
 		        postalcode = json.postalCodes[0].postalCode;
 				console.log('User Location is: ' + postalcode);
-			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":postalcode}';
+			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"'+postalcode+'"}';
 			xhr.send(data);
 		 });
 		 });
