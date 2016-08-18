@@ -33,7 +33,14 @@ var app = {
 		 
 		 window.analytics.startTrackerWithId('UA-67469655-6');
 		 
-		 var push = PushNotification.init({
+		 var userLocation = navigator.geolocation.getCurrentPosition(function(position){
+		 var latitude = position.coords.latitude;
+		 var longitude = position.coords.longitude;
+		 var postalcode;
+		 $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+		        postalcode = json.postalCodes[0].postalCode;
+				console.log('User Location is: ' + postalcode);
+				var push = PushNotification.init({
             "android": {
                 "senderID": "226322216862"
             },
@@ -45,6 +52,11 @@ var app = {
 			}, 
             "windows": {} 
         });
+			
+		 });
+		 });
+		 
+		 
 		StatusBar.overlaysWebView(false);
 		
         
@@ -72,17 +84,9 @@ var app = {
 					console.log(json.success + ", " + json.msg) ;
 				}
 			}
-			var userLocation = navigator.geolocation.getCurrentPosition(function(position){
-		 var latitude = position.coords.latitude;
-		 var longitude = position.coords.longitude;
-		 var postalcode;
-		 $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-		        postalcode = json.postalCodes[0].postalCode;
-				console.log('User Location is: ' + postalcode);
-			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"60540"}';
+			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"'+postalcode+'"}';
 			xhr.send(data);
-		 });
-		 });
+			
 			
         });
 
