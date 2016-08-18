@@ -71,7 +71,7 @@ var app = {
 					console.log(json.success + ", " + json.msg) ;
 				}
 			}
-			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'"}';
+			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"60540"}';
 			xhr.send(data);
         });
 
