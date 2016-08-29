@@ -32,15 +32,7 @@ var app = {
 		 try{
 		 
 		 window.analytics.startTrackerWithId('UA-67469655-6');
-		 
-		 var userLocation = navigator.geolocation.getCurrentPosition(function(position){
-		 var latitude = position.coords.latitude;
-		 var longitude = position.coords.longitude;
-		 var postalcode;
-		 $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-		        postalcode = json.postalCodes[0].postalCode;
-				console.log('User Location is: ' + postalcode);
-				var push = PushNotification.init({
+		 var push = PushNotification.init({
             "android": {
                 "senderID": "226322216862"
             },
@@ -52,8 +44,11 @@ var app = {
 			}, 
             "windows": {} 
         });
+		StatusBar.overlaysWebView(false);
 		
-		    push.on('registration', function(data) {
+        
+        
+        push.on('registration', function(data) {
             console.log("registration event: " + data.registrationId);
 			console.log("Device platform is: " + device.platform) ;
 			console.log("Device Cordova is: " + device.cordova) ;
@@ -67,7 +62,7 @@ var app = {
 			// Sending and receiving data in JSON format using POST mothod
 			//
 			xhr = new XMLHttpRequest();
-			var url = "http://services.appsonmobile.com/devices";
+			var url = "http://services.appsonmobile.com/demoDevices";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-type", "application/json");
 			xhr.onreadystatechange = function () { 
@@ -76,10 +71,8 @@ var app = {
 					console.log(json.success + ", " + json.msg) ;
 				}
 			}
-			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'","userLocation":"'+postalcode+'"}';
+			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'"}';
 			xhr.send(data);
-			
-			
         });
 
         push.on('notification', function(data) {
@@ -102,16 +95,6 @@ var app = {
             console.log("Error received");
 			console.log("Error Message is: " + e.message) ;				
         });
-			
-		 });
-		 });
-		 
-		 
-		StatusBar.overlaysWebView(false);
-		
-        
-        
-    
 		}
 		catch (e){
 		alert(e);
@@ -156,7 +139,6 @@ var app = {
 			var data = '{"deviceType":"'+device.platform+'","registrationID":"'+data.registrationId+'"}';
 			xhr.send(data);
         });
-
         push.on('notification', function(data) {
         	console.log("notification event received");
 			// data.message, 
@@ -172,7 +154,6 @@ var app = {
 			// data.additionalData 
 			console.log("Notification additionalData is: " + data.additionalData) ;
         });
-
         push.on('error', function(e) {
             console.log("Error received");
 			console.log("Error Message is: " + e.message) ;				
