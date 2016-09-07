@@ -13,7 +13,6 @@ if (!Ext.dataview.element) Ext.dataview.element = {};
 if (!Ext.device) Ext.device = {};
 if (!Ext.device.camera) Ext.device.camera = {};
 if (!Ext.device.communicator) Ext.device.communicator = {};
-if (!Ext.device.device) Ext.device.device = {};
 if (!Ext.direct) Ext.direct = {};
 if (!Ext.dom) Ext.dom = {};
 if (!Ext.env) Ext.env = {};
@@ -56238,373 +56237,6 @@ Ext.define('Ext.direct.Manager', {
     'Camera'
 ], 0));
 
-/**
- * @private
- */
-(Ext.cmd.derive('Ext.device.device.Abstract', Ext.Base, {
-    /**
-     * @event schemeupdate
-     * Event which is fired when your Sencha Native packaged application is opened from another application using a custom URL scheme.
-     * 
-     * This event will only fire if the application was already open (in other words; `onReady` was already fired). This means you should check
-     * if {@link Ext.device.Device#scheme} is set in your Application `launch`/`onReady` method, and perform any needed changes for that URL (if defined).
-     * Then listen to this event for future changed.
-     *
-     * ## Example
-     *
-     *     Ext.application({
-     *         name: 'Sencha',
-     *         requires: ['Ext.device.Device'],
-     *         launch: function() {
-     *             if (Ext.device.Device.scheme) {
-     *                 // the application was opened via another application. Do something:
-     *                 console.log('Applicaton opened via another application: ' + Ext.device.Device.scheme.url);
-     *             }
-     *
-     *             // Listen for future changes
-     *             Ext.device.Device.on('schemeupdate', function(device, scheme) {
-     *                 // the application was launched, closed, and then launched another from another application
-     *                 // this means onReady wont be called again ('cause the application is already running in the 
-     *                 // background) - but this event will be fired
-     *                 console.log('Applicated reopened via another application: ' + scheme.url);
-     *             }, this);
-     *         }
-     *     });
-     *
-     * __Note:__ This currently only works with the Sencha Native Packager. If you attempt to listen to this event when packaged with
-     * PhoneGap or simply in the browser, it will never fire.**
-     * 
-     * @param {Ext.device.Device} this The instance of Ext.device.Device
-     * @param {Object/Boolean} scheme The scheme information, if opened via another application
-     * @param {String} scheme.url The URL that was opened, if this application was opened via another application. Example: `sencha:`
-     * @param {String} scheme.sourceApplication The source application that opened this application. Example: `com.apple.safari`.
-     */
-    /**
-     * @property {String} name
-     * Returns the name of the current device. If the current device does not have a name (for example, in a browser), it will
-     * default to `not available`.
-     *
-     *     alert('Device name: ' + Ext.device.Device.name);
-     */
-    name: 'not available',
-    /**
-     * @property {String} uuid
-     * Returns a unique identifier for the current device. If the current device does not have a unique identifier (for example,
-     * in a browser), it will default to `anonymous`.
-     *
-     *     alert('Device UUID: ' + Ext.device.Device.uuid);
-     */
-    uuid: 'anonymous',
-    /**
-     * @property {String} platform
-     * The current platform the device is running on.
-     *
-     *     alert('Device platform: ' + Ext.device.Device.platform);
-     */
-    platform: Ext.os.name,
-    /**
-     * @property {Object/Boolean} scheme
-     * 
-     */
-    scheme: false,
-    /**
-     * Opens a specified URL. The URL can contain a custom URL Scheme for another app or service:
-     *
-     *     // Safari
-     *     Ext.device.Device.openURL('http://sencha.com');
-     *
-     *     // Telephone
-     *     Ext.device.Device.openURL('tel:6501231234');
-     *
-     *     // SMS with a default number
-     *     Ext.device.Device.openURL('sms:+12345678901');
-     *
-     *     // Email client
-     *     Ext.device.Device.openURL('mailto:rob@sencha.com');
-     *
-     * You can find a full list of available URL schemes here: [http://wiki.akosma.com/IPhone_URL_Schemes](http://wiki.akosma.com/IPhone_URL_Schemes).
-     *
-     * __Note:__ This currently only works with the Sencha Native Packager. Attempting to use this on PhoneGap, iOS Simulator
-     * or the browser will simply result in the current window location changing.**
-     *
-     * If successful, this will close the application (as another one opens).
-     * 
-     * @param {String} url The URL to open
-     */
-    openURL: function(url) {
-        window.location = url;
-    }
-}, 0, 0, 0, 0, 0, [
-    [
-        Ext.mixin.Observable.prototype.mixinId || Ext.mixin.Observable.$className,
-        Ext.mixin.Observable
-    ]
-], [
-    Ext.device.device,
-    'Abstract'
-], 0));
-
-/**
- * @private
- */
-(Ext.cmd.derive('Ext.device.device.Cordova', Ext.device.device.Abstract, {
-    alternateClassName: 'Ext.device.device.PhoneGap',
-    availableListeners: [
-        'pause',
-        'resume',
-        'backbutton',
-        'batterycritical',
-        'batterylow',
-        'batterystatus',
-        'menubutton',
-        'searchbutton',
-        'startcallbutton',
-        'endcallbutton',
-        'volumeupbutton',
-        'volumedownbutton'
-    ],
-    constructor: function() {
-        // We can't get the device details until the device is ready, so lets wait.
-        if (Ext.isReady) {
-            this.onReady();
-        } else {
-            Ext.onReady(this.onReady, this, {
-                single: true
-            });
-        }
-    },
-    /**
-     * @property {String} cordova
-     * Returns the version of Cordova running on the device.
-     *
-     *     alert('Device cordova: ' + Ext.device.Device.cordova);
-     */
-    /**
-     * @property {String} version
-     * Returns the operating system version.
-     *
-     *     alert('Device Version: ' + Ext.device.Device.version);
-     */
-    /**
-     * @property {String} model
-     * Returns the device's model name.
-     *
-     *     alert('Device Model: ' + Ext.device.Device.model);
-     */
-    /**
-     * @event pause
-     * Fires when the application goes into the background
-     */
-    /**
-     * @event resume
-     * Fires when the application goes into the foreground
-     */
-    /**
-     * @event batterycritical
-     * This event that fires when a Cordova application detects the percentage of battery 
-     * has reached the critical battery threshold.
-     */
-    /**
-     * @event batterylow
-     * This event that fires when a Cordova application detects the percentage of battery 
-     * has reached the low battery threshold.
-     */
-    /**
-     * @event batterystatus
-     * This event that fires when a Cordova application detects the percentage of battery 
-     * has changed by at least 1 percent.
-     */
-    /**
-     * @event backbutton
-     * This is an event that fires when the user presses the back button.
-     */
-    /**
-     * @event menubutton
-     * This is an event that fires when the user presses the menu button.
-     */
-    /**
-     * @event searchbutton
-     * This is an event that fires when the user presses the search button.
-     */
-    /**
-     * @event startcallbutton
-     * This is an event that fires when the user presses the start call button.
-     */
-    /**
-     * @event endcallbutton
-     * This is an event that fires when the user presses the end call button.
-     */
-    /**
-     * @event volumeupbutton
-     * This is an event that fires when the user presses the volume up button.
-     */
-    /**
-     * @event volumedownbutton
-     * This is an event that fires when the user presses the volume down button.
-     */
-    onReady: function() {
-        var me = this,
-            device = window.device;
-        me.name = device.name || device.model;
-        me.cordova = device.cordova;
-        me.platform = device.platform || Ext.os.name;
-        me.uuid = device.uuid;
-        me.version = device.version;
-        me.model = device.model;
-    },
-    doAddListener: function(name) {
-        if (!this.addedListeners) {
-            this.addedListeners = [];
-        }
-        if (this.availableListeners.indexOf(name) != -1 && this.addedListeners.indexOf(name) == -1) {
-            // Add the listeners
-            this.addedListeners.push(name);
-            document.addEventListener(name, function() {
-                me.fireEvent(name, me);
-            });
-        }
-        Ext.device.Device.mixins.observable.doAddListener.apply(Ext.device.Device.mixins.observable, arguments);
-    }
-}, 1, 0, 0, 0, 0, 0, [
-    Ext.device.device,
-    'Cordova',
-    Ext.device.device,
-    'PhoneGap'
-], 0));
-
-/**
- * @private
- */
-(Ext.cmd.derive('Ext.device.device.Sencha', Ext.device.device.Abstract, {
-    constructor: function() {
-        Ext.device.device.Abstract.prototype.constructor.apply(this, arguments);
-        this.name = device.name;
-        this.uuid = device.uuid;
-        this.platform = device.platformName || Ext.os.name;
-        this.scheme = Ext.device.Communicator.send({
-            command: 'OpenURL#getScheme',
-            sync: true
-        }) || false;
-        Ext.device.Communicator.send({
-            command: 'OpenURL#watch',
-            callbacks: {
-                callback: function(scheme) {
-                    this.scheme = scheme || false;
-                    this.fireEvent('schemeupdate', this, this.scheme);
-                }
-            },
-            scope: this
-        });
-    },
-    openURL: function(url) {
-        Ext.device.Communicator.send({
-            command: 'OpenURL#open',
-            url: url
-        });
-    }
-}, 1, 0, 0, 0, 0, 0, [
-    Ext.device.device,
-    'Sencha'
-], 0));
-
-/**
- * @private
- */
-(Ext.cmd.derive('Ext.device.device.Simulator', Ext.device.device.Abstract, {}, 0, 0, 0, 0, 0, 0, [
-    Ext.device.device,
-    'Simulator'
-], 0));
-
-/**
- * Provides a cross device way to get information about the device your application is running on. There are 3 different implementations:
- *
- * - Sencha Packager
- * - [Cordova](http://cordova.apache.org/docs/en/2.5.0/cordova_device_device.md.html#Device)
- * - Simulator
- *
- * ## Examples
- *
- * #### Device Information
- *
- * Getting the device information:
- *
- *     Ext.application({
- *         name: 'Sencha',
- *
- *         // Remember that the Ext.device.Device class *must* be required
- *         requires: ['Ext.device.Device'],
- *
- *         launch: function() {
- *             alert([
- *                 'Device name: ' + Ext.device.Device.name,
- *                 'Device platform: ' + Ext.device.Device.platform,
- *                 'Device UUID: ' + Ext.device.Device.uuid
- *             ].join('\n'));
- *         }
- *     });
- *
- * ### Custom Scheme URL
- *
- * Using custom scheme URL to application your application from other applications:
- *
- *     Ext.application({
- *         name: 'Sencha',
- *         requires: ['Ext.device.Device'],
- *         launch: function() {
- *             if (Ext.device.Device.scheme) {
- *                 // the application was opened via another application. Do something:
- *                 alert('Applicaton penned via another application: ' + Ext.device.Device.scheme.url);
- *             }
- *
- *             // Listen for future changes
- *             Ext.device.Device.on('schemeupdate', function(device, scheme) {
- *                 // the application was launched, closed, and then launched another from another application
- *                 // this means onReady wont be called again ('cause the application is already running in the 
- *                 // background) - but this event will be fired
- *                 alert('Applicated reopened via another application: ' + scheme.url);
- *             }, this);
- *         }
- *     });
- *
- * Of course, you must add the custom scheme URL you would like to use when packaging your application.
- * You can do this by setting the `URLScheme` property inside your `package.json` file (Sencha Native Packager configuration file):
- *
- *     {
- *         ...
- *         "URLScheme": "sencha",
- *         ...
- *     }
- *
- * You can change the available URL scheme.
- *
- * You can then test it by packaging and installing the application onto a device/iOS Simulator, opening Safari and typing: `sencha:testing`.
- * The application will launch and it will `alert` the URL you specified.
- *
- * **PLEASE NOTE: This currently only works with the Sencha Native Packager. If you attempt to listen to this event when packaged with
- * PhoneGap or simply in the browser, it will not function.**
- *
- * For more information regarding Native APIs, please review our [Native APIs guide](../../../packaging/native_apis.html).
- *
- * @mixins Ext.device.device.Abstract
- */
-(Ext.cmd.derive('Ext.device.Device', Ext.Base, {
-    singleton: true,
-    constructor: function() {
-        var browserEnv = Ext.browser.is;
-        if (browserEnv.WebView) {
-            if (browserEnv.Cordova) {
-                return Ext.create('Ext.device.device.Cordova');
-            } else if (browserEnv.Sencha) {
-                return Ext.create('Ext.device.device.Sencha');
-            }
-        }
-        return Ext.create('Ext.device.device.Simulator');
-    }
-}, 1, 0, 0, 0, 0, 0, [
-    Ext.device,
-    'Device'
-], 0));
-
 // Using @mixins to include all members of Ext.event.Touch
 // into here to keep documentation simpler
 /**
@@ -64158,6 +63790,12 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 name: 'distance'
+            },
+            {
+                name: 'latitude'
+            },
+            {
+                name: 'longitude'
             }
         ]
     }
@@ -64282,202 +63920,6 @@ Ext.define('Ext.direct.Manager', {
 ], 0));
 
 /*
- * File: app/model/MapMarkerPosition.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.model.MapMarkerPosition', Ext.data.Model, {
-    config: {
-        fields: [
-            {
-                name: 'lat'
-            },
-            {
-                name: 'long'
-            }
-        ]
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
-    'MapMarkerPosition'
-], 0));
-
-/*
- * File: app/model/storesNearBy.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.model.storesNearBy', Ext.data.Model, {
-    config: {
-        useCache: false,
-        fields: [
-            {
-                name: 'customerId',
-                persist: false
-            }
-        ]
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
-    'storesNearBy'
-], 0));
-
-/*
- * File: app/model/UserLocation.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.model.UserLocation', Ext.data.Model, {
-    config: {
-        fields: [
-            {
-                name: 'latitude'
-            },
-            {
-                name: 'longitude'
-            }
-        ]
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
-    'UserLocation'
-], 0));
-
-/*
- * File: app/store/ContactStore.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.store.ContactStore', Ext.data.Store, {
-    config: {
-        autoLoad: true,
-        autoSync: true,
-        data: [
-            {
-                businessName: 'iste',
-                category: 'illo',
-                phoneNumber: '(599) 543-9099',
-                emailAddress: '198 Hovde Trail',
-                address: '304 Monica Crossing',
-                city: 'Officia',
-                state: 'AS',
-                zipcode: 'atque',
-                picture: 'ea',
-                isFavorite: false
-            },
-            {
-                businessName: 'fugit',
-                category: 'et',
-                phoneNumber: '(515) 687-0416',
-                emailAddress: '28 Banding Drive',
-                address: '263 West Point',
-                city: 'Veritatis',
-                state: 'FL',
-                zipcode: 'repellendus',
-                picture: 'recusandae',
-                isFavorite: false
-            },
-            {
-                businessName: 'nisi',
-                category: 'dolorem',
-                phoneNumber: '(883) 506-3306',
-                emailAddress: '47 Elmside Place',
-                address: '263 West Point',
-                city: 'Laboriosam',
-                state: 'WY',
-                zipcode: 'optio',
-                picture: 'et',
-                isFavorite: false
-            },
-            {
-                businessName: 'est',
-                category: 'nulla',
-                phoneNumber: '(827) 412-2582',
-                emailAddress: '70664 Twin Pines Street',
-                address: '296 Reindahl Center',
-                city: 'Aspernatur',
-                state: 'IA',
-                zipcode: 'soluta',
-                picture: 'ullam',
-                isFavorite: true
-            },
-            {
-                businessName: 'provident',
-                category: 'veritatis',
-                phoneNumber: '(673) 355-2351',
-                emailAddress: '47 Elmside Place',
-                address: '28 Banding Drive',
-                city: 'Voluptate',
-                state: 'AR',
-                zipcode: 'eius',
-                picture: 'rerum',
-                isFavorite: true
-            }
-        ],
-        groupDir: 'ASC',
-        groupField: 'category',
-        model: 'LocalBuzzDemo.model.Contact',
-        storeId: 'ContactStore',
-        proxy: {
-            type: 'localstorage'
-        },
-        grouper: {
-            groupFn: function(record) {
-                return record.get('businessName')[0];
-            }
-        },
-        sorters: {
-            property: 'businessName'
-        },
-        fields: [
-            {
-                defaultValue: '0 mi',
-                name: 'distance'
-            }
-        ]
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
-    'ContactStore'
-], 0));
-
-/*
  * File: app/store/MyDealsStore.js
  *
  * This file was generated by Sencha Architect version 3.2.0.
@@ -64493,7 +63935,6 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.store.MyDealsStore', Ext.data.Store, {
     config: {
-        autoLoad: true,
         model: 'LocalBuzzDemo.model.Deal',
         storeId: 'MyDealsStore',
         proxy: {
@@ -64501,26 +63942,14 @@ Ext.define('Ext.direct.Manager', {
             simpleSortMode: true,
             sortParam: '{dealEndDate:DESC}',
             timeout: 300000,
-            url: 'http://services.appsonmobile.com/demoDeals',
+            url: 'services.appsonmbile.com/deals',
             reader: {
                 type: 'json'
             }
         },
-        listeners: [
-            {
-                fn: 'onJsonpstoreLoad',
-                event: 'load'
-            }
-        ],
         sorters: {
             property: 'dealEndDate'
         }
-    },
-    onJsonpstoreLoad: function(store, records, successful, operation, eOpts) {
-        //console.log(records);
-        var date = new Date();
-        var today = Ext.Date.format(date, 'n/j/Y');
-        var test = Ext.Date.add(date, Ext.Date.DAY, 3);
     }
 }, 0, 0, 0, 0, 0, 0, [
     LocalBuzzDemo.store,
@@ -64585,7 +64014,7 @@ Ext.define('Ext.direct.Manager', {
 ], 0));
 
 /*
- * File: app/store/MapMarkerPositionStore.js
+ * File: app/model/UserLocation.js
  *
  * This file was generated by Sencha Architect version 3.2.0.
  * http://www.sencha.com/products/architect/
@@ -64598,17 +64027,23 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.MapMarkerPositionStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzzDemo.model.UserLocation', Ext.data.Model, {
     config: {
-        model: 'LocalBuzzDemo.model.MapMarkerPosition',
-        storeId: 'MapMarkerPositionStore',
-        proxy: {
-            type: 'localstorage'
-        }
+        fields: [
+            {
+                name: 'latitude'
+            },
+            {
+                name: 'longitude'
+            },
+            {
+                name: 'zipcode'
+            }
+        ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
-    'MapMarkerPositionStore'
+    LocalBuzzDemo.model,
+    'UserLocation'
 ], 0));
 
 /*
@@ -64654,17 +64089,43 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.store.MyJsonPStore', Ext.data.Store, {
     config: {
-        autoLoad: true,
         groupField: 'category',
         model: 'LocalBuzzDemo.model.Contact',
         storeId: 'MyJsonPStore',
         proxy: {
             type: 'jsonp',
             timeout: 300000,
-            url: 'http://services.appsonmobile.com/demoStores',
+            url: 'services.appsonmbile.com/stores',
             reader: {
                 type: 'json'
             }
+        },
+        listeners: [
+            {
+                fn: 'onJsonpstoreLoad',
+                event: 'load'
+            }
+        ]
+    },
+    onJsonpstoreLoad: function(store, records, successful, operation, eOpts) {
+        //Ext.get('loadmask').hide();
+        var customerIds = [];
+        var dealParams = null;
+        Ext.Array.erase(customerIds, 0, customerIds.length);
+        store.each(function(rec) {
+            Ext.Array.include(customerIds, rec.get('customerId'));
+        });
+        dealParams = customerIds.join();
+        console.log(dealParams);
+        var dealStore = Ext.getStore('MyDealsStore');
+        if (dealParams) {
+            dealStore.load({
+                params: {
+                    customerId: dealParams
+                }
+            });
+        } else {
+            Ext.getCmp('latestbuzz1').setHtml('<h3 class="emptyText">No active buzz at this time.</h3>');
         }
     }
 }, 0, 0, 0, 0, [
@@ -64672,30 +64133,6 @@ Ext.define('Ext.direct.Manager', {
 ], 0, [
     LocalBuzzDemo.store,
     'MyJsonPStore'
-], 0));
-
-/*
- * File: app/store/StoreCalculateDistances.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.store.StoreCalculateDistances', Ext.data.Store, {
-    config: {
-        model: 'LocalBuzzDemo.model.storesNearBy',
-        storeId: 'StoreCalculateDistances'
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
-    'StoreCalculateDistances'
 ], 0));
 
 /*
@@ -64718,25 +64155,46 @@ Ext.define('Ext.direct.Manager', {
         styleHtmlContent: true,
         items: [
             {
-                xtype: 'numberfield',
+                xtype: 'textfield',
                 cls: 'searchfield',
-                height: '9vh',
-                html: '',
+                height: '11vh',
                 id: 'zipcodeLookUp',
                 itemId: 'zipcodeLookUp',
                 left: '18%',
                 padding: '5 5 5 5',
                 style: 'border:1px solid black',
-                top: '27%',
+                top: '32%',
                 width: '60%',
                 component: {
                     xtype: 'input',
-                    type: 'number',
-                    fastFocus: true
+                    type: 'text',
+                    fastFocus: true,
+                    pattern: '^d{5}$'
                 },
                 clearIcon: false,
                 name: 'zipcodeLookUp',
-                placeHolder: '      Enter zipcode'
+                maxLength: 5,
+                placeHolder: ' Enter 5 digit zipcode'
+            },
+            {
+                xtype: 'numberfield',
+                cls: 'searchfield',
+                height: '11vh',
+                id: 'zipcodeLookUp1',
+                itemId: 'zipcodeLookUp1',
+                left: '18%',
+                padding: '5 5 5 5',
+                style: 'border:1px solid black',
+                top: '32%',
+                width: '60%',
+                component: {
+                    type: 'number'
+                },
+                clearIcon: false,
+                name: 'zipcodeLookUp',
+                maxLength: 5,
+                placeHolder: '   Enter 5 digit zipcode',
+                minValue: 0
             },
             {
                 xtype: 'button',
@@ -64745,7 +64203,31 @@ Ext.define('Ext.direct.Manager', {
                     navigator.geolocation.getCurrentPosition(function showPosition(position) {
                         latitude = position.coords.latitude;
                         longitude = position.coords.longitude;
-                        var store = Ext.getStore('MyDealsStore');
+                        //load stores
+                        var store = Ext.getStore('MyJsonPStore');
+                        var dealStore = Ext.getStore('MyDealsStore');
+                        var customerIds;
+                        store.load({
+                            params: {
+                                latitude: latitude,
+                                longitude: longitude,
+                                distance: 50000
+                            }
+                        });
+                        userLocationStore.removeAll();
+                        var view = Ext.Viewport.add({
+                                xtype: 'Main'
+                            });
+                        Ext.Viewport.setActiveItem(view);
+                        $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+                            var zipcode = json.postalCodes[0].postalCode;
+                            userLocationStore.add({
+                                'latitude': latitude.toString(),
+                                'longitude': longitude.toString(),
+                                'zipcode': zipcode
+                            });
+                        });
+                    }, /*  var store = Ext.getStore('MyDealsStore');
                         var stores = [];
                         var storesNearBy = Ext.getStore('StoreCalculateDistances');
                         //userLocationStore.removeAt(0);
@@ -64753,10 +64235,11 @@ Ext.define('Ext.direct.Manager', {
                             'latitude': latitude.toString(),
                             'longitude': longitude.toString()
                         });
+
                         // Ext.Viewport.getActiveItem().destroy();
                         var view = Ext.Viewport.add({
-                                xtype: 'Main'
-                            });
+                            xtype: 'Main'
+                        });
                         Ext.Viewport.setActiveItem(view);
                         var store1 = Ext.getStore('MyJsonPStore');
                         store1.load();
@@ -64780,18 +64263,18 @@ Ext.define('Ext.direct.Manager', {
                                 }, this);
                                 var distance = json.rows[0].elements[0].distance.value;
                                 console.log(record.get('businessName') + distance);
-                                if (distance <= 80468) /*40234*/
-                                {
-                                    storesNearBy.add({
-                                        'customerId': record.get('customerId')
-                                    });
-                                    return true;
+                                if (distance <= 50000) /*40234*/
+                    /* {
+                                storesNearBy.add({
+                                'customerId': record.get('customerId')
+                                });
+                                return true;
                                 } else {
-                                    return false;
+                                return false;
                                 }
-                            });
-                        });
-                    }, onError, {
+                                });
+                                });*/
+                    onError, {
                         timeout: 5000
                     });
                     function onError() {
@@ -64811,8 +64294,8 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'contact-name',
                 disabled: true,
                 docked: 'top',
-                height: '',
-                html: '<br><div style="text-align:center;"><h3 style="color:#00529D"><b>Welcome to Local Buzz</h3><br><h5 style="color:#00529D">Find the Latest Buzz around You!</h3></div>',
+                height: '30%',
+                html: '<br><div style="text-align:center;"><h3 style="color:#00529D"><b>Welcome to Local Buzz</h3><br><h5 style="color:#00529D">Find the Latest Buzz around you!</h3></div>',
                 id: 'nameTxt4',
                 itemId: 'nameTxt2',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;color:#00529D!important;',
@@ -64822,11 +64305,14 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
-                html: '<div  style="text-align:center;"><br><h2 style="color:#00529D">OR</h2><br><br><br></div>',
+                height: '0%',
+                html: '<div  style="text-align:top;"><h3 style="color:#00529D">OR</h3></div>',
                 id: 'nameTxt5',
                 itemId: 'nameTxt3',
+                left: '35%',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                styleHtmlContent: true
+                styleHtmlContent: true,
+                top: '15%'
             },
             {
                 xtype: 'button',
@@ -64846,64 +64332,190 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onZipcodeLookUpAction',
                 event: 'action',
                 delegate: '#zipcodeLookUp'
+            },
+            {
+                fn: 'onZipcodeLookUpAction1',
+                event: 'action',
+                delegate: '#zipcodeLookUp1'
+            },
+            {
+                fn: 'onFormpanelInitialize',
+                event: 'initialize'
             }
         ]
     },
     onZipcodeLookUpAction: function(textfield, e, eOpts) {
         var postalCode = textfield.getValue();
-        console.log(postalCode);
-        var store = Ext.getStore('MyDealsStore');
-        var userLocationStore = Ext.getStore('UserLocation');
-        var stores = [];
-        var latitude;
-        var longitude;
-        var storesNearBy = Ext.getStore('StoreCalculateDistances');
-        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-            latitude = json.results[0].geometry.location.lat;
-            longitude = json.results[0].geometry.location.lng;
-            //userLocationStore.removeAt(0);
-            console.log(latitude, longitude);
-            userLocationStore.add({
-                'latitude': latitude.toString(),
-                'longitude': longitude.toString()
-            });
-            console.log('Store count is : ' + userLocationStore.getAllCount());
-            // Ext.Viewport.getActiveItem().destroy();
-            var view = Ext.Viewport.add({
-                    xtype: 'Main'
+        if (postalCode.toString().match('^[0-9]{5}?$')) {
+            console.log(postalCode);
+            var userLocationStore = Ext.getStore('UserLocation');
+            userLocationStore.removeAt(0);
+            $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=" + postalCode + "&country=US&username=1234_5678", function(json) {
+                var latitude = (json.postalCodes[0].lat).toString();
+                var longitude = (json.postalCodes[0].lng).toString();
+                console.log(latitude + "," + longitude);
+                userLocationStore.add({
+                    'latitude': latitude,
+                    'longitude': longitude
                 });
-            Ext.Viewport.setActiveItem(view);
-            var store1 = Ext.getStore('MyJsonPStore');
-            store1.load();
-            store1.clearFilter();
-            store1.filterBy(function(record) {
-                var address = record.get('address');
-                var customerId;
-                $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                    store.clearFilter();
-                    store.load();
-                    var store12 = Ext.getStore('StoreCalculateDistances');
-                    Ext.Array.erase(stores, 0, stores.length);
-                    store12.each(function(record) {
-                        Ext.Array.include(stores, record.get('customerId'));
-                    });
-                    // console.log(stores.length);
-                    store.filterBy(function(record) {
-                        return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                    }, this);
-                    var distance = json.rows[0].elements[0].distance.value;
-                    // console.log(record.get('businessName') + distance);
-                    if (distance <= 80468) {
-                        storesNearBy.add({
-                            'customerId': record.get('customerId')
-                        });
-                        return true;
-                    } else {
-                        return false;
+                var store = Ext.getStore('MyJsonPStore');
+                store.load({
+                    params: {
+                        latitude: latitude,
+                        longitude: longitude,
+                        distance: 50000
                     }
                 });
+                var view = Ext.Viewport.add({
+                        xtype: 'Main'
+                    });
+                Ext.Viewport.setActiveItem(view);
             });
-        });
+        } else /* var store = Ext.getStore('MyDealsStore');
+                var userLocationStore = Ext.getStore('UserLocation');
+                var stores = [];
+                var latitude;
+                var longitude;
+                var storesNearBy = Ext.getStore('StoreCalculateDistances');
+                $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                    latitude = json.results[0].geometry.location.lat;
+                    longitude = json.results[0].geometry.location.lng;
+                    //userLocationStore.removeAt(0);
+                    console.log(latitude, longitude);
+                    userLocationStore.add({
+                        'latitude': latitude.toString(),
+                        'longitude': longitude.toString()
+                    });
+                    console.log('Store count is : ' + userLocationStore.getAllCount());
+                    // Ext.Viewport.getActiveItem().destroy();
+                    var view = Ext.Viewport.add({
+                            xtype: 'Main'
+                        });
+                    Ext.Viewport.setActiveItem(view);
+                    var store1 = Ext.getStore('MyJsonPStore');
+                    store1.load();
+                    store1.clearFilter();
+                    store1.filterBy(function(record) {
+                        var address = record.get('address');
+                        var customerId;
+                        $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                            store.clearFilter();
+                            store.load();
+                            var store12 = Ext.getStore('StoreCalculateDistances');
+                            Ext.Array.erase(stores, 0, stores.length);
+                            store12.each(function(record) {
+                                Ext.Array.include(stores, record.get('customerId'));
+                            });
+                           // console.log(stores.length);
+                            store.filterBy(function(record) {
+                                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                            }, this);
+                            var distance = json.rows[0].elements[0].distance.value;
+                           // console.log(record.get('businessName') + distance);
+                            if (distance <= 50000) {
+                                storesNearBy.add({
+                                    'customerId': record.get('customerId')
+                                });
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                    });
+                });*/
+        {
+            Ext.Msg.alert('Error', 'Please enter valid zipcode', null, null);
+        }
+    },
+    onZipcodeLookUpAction1: function(textfield, e, eOpts) {
+        var postalCode = textfield.getValue();
+        if (postalCode.toString().match('^[0-9]{5}?$')) {
+            console.log(postalCode);
+            var userLocationStore = Ext.getStore('UserLocation');
+            userLocationStore.removeAt(0);
+            $.getJSON("http://api.geonames.org/postalCodeSearchJSON?postalcode=" + postalCode + "&maxRows=10&country=US&username=1234_5678", function(json) {
+                var latitude = (json.postalCodes[0].lat).toString();
+                var longitude = (json.postalCodes[0].lng).toString();
+                console.log(latitude + "," + longitude);
+                userLocationStore.add({
+                    'latitude': latitude,
+                    'longitude': longitude
+                });
+                var store = Ext.getStore('MyJsonPStore');
+                store.load({
+                    params: {
+                        latitude: latitude,
+                        longitude: longitude,
+                        distance: 50000
+                    }
+                });
+                var view = Ext.Viewport.add({
+                        xtype: 'Main'
+                    });
+                Ext.Viewport.setActiveItem(view);
+            });
+        } else /* var store = Ext.getStore('MyDealsStore');
+                var userLocationStore = Ext.getStore('UserLocation');
+                var stores = [];
+                var latitude;
+                var longitude;
+                var storesNearBy = Ext.getStore('StoreCalculateDistances');
+                $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                    latitude = json.results[0].geometry.location.lat;
+                    longitude = json.results[0].geometry.location.lng;
+                    //userLocationStore.removeAt(0);
+                    console.log(latitude, longitude);
+                    userLocationStore.add({
+                        'latitude': latitude.toString(),
+                        'longitude': longitude.toString()
+                    });
+                    console.log('Store count is : ' + userLocationStore.getAllCount());
+                    // Ext.Viewport.getActiveItem().destroy();
+                    var view = Ext.Viewport.add({
+                            xtype: 'Main'
+                        });
+                    Ext.Viewport.setActiveItem(view);
+                    var store1 = Ext.getStore('MyJsonPStore');
+                    store1.load();
+                    store1.clearFilter();
+                    store1.filterBy(function(record) {
+                        var address = record.get('address');
+                        var customerId;
+                        $.getJSON("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + latitude + "," + longitude + "&destinations=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                            store.clearFilter();
+                            store.load();
+                            var store12 = Ext.getStore('StoreCalculateDistances');
+                            Ext.Array.erase(stores, 0, stores.length);
+                            store12.each(function(record) {
+                                Ext.Array.include(stores, record.get('customerId'));
+                            });
+                           // console.log(stores.length);
+                            store.filterBy(function(record) {
+                                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                            }, this);
+                            var distance = json.rows[0].elements[0].distance.value;
+                           // console.log(record.get('businessName') + distance);
+                            if (distance <= 50000) {
+                                storesNearBy.add({
+                                    'customerId': record.get('customerId')
+                                });
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                    });
+                });*/
+        {
+            Ext.Msg.alert('Error', 'Please enter valid zipcode', null, null);
+        }
+    },
+    onFormpanelInitialize: function(component, eOpts) {
+        if (Ext.os.is('Android')) {
+            Ext.getCmp('zipcodeLookUp1').destroy();
+        } else {
+            Ext.getCmp('zipcodeLookUp').destroy();
+        }
     }
 }, 0, 0, [
     "component",
@@ -64946,7 +64558,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
-        style: 'background:#fff;',
+        style: 'background:#fff;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
         tpl: [
@@ -64976,6 +64588,10 @@ Ext.define('Ext.direct.Manager', {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                             } else {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
+                                var store = Ext.getStore('MyJsonPStore');
+                                var dealStore = Ext.getStore('MyDealsStore');
+                                store.clearFilter();
+                                dealStore.clearFilter();
                             }
                         },
                         centered: false,
@@ -65010,11 +64626,12 @@ Ext.define('Ext.direct.Manager', {
                         padding: '0 5 25 5',
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
-                        ui: 'plain'
+                        ui: 'plain',
+                        width: '5vh'
                     },
                     {
                         xtype: 'spacer',
-                        width: 70
+                        maxWidth: '30vh'
                     },
                     {
                         xtype: 'component',
@@ -65069,10 +64686,10 @@ Ext.define('Ext.direct.Manager', {
                 html: '<p style="font-size:2.3vw;"> Click on picture to enlarge</p>',
                 id: 'nameTxt3',
                 itemId: 'nameTxt3',
-                left: '40%',
+                left: '35%',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '43%',
+                top: '45%',
                 width: '65%'
             },
             {
@@ -65113,14 +64730,17 @@ Ext.define('Ext.direct.Manager', {
                     {
                         fn: function(element, eOpts) {
                             element.addListener('tap', function() {
-                                var queryString = encodeURIComponent(Ext.getCmp('address1').getValue());
-                                var url;
-                                if (Ext.os.is('Android')) {
-                                    url = 'geo:0,0?q=' + queryString;
-                                } else {
-                                    url = 'maps:q=' + queryString;
+                                if (Ext.getCmp('address1').getValue()) {
+                                    var queryString = encodeURIComponent(Ext.getCmp('address1').getValue());
+                                    var url;
+                                    if (Ext.os.is('Android')) {
+                                        url = 'geo:0,0?q=' + queryString;
+                                    } else {
+                                        url = 'maps:q=' + queryString;
+                                    }
+                                    //Ext.device.Device.openURL(url);
+                                    window.open(url, '_system');
                                 }
-                                Ext.device.Device.openURL(url);
                             });
                         },
                         event: 'painted'
@@ -65151,7 +64771,9 @@ Ext.define('Ext.direct.Manager', {
                         fn: function(element, eOpts) {
                             element.addListener('tap', function() {
                                 var url = Ext.getCmp('website2').getValue();
-                                window.open(url, '_system', 'location=yes');
+                                if (url) {
+                                    window.open(url, '_system', 'location=yes');
+                                }
                             });
                         },
                         event: 'painted'
@@ -65185,15 +64807,17 @@ Ext.define('Ext.direct.Manager', {
                                 to:          Ext.getCmp('email').getValue(), // email addresses for TO field
                                 isHtml:    false, // indicats if the body is HTML or plain text
                                 });*/
-                                window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-                                null, [
-                                    Ext.getCmp('email1').getValue()
-                                ], // TO: must be null or an array
-                                null, // CC: must be null or an array
-                                null, // BCC: must be null or an array
-                                null, // FILES: can be null, a string, or an array
-                                null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
-                                null);
+                                if (Ext.getCmp('email1').getValue()) {
+                                    window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
+                                    null, [
+                                        Ext.getCmp('email1').getValue()
+                                    ], // TO: must be null or an array
+                                    null, // CC: must be null or an array
+                                    null, // BCC: must be null or an array
+                                    null, // FILES: can be null, a string, or an array
+                                    null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
+                                    null);
+                                }
                             });
                         },
                         // called when sh*t hits the fan
@@ -65226,7 +64850,10 @@ Ext.define('Ext.direct.Manager', {
                             element.addListener('tap', function() {
                                 // console.log(Ext.getCmp('phoneNumber').getValue());
                                 var numberToDial = Ext.getCmp('phoneNumber1').getValue();
-                                window.location = 'tel:' + numberToDial;
+                                //window.location = 'tel:'+ numberToDial ;
+                                if (numberToDial) {
+                                    window.open('tel:' + numberToDial, '_system');
+                                }
                             });
                         },
                         event: 'painted'
@@ -65261,7 +64888,7 @@ Ext.define('Ext.direct.Manager', {
         var record = Ext.getStore('LocalStore').getAt(0);
         console.log(record.get('dealImageURL'));
         if (record.get('dealImageURL')) {
-            this.down('#dealimage').setHtml('<img src="' + record.get('dealImageURL') + '" style="margin: 0px 5px 0px 5px;height:40vh;width:95%;border:none;"/>');
+            this.down('#dealimage').setHtml('<img src="' + record.get('dealImageURL') + '" style="margin: 0px 5px 0px 0px;height:39vh;width:98%;border:none;"/>');
             this.down('#nameTxt3').show();
         } else {
             this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:5vw;">' + record.get('dealDescription') + '</div><br><br><div style="font-size:4vw;margin:5px 5px 5px 5px;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
@@ -65275,7 +64902,9 @@ Ext.define('Ext.direct.Manager', {
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
             var store = Ext.getStore('MyJsonPStore');
+            //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
+            //var rec = store.getAt(0);
             Ext.getCmp('phoneNumber1').setValue(rec.get('phoneNumber'));
             Ext.getCmp('website3').setValue(rec.get('websiteDisplayName'));
             Ext.getCmp('website2').setValue(rec.get('website'));
@@ -65329,7 +64958,7 @@ Ext.define('Ext.direct.Manager', {
         hideOnMaskTap: false,
         layout: 'vbox',
         modal: false,
-        scrollable: false,
+        scrollable: 'vertical',
         enableSubmissionForm: false,
         items: [
             {
@@ -65340,6 +64969,7 @@ Ext.define('Ext.direct.Manager', {
                     {
                         xtype: 'button',
                         cls: 'icon-back-button',
+                        height: '100%',
                         itemId: 'infoBackBtn',
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
@@ -65385,7 +65015,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'storeImage',
                 itemId: 'storeImage',
                 left: '2%',
-                width: '100%'
+                width: '96%'
             },
             {
                 xtype: 'textfield',
@@ -65395,15 +65025,15 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: false,
                 docked: 'bottom',
-                height: '10vh',
+                height: '11vh',
                 hidden: false,
                 id: 'website1',
                 itemId: 'website1',
-                margin: '0 5 0 5',
+                margin: '5 5 5 5',
                 minHeight: '',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '73%',
+                top: '75%',
                 width: '95%',
                 clearIcon: false,
                 name: 'websiteDisplayName',
@@ -65414,7 +65044,9 @@ Ext.define('Ext.direct.Manager', {
                         fn: function(element, eOpts) {
                             element.addListener('tap', function() {
                                 var url = Ext.getCmp('website').getValue();
-                                window.open(url, '_system', 'location=yes');
+                                if (url) {
+                                    window.open(url, '_system', 'location=yes');
+                                }
                             });
                         },
                         event: 'painted'
@@ -65428,10 +65060,10 @@ Ext.define('Ext.direct.Manager', {
                     'customfield2'
                 ],
                 docked: 'bottom',
-                height: '10vh',
+                height: '11vh',
                 id: 'email',
                 itemId: 'email',
-                margin: '0 5 0 5',
+                margin: '5 5 5 5',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
                 top: '63%',
@@ -65451,15 +65083,17 @@ Ext.define('Ext.direct.Manager', {
                                 to:          Ext.getCmp('email').getValue(), // email addresses for TO field
                                 isHtml:    false, // indicats if the body is HTML or plain text
                                 });*/
-                                window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-                                null, [
-                                    Ext.getCmp('email').getValue()
-                                ], // TO: must be null or an array
-                                null, // CC: must be null or an array
-                                null, // BCC: must be null or an array
-                                null, // FILES: can be null, a string, or an array
-                                null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
-                                null);
+                                if (Ext.getCmp('email').getValue()) {
+                                    window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
+                                    null, [
+                                        Ext.getCmp('email').getValue()
+                                    ], // TO: must be null or an array
+                                    null, // CC: must be null or an array
+                                    null, // BCC: must be null or an array
+                                    null, // FILES: can be null, a string, or an array
+                                    null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
+                                    null);
+                                }
                             });
                         },
                         // called when sh*t hits the fan
@@ -65475,12 +65109,12 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: false,
                 docked: 'bottom',
-                height: '10vh',
+                height: '11vh',
                 hidden: false,
                 html: '',
                 id: 'phoneNumber',
                 itemId: 'phoneNumber',
-                margin: '0 5 0 5',
+                margin: '5 5 5 5',
                 padding: '15 10 10 10',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
@@ -65494,9 +65128,12 @@ Ext.define('Ext.direct.Manager', {
                     {
                         fn: function(element, eOpts) {
                             element.addListener('tap', function() {
-                                // console.log(Ext.getCmp('phoneNumber').getValue());
+                                console.log(Ext.getCmp('phoneNumber').getValue());
                                 var numberToDial = Ext.getCmp('phoneNumber').getValue();
-                                window.location = 'tel:' + numberToDial;
+                                // window.location = 'tel:'+ numberToDial ;
+                                if (numberToDial) {
+                                    window.open('tel:' + numberToDial, '_system');
+                                }
                             });
                         },
                         event: 'painted'
@@ -65522,13 +65159,13 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'button',
                 handler: function(button, e) {
-                    var store = Ext.getStore('MyDealsStore');
-                    var date = new Date();
-                    var today = Ext.Date.format(date, 'n/j/Y');
+                    //var store = Ext.getStore('MyDealsStore');
+                    //var date = new Date();
+                    //var today = Ext.Date.format(date,'n/j/Y');
                     //var test = Ext.Date.add(date,Ext.Date.DAY,0);
                     //var today = Ext.Date.format(test,'n/j/Y');
                     //store.clearFilter();
-                    store.load();
+                    //store.load();
                     /*store.each(function(rec)
                     {
 
@@ -65574,11 +65211,10 @@ Ext.define('Ext.direct.Manager', {
                 height: '9vh',
                 id: 'address',
                 itemId: 'address',
-                margin: '0 0 0 5',
-                padding: '10 5 0 5',
-                style: 'font-size:4.2vw;font-family:Arial;brder:none!important',
+                padding: '10 5 0 10',
+                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
-                top: '85%',
+                top: '88%',
                 width: '95%',
                 clearIcon: false,
                 name: 'address',
@@ -65588,14 +65224,18 @@ Ext.define('Ext.direct.Manager', {
                     {
                         fn: function(element, eOpts) {
                             element.addListener('tap', function() {
-                                var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
-                                var url;
-                                if (Ext.os.is('Android')) {
-                                    url = 'geo:0,0?q=' + queryString;
-                                } else {
-                                    url = 'maps:q=' + queryString;
+                                if (Ext.getCmp('address').getValue()) {
+                                    console.log('Address button tapped');
+                                    var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
+                                    var url;
+                                    if (Ext.os.is('Android')) {
+                                        url = 'geo:0,0?q=' + queryString;
+                                    } else {
+                                        url = 'maps:q=' + queryString;
+                                    }
+                                    //Ext.device.Device.openURL(url);
+                                    window.open(url, '_system');
                                 }
-                                Ext.device.Device.openURL(url);
                             });
                         },
                         event: 'painted'
@@ -65656,7 +65296,9 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            if (record.get('pictureURL')) {
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            }
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
@@ -65666,20 +65308,11 @@ Ext.define('Ext.direct.Manager', {
             }
             // this.down('#favoriteview')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
             this.down('#favbutton')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
-        }
-        //this.down('contactpic').setData(record.data);
-        /* var ds = Ext.StoreManager.lookup('MyDealsStore');
-            ds.clearFilter() ;
+            //this.down('contactpic').setData(record.data);
+            var ds = Ext.StoreManager.lookup('MyDealsStore');
+            ds.clearFilter();
             ds.filter('customerId', customerId);
-            this.down('listofdeals').setData(ds.getData()) ;*/
-        /*dealsData  = ds.getData().getAt(0);
-            var dealName = 'No Deals';
-            if(dealsData) {
-                 dealName = dealsData.get('dealName');
-            }*/
-        var ds = Ext.StoreManager.lookup('MyDealsStore');
-        ds.clearFilter();
-        ds.filter('customerId', customerId);
+        }
     }
 }, 0, [
     "contactinfo"
@@ -65718,8 +65351,10 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.List', Ext.dataview.List, {
     config: {
+        cls: 'tpl-l0uxnqjl',
+        height: '100%',
         disableSelection: true,
-        emptyText: '<h4 class="emptyText">Find stores registed with Local Buzz here!</h4>',
+        emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
         grouped: true,
         itemTpl: [
@@ -65771,7 +65406,8 @@ Ext.define('Ext.direct.Manager', {
         style: '',
         styleHtmlContent: true,
         allowDeselect: true,
-        emptyText: '<h4 class="emptyText">No active buzz at this tIme.</h4>',
+        emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
+        selectedCls: 'list-item-selected',
         store: 'MyDealsStore',
         onItemDisclosure: false,
         useSimpleItems: false,
@@ -65913,7 +65549,7 @@ Ext.define('Ext.direct.Manager', {
 ], 0));
 
 /*
- * File: app/controller/LocalBuzz.js
+ * File: app/controller/LocalBuzzDemo.js
  *
  * This file was generated by Sencha Architect version 3.2.0.
  * http://www.sencha.com/products/architect/
@@ -65926,7 +65562,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.controller.LocalBuzz', Ext.app.Controller, {
+(Ext.cmd.derive('LocalBuzzDemo.controller.LocalBuzzDemo', Ext.app.Controller, {
     config: {
         stores: [
             'MyJsonPStore',
@@ -65996,16 +65632,23 @@ Ext.define('Ext.direct.Manager', {
         info.setRecord(record);
         Ext.Viewport.add(info);
         Ext.Viewport.setActiveItem(info);
-        //console.log(info);
-        var storeName = Ext.getStore('MyJsonPStore');
-        var store = Ext.getStore('MyDealsStore');
-        store.clearFilter();
-        storeName.clearFilter();
-        store.load();
-        store.filter('customerId', record.get('customerId'));
-        storeName.filter('customerId', record.get('customerId'));
-        store.filter('dealStatus', 'Active');
     },
+    //console.log(info);
+    //var customerId = record.get('customerId');
+    //var storeName = Ext.getStore('MyJsonPStore');
+    /*var store = Ext.getStore('MyDealsStore');
+        store.load({
+            params: {
+        		customerId: customerId
+
+        	}
+        });*/
+    //store.clearFilter();
+    //storeName.clearFilter();
+    //store.load();
+    //store.filter('customerId',record.get('customerId'));
+    //storeName.filter('customerId',record.get('customerId'));
+    //store.filter('dealStatus','Active');
     onInfoBackBtnTapHome: function(button, e, eOpts) {
         var ds = Ext.StoreManager.lookup('MyJsonPStore');
         ds.clearFilter();
@@ -66082,19 +65725,23 @@ Ext.define('Ext.direct.Manager', {
         //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
         var showPosition;
         if (navigator.geolocation) {
-            //if you have the geolocation, run the showPosition function
-            navigator.geolocation.getCurrentPosition(function showPosition(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                console.log('Inside Analytics module: ' + latitude + "," + longitude);
-                // api call for postal code and track event
-                $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-                    //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
-                    //analytics.addCustomDimension('1', record.get('customerId'));
-                    analytics.trackEvent(record.get('dealName'), json.postalCodes[0].postalCode, record.get('customerId'));
-                });
-            });
-        } else {
+            //if you have the geolocation, get the zipcode from local store on app launch
+            //navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            // var latitude = position.coords.latitude;
+            // var longitude = position.coords.longitude;
+            var userLocationStore = Ext.getStore('UserLocation');
+            var zipcode = userLocationStore.getAt(0).get('zipcode');
+            var latitude = userLocationStore.getAt(0).get('latitude');
+            var longitude = userLocationStore.getAt(0).get('longitude');
+            console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+            // api call for postal code and track event
+            //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+            //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+            //analytics.addCustomDimension('1', record.get('customerId'));
+            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+        } else // });
+        // });
+        {
             //geolocation not happening
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
@@ -66130,27 +65777,66 @@ Ext.define('Ext.direct.Manager', {
         store.filter('dealStatus', 'Active');
 
         //Ext.Viewport.setActiveItem('contactinfo') ;*/
-        Ext.Viewport.getActiveItem().destroy();
+        /*Ext.Viewport.getActiveItem().destroy();
         var ds = Ext.StoreManager.lookup('MyJsonPStore');
-        ds.clearFilter();
-        var dealRecord = this.getContactinfo().getRecord();
+        //ds.clearFilter() ;
+        var dealRecord = this.getContactinfo().getRecord() ;
         var customerId = dealRecord.get('customerId');
-        ds.filter('customerId', customerId);
-        var customerData = ds.getData().getAt(0);
+        //ds.filter('customerId', customerId);
+        ds.load({
+            params: {
+        		customerId: customerId
+
+        	}
+        });
+        var customerData = ds.getData().getAt(0) ;
         var info = this.getContactinfo();
         info.setRecord(customerData);
-        ds.clearFilter();
+        ds.clearFilter() ;
         Ext.Viewport.setActiveItem(info);
+
         var store = Ext.StoreManager.lookup('MyDealsStore');
         //store.clearFilter();
-        store.load();
+        store.load({
+            params: {
+        		customerId: customerId
+
+        	}
+        });*/
+        Ext.Viewport.getActiveItem().destroy();
+        Ext.Viewport.setActiveItem(2);
     },
     onFavoritesActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         var store = Ext.getStore('UserPreferences');
         var records = [];
         var ds = Ext.getStore('MyJsonPStore');
-        ds.clearFilter();
-        //store.clearFilter();
+        var dealStore = Ext.getStore('MyDealsStore');
+        /*var UserLocationStore = Ext.getStore('UserLocation');
+        var latitude = UserLocationStore.getAt(0).get('latitude');
+        var longitude = UserLocationStore.getAt(0).get('longitude');
+        var zipcode = UserLocationStore.getAt(0).get('zipcode');
+        //load stores
+
+           if(latitude && longitude){
+            ds.load({
+                params: {
+                    latitude: latitude,
+                    longitude:longitude,
+                    distance:50000
+
+                }
+            });
+           }
+        else{
+            ds.load({
+                params: {
+                    zipcode: postalCode,
+                    distance:50000
+
+                 }
+                });
+
+        }*/
         store.each(function(rec) {
             if (rec.get('isFavorite') === true) {
                 records.push(rec.get('customerId'));
@@ -66158,6 +65844,8 @@ Ext.define('Ext.direct.Manager', {
                 Ext.Array.remove(records, rec.get('customerId'));
             }
         });
+        ds.clearFilter();
+        dealStore.clearFilter();
         ds.filterBy(function(record) {
             return Ext.Array.indexOf(records, record.get('customerId')) !== -1;
         }, this);
@@ -66199,7 +65887,7 @@ Ext.define('Ext.direct.Manager', {
                 } else {
                     //html = '<img style="width:100%;" src="'+res.URI+'">';
                     //document.body.innerHTML = html;
-                    window.plugins.socialsharing.share(null, 'Hi! Check out the Latest Buzz from LocalBuzz', res.URI, null);
+                    window.plugins.socialsharing.share(null, 'Hi! Check out this latest buzz from Local Buzz!', res.URI, null);
                 }
             }, 50);
             Ext.get('share').show();
@@ -66212,7 +65900,7 @@ Ext.define('Ext.direct.Manager', {
                     console.error(error);
                 } else {
                     //Ext.Msg.alert(res.filePath,null,null,null); //should be path/to/myScreenshot.jpg
-                    window.plugins.socialsharing.share(null, 'Hi! Check out the Latest Buzz from LocalBuzz', res.filePath, null);
+                    window.plugins.socialsharing.share(null, 'Hi! Check out this latest buzz from Local Buzz!', res.filePath, null);
                     Ext.getCmp('dealpictureBackBtn').show();
                     Ext.get('share').show();
                 }
@@ -66223,7 +65911,12 @@ Ext.define('Ext.direct.Manager', {
     onDealBackBtn1Tap: function(button, e, eOpts) {
         Ext.Viewport.getActiveItem().destroy();
         Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
-        /*var ds = Ext.StoreManager.lookup('MyJsonPStore');
+    }
+}, 0, 0, 0, 0, 0, 0, [
+    LocalBuzzDemo.controller,
+    'LocalBuzzDemo'
+], 0));
+/*var ds = Ext.StoreManager.lookup('MyJsonPStore');
         ds.clearFilter() ;
         var dealRecord = this.getContactinfo().getRecord() ;
         var customerId = dealRecord.get('customerId');
@@ -66233,14 +65926,9 @@ Ext.define('Ext.direct.Manager', {
         info.setRecord(customerData);
         ds.clearFilter() ;
         Ext.Viewport.setActiveItem(info);*/
-        var store = Ext.StoreManager.lookup('MyDealsStore');
-        //store.clearFilter();
-        store.load();
-    }
-}, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.controller,
-    'LocalBuzz'
-], 0));
+//var store = Ext.StoreManager.lookup('MyDealsStore');
+//store.clearFilter();
+//store.load();
 
 /*
  * File: app/view/Picture.js
@@ -66316,7 +66004,7 @@ Ext.define('Ext.direct.Manager', {
         styleHtmlContent: true,
         width: '100%',
         allowDeselect: true,
-        emptyText: '<h4 class="emptyText">No active buzz at this tIme.</h4>',
+        deferEmptyText: false,
         store: 'MyDealsStore',
         itemTpl: [
             '',
@@ -66353,6 +66041,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 fn: 'onLatestbuzzPainted',
+                single: true,
                 event: 'painted'
             }
         ]
@@ -66381,38 +66070,29 @@ Ext.define('Ext.direct.Manager', {
         //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
         var showPosition;
         if (navigator.geolocation) {
-            //if you have the geolocation, run the showPosition function
-            navigator.geolocation.getCurrentPosition(function showPosition(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                console.log('LatestBuzz View Analytics' + latitude + "," + longitude);
-                // api call for postal code and track event
-                $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-                    //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
-                    //analytics.addCustomDimension('1', record.get('customerId'));
-                    analytics.trackEvent(record.get('dealName'), json.postalCodes[0].postalCode, record.get('customerId'));
-                });
-            });
-        } else {
+            //if you have the geolocation, get the zipcode from local store on app launch
+            //navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            // var latitude = position.coords.latitude;
+            // var longitude = position.coords.longitude;
+            var userLocationStore = Ext.getStore('UserLocation');
+            var zipcode = userLocationStore.getAt(0).get('zipcode');
+            var latitude = userLocationStore.getAt(0).get('latitude');
+            var longitude = userLocationStore.getAt(0).get('longitude');
+            console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+            // api call for postal code and track event
+            //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+            //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+            //analytics.addCustomDimension('1', record.get('customerId'));
+            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+        } else // });
+        // });
+        {
             //geolocation not happening
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
     },
-    onLatestbuzzPainted: function(element, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        store.clearFilter();
-        store.load();
-        var store1 = Ext.getStore('StoreCalculateDistances');
-        var stores = [];
-        store1.each(function(record) {
-            Ext.Array.include(stores, record.get('customerId'));
-        });
-        console.log(stores.length);
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
-    }
+    onLatestbuzzPainted: function(element, eOpts) {}
 }, 0, [
     "latestbuzz"
 ], [
@@ -66431,6 +66111,18 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
+/* var store = Ext.getStore('MyDealsStore');
+                store.clearFilter();
+                store.load();
+                var store1 = Ext.getStore('StoreCalculateDistances');
+                var stores = [];
+                store1.each(function(record) {
+                    Ext.Array.include(stores, record.get('customerId'));
+                });
+                console.log(stores.length);
+                store.filterBy(function(record) {
+                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                }, this);*/
 
 /*
  * File: app/view/FavoriteView.js
@@ -66452,6 +66144,7 @@ Ext.define('Ext.direct.Manager', {
         style: 'background:#fff;',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
+        store: 'MyJsonPStore',
         itemTpl: [
             '<div style= "margin:5px 5px 5px 5px;padding:5px 5px 5px 5px;border:2px groove #C0C0C0"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100" height="120px"  /></div>',
             '<div style="width:120px;color:black;font-size:2.8vw;text-align:center; ">{businessName}</div>',
@@ -66518,6 +66211,17 @@ Ext.define('Ext.direct.Manager', {
                 ui: 'dark',
                 layout: 'vbox',
                 modal: true,
+                listeners: [
+                    {
+                        fn: function(element, eOpts) {
+                            var store = Ext.getStore('MyJsonPStore');
+                            store.clearFilter();
+                            var dealStore = Ext.getStore('MyDealsStore');
+                            dealStore.clearFilter();
+                        },
+                        event: 'painted'
+                    }
+                ],
                 items: [
                     {
                         xtype: 'toolbar',
@@ -66588,22 +66292,11 @@ Ext.define('Ext.direct.Manager', {
                 listeners: [
                     {
                         fn: function(element, eOpts) {
-                            Ext.getStore('MyJsonPStore').clearFilter();
-                            Ext.getStore('MyDealsStore').clearFilter();
-                            var storeName = Ext.getStore('MyJsonPStore').load();
-                            var store = Ext.getStore('MyDealsStore');
+                            document.getElementById('searchfield').blur();
+                            var store = Ext.getStore('MyJsonPStore');
                             store.clearFilter();
-                            store.load();
-                            var store1 = Ext.getStore('StoreCalculateDistances');
-                            var stores = [];
-                            store1.each(function(record) {
-                                //stores.push(record.get('customerId'));
-                                Ext.Array.include(stores, record.get('customerId'));
-                            });
-                            console.log(stores.length);
-                            storeName.filterBy(function(record) {
-                                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                            }, this);
+                            var dealStore = Ext.getStore('MyDealsStore');
+                            dealStore.clearFilter();
                         },
                         event: 'painted'
                     }
@@ -66638,8 +66331,6 @@ Ext.define('Ext.direct.Manager', {
                         fn: function(element, eOpts) {
                             var store = Ext.getStore('UserPreferences');
                             var records = [];
-                            var ds = Ext.getStore('MyJsonPStore');
-                            ds.clearFilter();
                             store.each(function(rec) {
                                 if (rec.get('isFavorite') === true) {
                                     records.push(rec.get('customerId'));
@@ -66647,6 +66338,10 @@ Ext.define('Ext.direct.Manager', {
                                     Ext.Array.remove(records, rec.get('customerId'));
                                 }
                             });
+                            var ds = Ext.getStore('MyJsonPStore');
+                            var dealStore = Ext.getStore('MyDealsStore');
+                            dealStore.clearFilter();
+                            ds.clearFilter();
                             ds.filterBy(function(record) {
                                 return Ext.Array.indexOf(records, record.get('customerId')) !== -1;
                             }, this);
@@ -66789,210 +66484,83 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onBuzzNearMeActivate',
                 event: 'activate',
                 delegate: '#BuzzNearMe'
-            },
-            {
-                fn: 'onBuzzNearMeDeactivate',
-                event: 'deactivate',
-                delegate: '#BuzzNearMe'
             }
         ]
     },
     onLatestBuzzActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
+        var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        store.load();
-        var store1 = Ext.getStore('StoreCalculateDistances');
-        var stores = [];
-        store1.each(function(record) {
-            Ext.Array.include(stores, record.get('customerId'));
-        });
-        console.log(stores.length);
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
+        var dealStore = Ext.getStore('MyDealsStore');
+        dealStore.clearFilter();
     },
     onSearchfieldKeyup: function(textfield, e, eOpts) {
         var search = textfield.getValue();
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        var store1 = Ext.getStore('StoreCalculateDistances');
         var stores = [];
-        store1.each(function(record) {
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores, record.get('customerId'));
-        });
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
-        //store.filter('businessName',search);
         var myfilter = new Ext.util.Filter({
                 filterFn: function(rec) {
-                    return rec.get('businessName').indexOf(search) > -1;
+                    var businessName = rec.get('businessName').toString().toLowerCase();
+                    return (businessName.indexOf(search.toLowerCase()) > -1);
                 }
             });
         store.filter(myfilter);
     },
     onSearchBusinessActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         document.getElementById('searchfield').blur();
-        Ext.getStore('MyDealsStore').clearFilter();
+        //load stores
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        var store1 = Ext.getStore('StoreCalculateDistances');
-        var stores = [];
-        store1.each(function(record) {
-            //stores.push(record.get('customerId'));
-            console.log(record.get('customerId'));
-            Ext.Array.include(stores, record.get('customerId'));
-        });
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
+        var dealStore = Ext.getStore('MyDealsStore');
+        dealStore.clearFilter();
     },
     onMyMapRender: function(map, gmap, eOpts) {
         var lat, long;
         var infoWindow;
         var latitude, longitude;
-        if (Ext.getCmp('zipcodeLookUp').getValue()) {
-            /* navigator.geolocation.getCurrentPosition(function showPosition(position){
-                    lat = position.coords.latitude;
-                    long = position.coords.longitude;
-                    Ext.getCmp('mymap').setMapCenter({
-                        latitude: lat,
-                        longitude: long
-                    });
-                   });*/
-            var userLocation = Ext.getStore('UserLocation');
-            lat = userLocation.getAt(0).get('latitude');
-            long = userLocation.getAt(0).get('longitude');
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
-            });
-        }
-        /* Ext.getCmp('mymap').setMapCenter({
-                                    latitude: latitude,
-                                    longitude: longitude
-                                });*/
-        /*navigator.geolocation.getCurrentPosition(function showPosition(position) {
-                            Ext.getCmp('mymap').show();
-                            Ext.getCmp('lookUpZipcode').hide();
-                            Ext.getCmp('locationOffText').hide();
-                            latitude = position.coords.latitude;
-                            longitude = position.coords.longitude;
-
-
-                        },onError);
-
-                        function onError(error){
-                            Ext.getCmp('locationOffText').show();
-                            Ext.getCmp('lookUpZipcode').show();
-                            Ext.getCmp('mymap').hide();
-
-                        Ext.getCmp('lookUpZipcode').addListener('action',function(){
-
-                        var postalCode = Ext.getCmp('lookUpZipcode').getValue();
-                        Ext.getCmp('mymap').show();
-                        Ext.getCmp('lookUpZipcode').hide();
-                        Ext.getCmp('locationOffText').hide();
-                         console.log(postalCode);
-
-                        $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ postalCode +"&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM",
-
-                                      function(json){
-                                          lat = json.results[0].geometry.location.lat;
-                                          long = json.results[0].geometry.location.lng;
-
-                        Ext.getCmp('mymap').setMapCenter({latitude: lat ,longitude: long});
-
-                            });
-                            });
-
-
-
-                                }*/
-        map.mapTypeControl = false;
-        var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-        if (Ext.getCmp('zipcodeLookUp').getValue() !== '') {
-            var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-            /* console.log(Ext.getCmp('zipcodeLookUp').getValue());
-                $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                    lat = json.results[0].geometry.location.lat;
-                    long = json.results[0].geometry.location.lng;
-                    Ext.getCmp('mymap').setMapCenter({
-                        latitude: lat,
-                        longitude: long
-                    });
-                });*/
-            var userLocation = Ext.getStore('UserLocation');
-            lat = userLocation.getAt(0).get('latitude');
-            long = userLocation.getAt(0).get('longitude');
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
-            });
-        }
         var store = Ext.getStore('MyJsonPStore');
         store.clearFilter();
-        var store1 = Ext.getStore('StoreCalculateDistances');
-        var stores = [];
-        store1.each(function(record) {
-            //stores.push(record.get('customerId'));
-            Ext.Array.include(stores, record.get('customerId'));
+        var dealStore = Ext.getStore('MyDealsStore');
+        dealStore.clearFilter();
+        var userLocation = Ext.getStore('UserLocation');
+        latitude = userLocation.getAt(0).get('latitude');
+        longitude = userLocation.getAt(0).get('longitude');
+        //userLocationStore.removeAt(0);
+        console.log(latitude, longitude);
+        //set center of map
+        Ext.getCmp('mymap').setMapCenter({
+            latitude: latitude,
+            longitude: longitude
         });
-        console.log(stores.length);
-        store.filterBy(function(record) {
-            return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-        }, this);
+        map.mapTypeControl = false;
+        //var postalCode = Ext.getCmp('zipcodeLookUp1').getValue();
+        var store = Ext.getStore('MyJsonPStore');
         if (store.getCount() === 0) {
             Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
-        store.clearFilter();
-        var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
+        //store.clearFilter();
+        console.log('Store count: ' + store.getCount());
+        //place markers on map
         var check_if_markers_visible = false;
         store.each(function(record) {
+            console.log('Business Name: ' + record.get('businessName'));
             var address = record.get('address');
             $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
+                console.log('Latitude from DB: ' + record.get('latitude'));
+                console.log('Longitude from DB: ' + record.get('longitude'));
                 lat = json.results[0].geometry.location.lat;
                 long = json.results[0].geometry.location.lng;
-                //console.log(lat,long);
+                console.log(lat, long);
                 var m = new google.maps.LatLng(lat, long);
-                //businessName = record.get('businessName');
+                //console.log('Marker position is : '+ m);
+                businessName = record.get('businessName');
                 addMarker(record.get('category'), record.get('businessName'), m, record);
-                mapMarkerPositionStore.add({
-                    'lat': lat,
-                    'long': long
-                });
             });
         });
         $('#mymap').on('click', 'a', function(e) {
             e.preventDefault();
             window.open($(this).attr('href'), '_system', 'location=yes');
         });
-        /* $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                                lat = json.results[0].geometry.location.lat;
-                                long = json.results[0].geometry.location.lng;
-                                Ext.getCmp('mymap').setMapCenter({
-                                    latitude: lat,
-                                    longitude: long
-                                });
-                                var southWest = json.results[0].geometry.viewport.southwest;
-                                var northEast = json.results[0].geometry.viewport.northeast;
-                                var bounds = new google.maps.LatLngBounds(southWest, northEast);
-                                var check_if_markers_visible = false;
-                                mapMarkerPositionStore.each(function(rec) {
-                                    var pos = new google.maps.LatLng(rec.get('lat'), rec.get('long'));
-                                    console.log(rec.get('lat'), rec.get('long'));
-                                    if (bounds.contains(pos)) {
-                                        check_if_markers_visible = true;
-                                    }
-                                });
-                                if (mapMarkerPositionStore.getAllCount() !== 0) {
-                                    console.log(check_if_markers_visible);
-                                    if (check_if_markers_visible === false) {
-                                        Ext.Msg.alert('No Buzz Found', 'Please Check Back Later', null, null);
-                                    }
-                                }
-                            });*/
         var icons = {
                 "0": {
                     icon: 'resources/img/car.png'
@@ -67016,24 +66584,18 @@ Ext.define('Ext.direct.Manager', {
                     icon: 'resources/img/daycare.png'
                 },
                 "7": {
+                    icon: 'resources/img/fitness.png'
+                },
+                "8": {
                     icon: 'resources/img/flag-export.png'
                 }
             };
-        /*{
-                                                path: fontawesome.markers.SCISSORS,
-                                                scale: 0.4,
-                                                strokeWeight: 0.2,
-                                                strokeColor: 'black',
-                                                strokeOpacity: 1,
-                                                fillColor: '#1985d0',
-                                                fillOpacity: 1
-                                            }*/
         function addMarker(feature, businessName, m, record) {
             var ds = Ext.getStore('MyDealsStore');
             ds.clearFilter();
             ds.filter('customerId', record.get('customerId'));
-            ds.load();
-            ds.filter('dealStatus', 'Active');
+            // ds.load();
+            //ds.filter('dealStatus', 'Active');
             var count = ds.getCount();
             var category;
             if (feature === 'Automotive') {
@@ -67050,23 +66612,25 @@ Ext.define('Ext.direct.Manager', {
                 category = 5;
             } else if (feature === 'Education') {
                 category = 6;
-            } else {
+            } else if (feature === 'Fitness') {
                 category = 7;
+            } else {
+                category = 8;
             }
             /* var marker = new MarkerWithLabel ({
-                                    position: m,
-                                    map: gmap,
-                                    draggable: false,
-                                    animation: google.maps.Animation.DROP,
-                                    icon: icons[category].icon,
-                                    labelContent: count.toString(),
-                                    labelAnchor: new google.maps.Point(-10, 50),
-                                    labelClass: "labels",
-                                    labelStyle: {opacity: 1.0}
+                                            position: m,
+                                            map: gmap,
+                                            draggable: false,
+                                            animation: google.maps.Animation.DROP,
+                                            icon: icons[category].icon,
+                                            labelContent: count.toString(),
+                                            labelAnchor: new google.maps.Point(-10, 50),
+                                            labelClass: "labels",
+                                            labelStyle: {opacity: 1.0}
 
 
 
-                                });*/
+                                        });*/
             var marker = new google.maps.Marker({
                     position: m,
                     map: gmap,
@@ -67075,13 +66639,10 @@ Ext.define('Ext.direct.Manager', {
             var content = '<h4 id ="businessname">' + businessName + '</h4><div><label id="labelStore" style="color:green;font-size:4vw;text-decoration:underline">' + count + ' Active Buzz</label></div>';
             addInfoWindow(marker, content, record, businessName);
         }
+        //click on marker event
         function addInfoWindow(marker, content, record, businessName) {
-            /*infoWindow = new google.maps.InfoWindow({
-                                content: content
-
-
-                            });*/
             google.maps.event.addListener(marker, 'mousedown', function() {
+                console.log('Marker clicked ' + record.get('customerId'));
                 if (infoWindow) {
                     infoWindow.close();
                 }
@@ -67090,64 +66651,26 @@ Ext.define('Ext.direct.Manager', {
                 });
                 infoWindow.open(gmap, marker);
                 infoWindow.setContent(content);
-                console.log('Marker clicked ' + record.get('customerId'));
                 google.maps.event.addListener(infoWindow, 'domready', function() {
                     document.getElementById('labelStore').addEventListener('mousedown', function() {
-                        /* console.log('Label Clicked ' + businessName);
-
-                                       var store = Ext.getStore('MyDealsStore');
-                                       store.clearFilter();
-                                       store.load();
-
-                                        store.filter('businessName',businessName);
-
-                                        if(Ext.Viewport.getComponent('DealsPanel1')){
-                                            Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel1'));if(Ext.Viewport.getComponent('Info')){
-                                            }
-                                            else {
-                                            var view = Ext.Viewport.add({xtype:'DealsPanel1'});
-                                            Ext.Viewport.setActiveItem(view);
-                                            }
-
-                                            }*/
                         var view;
                         if (Ext.Viewport.getComponent('Info')) {
-                            view = Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
-                            view.setRecord(record);
-                        } else {
+                            Ext.Viewport.getComponent('Info').destroy();
+                            console.log('Info exists');
                             view = Ext.Viewport.add({
                                 xtype: 'contactinfo'
                             });
                             view.setRecord(record);
                             Ext.Viewport.setActiveItem(view);
+                        } else {
+                            view = Ext.Viewport.add({
+                                xtype: 'contactinfo'
+                            });
+                            console.log('Info does not exist');
+                            view.setRecord(record);
+                            Ext.Viewport.setActiveItem(view);
                         }
                     });
-                    /* document.getElementById('labelStoreInfo').addEventListener('mousedown',function() {
-
-
-                                        console.log('Label Clicked ' + businessName);
-
-                                       var store = Ext.getStore('MyJsonPStore');
-                                       store.clearFilter();
-                                       //store.load();
-
-                                        //store.filter('businessName',businessName);
-                                        var record = store.findRecord('businessName',businessName);
-
-                                            var view;
-                                            if(Ext.Viewport.getComponent('Info')){
-                                            view = Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
-                                                view.setRecord(record);
-                                            }
-                                        else {
-
-                                        view = Ext.Viewport.add({xtype:'contactinfo'});
-                                        view.setRecord(record);
-                                        Ext.Viewport.setActiveItem(view);
-
-                                        }
-
-                                    });*/
                     google.maps.event.addListener(gmap, 'click', function() {
                         if (infoWindow) {
                             infoWindow.close();
@@ -67158,76 +66681,12 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     onBuzzNearMeActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
-        Ext.getStore('MyJsonPStore').clearFilter();
-        Ext.getStore('MyJsonPStore').load();
-        var mapMarkerPositionStore = Ext.getStore('MapMarkerPositionStore');
-        if (Ext.getCmp('zipcodeLookUp').getValue()) {
-            var postalCode = Ext.getCmp('zipcodeLookUp').getValue();
-            console.log(postalCode);
-            console.log('zipcode is :' + Ext.getCmp('zipcodeLookUp').getValue());
-            /* $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + postalCode + "&key=AIzaSyDHFtBdpwHNSJ2Pu0HpRK1ce5uHCSGHKXM", function(json) {
-                    lat = json.results[0].geometry.location.lat;
-                    long = json.results[0].geometry.location.lng;
-                    Ext.getCmp('mymap').setMapCenter({
-                        latitude: lat,
-                        longitude: long
-                    });*/
-            var userLocation = Ext.getStore('UserLocation');
-            lat = userLocation.getAt(0).get('latitude');
-            long = userLocation.getAt(0).get('longitude');
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
-            });
-            var store = Ext.getStore('MyJsonPStore');
-            store.clearFilter();
-            var store1 = Ext.getStore('StoreCalculateDistances');
-            var stores = [];
-            store1.each(function(record) {
-                //stores.push(record.get('customerId'));
-                Ext.Array.include(stores, record.get('customerId'));
-            });
-            store.filterBy(function(record) {
-                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-            }, this);
-            if (store.getCount() === 0) {
-                Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
-            }
-        } else //});
-        // });
-        {
-            /* navigator.geolocation.getCurrentPosition(function showPosition(position){
-                    lat = position.coords.latitude;
-                    long = position.coords.longitude;
-                    Ext.getCmp('mymap').setMapCenter({
-                        latitude: lat,
-                        longitude: long
-                    });*/
-            var userLocation = Ext.getStore('UserLocation');
-            lat = userLocation.getAt(0).get('latitude');
-            long = userLocation.getAt(0).get('longitude');
-            Ext.getCmp('mymap').setMapCenter({
-                latitude: lat,
-                longitude: long
-            });
-            var store = Ext.getStore('MyJsonPStore');
-            store.clearFilter();
-            var store1 = Ext.getStore('StoreCalculateDistances');
-            var stores = [];
-            store1.each(function(record) {
-                //stores.push(record.get('customerId'));
-                Ext.Array.include(stores, record.get('customerId'));
-            });
-            store.filterBy(function(record) {
-                return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-            }, this);
-            if (store.getCount() === 0) {
-                Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
-            }
+        var store = Ext.getStore('MyJsonPStore');
+        store.clearFilter();
+        if (store.getCount() === 0) {
+            Ext.Msg.alert('No Buzz found', 'Please check back later', null, null);
         }
-    },
-    // });
-    onBuzzNearMeDeactivate: function(oldActiveItem, container, newActiveItem, eOpts) {}
+    }
 }, 0, [
     "Main"
 ], [
@@ -67246,10 +66705,6 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'Main'
 ], 0));
-/* Ext.getCmp('mymap').hide();
-            Ext.getCmp('locationOffText').show();
-            Ext.getCmp('lookUpZipcode').show();
-            Ext.getCmp('lookUpZipcode').setValue('');*/
 
 /*
  * File: app/view/DealsPanel.js
@@ -67325,10 +66780,9 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        store.load();
-    },
+    onPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {},
+    //var store = Ext.getStore('MyDealsStore');
+    //store.load();
     //Ext.Viewport.getActiveItem().destroy();
     //store.filter('dealStatus','Active');
     //var date = new Date();
@@ -67363,10 +66817,7 @@ Ext.define('Ext.direct.Manager', {
 
 
         //store.clearFilter();*/
-    onDealsPanelPainted: function(element, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        store.load();
-    }
+    onDealsPanelPainted: function(element, eOpts) {}
 }, 0, [
     "DealsPanel"
 ], [
@@ -67385,6 +66836,8 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'DealsPanel'
 ], 0));
+//var store = Ext.getStore('MyDealsStore');
+//store.load();
 
 /*
  * File: app/view/DealsPanel1.js
@@ -67460,10 +66913,9 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        store.load();
-    },
+    onPanelActivate: function(newActiveItem, container, oldActiveItem, eOpts) {},
+    //var store = Ext.getStore('MyDealsStore');
+    //store.load();
     //Ext.Viewport.getActiveItem().destroy();
     //store.filter('dealStatus','Active');
     //var date = new Date();
@@ -67498,10 +66950,7 @@ Ext.define('Ext.direct.Manager', {
 
 
         //store.clearFilter();*/
-    onDealsPanel1Painted: function(element, eOpts) {
-        var store = Ext.getStore('MyDealsStore');
-        store.load();
-    }
+    onDealsPanel1Painted: function(element, eOpts) {}
 }, 0, [
     "DealsPanel1"
 ], [
@@ -67520,6 +66969,8 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'DealsPanel1'
 ], 0));
+//var store = Ext.getStore('MyDealsStore');
+//store.load();
 
 /*
  * File: app/view/DealImage.js
@@ -67637,20 +67088,14 @@ Ext.application({
     models: [
         'Contact',
         'Deal',
-        'UserPreferences',
-        'MapMarkerPosition',
-        'storesNearBy',
-        'UserLocation'
+        'UserPreferences'
     ],
     stores: [
-        'ContactStore',
         'MyDealsStore',
         'UserPreferences',
         'LocalStore',
-        'MapMarkerPositionStore',
         'UserLocation',
-        'MyJsonPStore',
-        'StoreCalculateDistances'
+        'MyJsonPStore'
     ],
     views: [
         'Picture',
@@ -67667,15 +67112,12 @@ Ext.application({
         'Info'
     ],
     controllers: [
-        'LocalBuzz'
+        'LocalBuzzDemo'
     ],
     icon: 'icon.png',
     name: 'LocalBuzzDemo',
     launch: function() {
         var postalCode;
-        var store = Ext.getStore('MyDealsStore');
-        store.clearFilter();
-        store.load();
         Ext.util.Format.empty = function(value, defaultValue) {
             return !Ext.isEmpty(value) ? value : defaultValue;
         };
@@ -67727,10 +67169,11 @@ Ext.application({
                 } else if (Ext.Viewport.getActiveItem().getItemId() === 'DealsPanel') {
                     Ext.Viewport.getActiveItem().destroy();
                     Ext.Viewport.setActiveItem(2);
-                    var store1 = Ext.StoreManager.lookup('MyDealsStore');
-                    //store.clearFilter();
-                    store1.load();
-                } else if (Ext.Viewport.getActiveItem().getItemId() === 'DealsPanel1') {
+                }
+                //var store1 = Ext.StoreManager.lookup('MyDealsStore');
+                //store.clearFilter();
+                //store1.load();
+                else if (Ext.Viewport.getActiveItem().getItemId() === 'DealsPanel1') {
                     console.log('DealsPanel1');
                     Ext.Viewport.getActiveItem().destroy();
                     Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
@@ -67748,6 +67191,68 @@ Ext.application({
                 }
             }
         }
+        document.addEventListener('resume', function() {
+            console.log('App resumed');
+            var userLocation = Ext.getStore('UserLocation');
+            latitude = userLocation.getAt(0).get('latitude');
+            longitude = userLocation.getAt(0).get('longitude');
+            //Load stores ios user entered zipcode
+            /*   if(Ext.getCmp('zipcodeLookUp1').getValue()){
+                var postalCode = Ext.getCmp('zipcodeLookUp1').getValue();
+
+
+                var store = Ext.getStore('MyJsonPStore');
+
+                store.load({
+                    params: {
+                        zipcode: postalCode,
+                        distance:50000
+
+                    }
+                });
+
+            }
+            //Load stores android user entered zipcode
+            else if(Ext.getCmp('zipcodeLookUp').getValue()){
+                var postalCode1 = Ext.getCmp('zipcodeLookUp').getValue();
+
+
+                var store = Ext.getStore('MyJsonPStore');
+
+                store.load({
+                    params: {
+                        zipcode: postalCode1,
+                        distance:50000
+
+                    }
+                });
+
+            }
+            // Either devices use current location used
+            else{
+                navigator.geolocation.getCurrentPosition(function showPosition(position) {
+                    latitude = position.coords.latitude;
+                    longitude = position.coords.longitude;*/
+            //load stores
+            var store = Ext.getStore('MyJsonPStore');
+            var dealStore = Ext.getStore('MyDealsStore');
+            var customerIds;
+            store.load({
+                params: {
+                    latitude: latitude,
+                    longitude: longitude,
+                    distance: 50000
+                }
+            });
+        });
+        /* },onError, {
+                    timeout: 5000
+                });*/
+        /* }
+
+            function onError() {
+                Ext.Msg.alert('Location service is disabled', 'Allow Local Buzz to access your location', null, null);
+            }*/
         Ext.create('LocalBuzzDemo.view.WelcomeScreen', {
             fullscreen: true
         });
@@ -67755,5 +67260,5 @@ Ext.application({
 });
 
 // @tag full-page
-// @require H:\Apps\Sencha Architect Apps\LocalBuzzDemo\app.js
+// @require H:\Apps\Sencha Architect Apps\LocalBuzzReleaseDemo\app.js
 
