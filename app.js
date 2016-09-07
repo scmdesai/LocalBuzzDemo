@@ -63942,7 +63942,7 @@ Ext.define('Ext.direct.Manager', {
             simpleSortMode: true,
             sortParam: '{dealEndDate:DESC}',
             timeout: 300000,
-            url: 'services.appsonmbile.com/deals',
+            url: 'services.appsonmbile.com/demoDeals',
             reader: {
                 type: 'json'
             }
@@ -64095,7 +64095,7 @@ Ext.define('Ext.direct.Manager', {
         proxy: {
             type: 'jsonp',
             timeout: 300000,
-            url: 'services.appsonmbile.com/stores',
+            url: 'services.appsonmbile.com/demoStores',
             reader: {
                 type: 'json'
             }
