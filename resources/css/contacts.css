@@ -173,7 +173,6 @@ $list-header-bg-color: $base-color;
 
 /* list item rows */
 .list-item {
-    overflow: scroll;
     white-space: normal;
     word-wrap: break-word;
 }
