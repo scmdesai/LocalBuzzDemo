@@ -66174,11 +66174,9 @@ Ext.define('Ext.direct.Manager', {
             '-->',
             '<div style="border:2px dotted #c0c0c0;margin:0px 2px 2px 2px;"/>',
             '    <div class="list-item">',
-            '        <tpl if= "dealImageURL">',
-            '            <img class="photo" src="{dealImageURL}"  />',
-            '            <tpl else>',
-            '               <img class="photo" src="resources/img/localbuzzicon.png" />',
-            '        </tpl>',
+            '        ',
+            '            <img class="photo" src="{dealPictureURL}"  />',
+            '            ',
             '        ',
             '        <div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:0px 5px 5px 5px;"><b>{dealName}</b></div>',
             '        <div style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500"><b>{businessName}</b></div>',
@@ -66452,8 +66450,7 @@ Ext.define('Ext.direct.Manager', {
                         html: '<h1 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px">Local Buzz</h1>'
                     },
                     {
-                        xtype: 'latestbuzz',
-                        styleHtmlContent: false
+                        xtype: 'latestbuzz'
                     }
                 ]
             },
