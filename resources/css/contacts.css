@@ -173,8 +173,9 @@ $list-header-bg-color: $base-color;
 
 /* list item rows */
 .list-item {
-    overflow: hidden;
+    overflow: scroll;
     white-space: normal;
+    word-wrap: break-word;
 }
 
 .list-item .photo {
@@ -197,6 +198,7 @@ $list-header-bg-color: $base-color;
     border: 1px solid #999; 
     margin:5px 5px 5px 5px;
 }
+
 
 
 
