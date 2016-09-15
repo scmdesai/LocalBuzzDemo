@@ -66001,6 +66001,7 @@ Ext.define('Ext.direct.Manager', {
         var record = Ext.getStore('LocalStore').getAt(0);
         //console.log(businessName.customerId);
         Ext.getCmp('dealpictureBackBtn').hide();
+        Ext.get('enlargebtn').hide();
         Ext.get('share').hide();
         var pic = Ext.getCmp('dealPicture');
         //vat txt = '<div><img src="{dealPictureURL}" style="margin:5px 5px 5px 5px;height:160;width:100%;" /></div> +<div style="font-size:6vw;color:green">{dealName}</div>+<div style="font-size:5vw;color:black">{dealDescription}</div>+<div style="font-size:3vw;color:red;margin:5px 5px 5px 5px;">Valid from {dealStartDate} through {dealEndDate}</div>';
@@ -66037,6 +66038,7 @@ Ext.define('Ext.direct.Manager', {
                 }
             }, 50);
             Ext.get('share').show();
+            Ext.get('enlargebtn').show();
             var view = Ext.Viewport.getComponent('DealPicture');
             view.setRecord(record);
             Ext.Viewport.setActiveItem(view);
@@ -66049,6 +66051,7 @@ Ext.define('Ext.direct.Manager', {
                     window.plugins.socialsharing.share(null, 'Hi! Check out this latest buzz from Local Buzz!', res.filePath, null);
                     Ext.getCmp('dealpictureBackBtn').show();
                     Ext.get('share').show();
+                    Ext.get('enlargebtn').show();
                 }
             }, 'jpg', 50, 'myScreenShot');
         }
@@ -67338,6 +67341,15 @@ Ext.application({
                 }
             }
         }
+        Ext.override(Ext.MessageBox, {
+            hide: function() {
+                console.log('Hiding messagebox');
+                if (this.activeAnimation && this.activeAnimation._onEnd) {
+                    this.activeAnimation._onEnd();
+                }
+                return this.callParent(arguments);
+            }
+        });
         document.addEventListener('resume', function() {
             console.log('App resumed');
             var userLocation = Ext.getStore('UserLocation');
