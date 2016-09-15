@@ -64661,7 +64661,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '2%',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0',
                 top: '1%',
-                width: '97%',
+                width: '95%',
                 listeners: [
                     {
                         fn: function(element, eOpts) {
