@@ -64672,6 +64672,75 @@ Ext.define('Ext.direct.Manager', {
                                     view.setRecord(record);
                                     view.showBy(Ext.get('dealPicture'));
                                 });
+                            } else {
+                                element.addListener('tap', function() {
+                                    var record = Ext.getStore('LocalStore').getAt(0);
+                                    var dealDescription = record.get('dealDescription').toString();
+                                    if (dealDescription) {
+                                        console.log('dealDescription is : ' + dealDescription);
+                                        //find if the url is nested(example appsonmobile.com/about-us)
+                                        var content = dealDescription.split('/');
+                                        if (content.length > 1) {
+                                            var index = content.length - 1;
+                                            //Find where url begins
+                                            var temp = dealDescription.split('.');
+                                            //this will have the starting of the string till the first part of the url (eg www. or images.)
+                                            console.log(temp[0]);
+                                            //extract only the first part of the url
+                                            var temp2 = temp[0].split(' ');
+                                            console.log(temp2.length);
+                                            var i = temp2.length;
+                                            var temp3 = temp2[i - 1];
+                                            console.log(temp3);
+                                            //the first part of the url is the firstIndex
+                                            var firstIndex = dealDescription.indexOf(temp3);
+                                            var lastIndex = dealDescription.lastIndexOf('/');
+                                            var tmp = content[index].split(' ');
+                                            var lastPartURLIndex = tmp[0].length;
+                                            var lastPartURLData = content[index];
+                                            var lastPartURL = lastPartURLData.substring(0, lastPartURLIndex);
+                                            //copy the entire url till the last '/' and then add the last part
+                                            var url = dealDescription.substring(firstIndex, lastIndex) + '/' + lastPartURL;
+                                            console.log('url is :' + url);
+                                            //if the url already contains http or https..directly open the link else add http
+                                            if (url) {
+                                                dealDescription.link(url);
+                                                if (url.indexOf("http") < 0) {
+                                                    window.open("http://" + url, '_system', 'location=yes');
+                                                } else {
+                                                    window.open(url, '_system', 'location=yes');
+                                                }
+                                            }
+                                        } else //if there is no nesting ( example www.google.com,appsonmobile.com,news.google.com)
+                                        {
+                                            var temp11 = dealDescription.split('.');
+                                            if (temp11.length > 1) {
+                                                console.log(temp11[0]);
+                                                var temp21 = temp11[0].split(' ');
+                                                console.log(temp21.length);
+                                                var i1 = temp21.length;
+                                                var temp31 = temp21[i1 - 1];
+                                                console.log(temp31);
+                                                var firstIndex1 = dealDescription.indexOf(temp31);
+                                                var url1;
+                                                var lastIndex1 = dealDescription.indexOf(' ', firstIndex1);
+                                                if (lastIndex1 < 0) {
+                                                    lastIndex1 = dealDescription.length;
+                                                }
+                                                url1 = dealDescription.substring(firstIndex1, lastIndex1);
+                                                console.log('url is :' + url1);
+                                                if (url1) {
+                                                    dealDescription.link(url1);
+                                                    if (url1.indexOf("http") < 0) {
+                                                        window.open("http://" + url1, '_system', 'location=yes');
+                                                    } else {
+                                                        window.open(url1, '_system', 'location=yes');
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
                             }
                         },
                         event: 'painted'
@@ -64682,15 +64751,88 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
-                height: '',
-                html: '<p style="font-size:2.3vw;"> Click on picture to enlarge</p>',
                 id: 'nameTxt3',
                 itemId: 'nameTxt3',
-                left: '35%',
                 margin: '10 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '45%',
-                width: '65%'
+                minHeight: '8vh',
+                style: 'font-family:Arial;font-size:4vw',
+                top: '39vh',
+                width: '98%',
+                listeners: [
+                    {
+                        fn: function(element, eOpts) {
+                            element.addListener('tap', function() {
+                                var record = Ext.getStore('LocalStore').getAt(0);
+                                var dealDescription = record.get('dealDescription').toString();
+                                if (dealDescription) {
+                                    console.log('dealDescription is : ' + dealDescription);
+                                    //find if the url is nested(example appsonmobile.com/about-us)
+                                    var content = dealDescription.split('/');
+                                    if (content.length > 1) {
+                                        var index = content.length - 1;
+                                        //Find where url begins
+                                        var temp = dealDescription.split('.');
+                                        //this will have the starting of the string till the first part of the url (eg www. or images.)
+                                        console.log(temp[0]);
+                                        //extract only the first part of the url
+                                        var temp2 = temp[0].split(' ');
+                                        console.log(temp2.length);
+                                        var i = temp2.length;
+                                        var temp3 = temp2[i - 1];
+                                        console.log(temp3);
+                                        //the first part of the url is the firstIndex
+                                        var firstIndex = dealDescription.indexOf(temp3);
+                                        var lastIndex = dealDescription.lastIndexOf('/');
+                                        var tmp = content[index].split(' ');
+                                        var lastPartURLIndex = tmp[0].length;
+                                        var lastPartURLData = content[index];
+                                        var lastPartURL = lastPartURLData.substring(0, lastPartURLIndex);
+                                        //copy the entire url till the last '/' and then add the last part
+                                        var url = dealDescription.substring(firstIndex, lastIndex) + '/' + lastPartURL;
+                                        console.log('url is :' + url);
+                                        //if the url already contains http or https..directly open the link else add http
+                                        if (url) {
+                                            dealDescription.link(url);
+                                            if (url.indexOf("http") < 0) {
+                                                window.open("http://" + url, '_system', 'location=yes');
+                                            } else {
+                                                window.open(url, '_system', 'location=yes');
+                                            }
+                                        }
+                                    } else //if there is no nesting ( example www.google.com,appsonmobile.com,news.google.com)
+                                    {
+                                        var temp111 = dealDescription.split('.');
+                                        if (temp111.length > 1) {
+                                            console.log(temp111[0]);
+                                            var temp211 = temp111[0].split(' ');
+                                            console.log(temp211.length);
+                                            var i11 = temp211.length;
+                                            var temp311 = temp211[i11 - 1];
+                                            console.log(temp311);
+                                            var firstIndex11 = dealDescription.indexOf(temp311);
+                                            var url11;
+                                            var lastIndex11 = dealDescription.indexOf(' ', firstIndex11);
+                                            if (lastIndex11 < 0) {
+                                                lastIndex11 = dealDescription.length;
+                                            }
+                                            url11 = dealDescription.substring(firstIndex11, lastIndex11);
+                                            console.log('url is :' + url11);
+                                            if (url11) {
+                                                dealDescription.link(url11);
+                                                if (url11.indexOf("http") < 0) {
+                                                    window.open("http://" + url11, '_system', 'location=yes');
+                                                } else {
+                                                    window.open(url11, '_system', 'location=yes');
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        event: 'painted'
+                    }
+                ]
             },
             {
                 xtype: 'component',
@@ -64703,7 +64845,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '40%',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '50%',
+                top: '52%',
                 width: '65%'
             },
             {
@@ -64888,10 +65030,10 @@ Ext.define('Ext.direct.Manager', {
         var record = Ext.getStore('LocalStore').getAt(0);
         console.log(record.get('dealImageURL'));
         if (record.get('dealImageURL')) {
-            this.down('#dealimage').setHtml('<img src="' + record.get('dealImageURL') + '" style="margin: 0px 5px 0px 0px;height:39vh;width:98%;border:none;"/>');
+            this.down('#dealimage').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:5vw;">' + record.get('dealDescription') + '</div><br><br><div style="font-size:4vw;margin:5px 5px 5px 5px;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
+            this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             this.down('#nameTxt3').hide();
         }
     },
@@ -64901,6 +65043,7 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
+            this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
