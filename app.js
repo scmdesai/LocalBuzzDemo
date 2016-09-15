@@ -66142,38 +66142,43 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz', Ext.dataview.List, {
     config: {
         height: '100%',
         html: '',
         id: 'latestbuzz1',
         itemId: 'latestbuzz1',
-        padding: '5 5 5 5',
-        style: 'background:#fff!important',
+        style: '',
         styleHtmlContent: true,
         width: '100%',
         allowDeselect: true,
-        deferEmptyText: false,
+        emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
+        selectedCls: 'list-item-selected',
         store: 'MyDealsStore',
+        onItemDisclosure: false,
+        useSimpleItems: false,
         itemTpl: [
             '',
-            '<!--<div style="border:2px groove #c0c0c0;margin:5px 5px 5px 5px;padding:1px 1px 1px 1px;">',
-            '<div style="font-size:4vw;color:#00529D;height:6vh">{businessName}</div>',
-            '<div style="font-size:3vw;color:black;text-align:right;margin:5px 5px 5px 5px;">{dealName}</div>',
-            '<tpl if="dealEndDate &lt; todayplusfivedays">',
-            '<div style="font-size:2.5vw;color:grey;text-align:right;">Ends {dealEndDate}</div>',
-            '<tpl else>',
-            '<div style="font-size:2.5vw;color:grey;text-align:right;">Ends {dealEndDate}</div>',
-            '</tpl>',
-            '<div><img src="{dealPictureURL}" height="100vh" width="100%"/></div>',
             '',
             '',
             '',
             '',
-            '<!--<div style="font-size:3vw;font-family:Arial;">{dealPictureURL}</div> -->',
-            '<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;">',
+            '',
+            '<!--',
+            '<div style="margin:5px 5px 5px 0px;font-size:5vw;color:green;font-weight:bold;font-family:Arial">{dealName}</div>',
+            '<div style="font-size:3.5vw;margin:5px 5px 5px 0px;font-family:Arial"><b>{dealDescription}</b></div>',
+            '<tpl if= "dealEndDate &lt;= today"> ',
+            ' <div class= "expiringDate" >Valid {dealStartDate} - {dealEndDate}</div>',
+            '  <tpl else>',
+            '        <div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
+            '-->',
+            '<div style="border:2px dotted #c0c0c0;margin:0px 2px 2px 2px;"/>',
             '    <div class="list-item">',
-            '        <img class="photo" src="{dealPictureURL}"  />',
+            '        <tpl if= "dealImageURL">',
+            '            <img class="photo" src="{dealImageURL}"  />',
+            '            <tpl else>',
+            '               <img class="photo" src="resources/img/localbuzzicon.png" />',
+            '        </tpl>',
             '        ',
             '        <div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:0px 5px 5px 5px;"><b>{dealName}</b></div>',
             '        <div style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500"><b>{businessName}</b></div>',
@@ -66181,21 +66186,100 @@ Ext.define('Ext.direct.Manager', {
             '        <div style="font-size:2.8vw;text-align:left;word-wrap: break-word;padding:0px 0px 0px 5px;">{dealDescription}</div>',
             '        ',
             '        <div style="font-size:2.8vw;color:grey;text-align:left;padding:5px 5px 5px 5px;">{dealStartDate} - {dealEndDate}</div>',
-            '    </div>'
+            '   ',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
         ],
         listeners: [
             {
-                fn: 'onLatestbuzzItemTap',
+                fn: 'onLatestbuzz1ItemTap',
                 event: 'itemtap'
-            },
-            {
-                fn: 'onLatestbuzzPainted',
-                single: true,
-                event: 'painted'
             }
         ]
     },
-    onLatestbuzzItemTap: function(dataview, index, target, record, e, eOpts) {
+    onLatestbuzz1ItemTap: function(dataview, index, target, record, e, eOpts) {
         if (e.target === 'favDealBtn') {
             Ext.get('favDealBtn').setHtml('New Value');
         }
@@ -66240,19 +66324,20 @@ Ext.define('Ext.direct.Manager', {
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
-    },
-    onLatestbuzzPainted: function(element, eOpts) {}
+    }
 }, 0, [
     "latestbuzz"
 ], [
     "component",
     "container",
     "dataview",
+    "list",
     "latestbuzz"
 ], {
     "component": true,
     "container": true,
     "dataview": true,
+    "list": true,
     "latestbuzz": true
 }, [
     "widget.latestbuzz"
@@ -66260,18 +66345,6 @@ Ext.define('Ext.direct.Manager', {
     LocalBuzzDemo.view,
     'LatestBuzz'
 ], 0));
-/* var store = Ext.getStore('MyDealsStore');
-                store.clearFilter();
-                store.load();
-                var store1 = Ext.getStore('StoreCalculateDistances');
-                var stores = [];
-                store1.each(function(record) {
-                    Ext.Array.include(stores, record.get('customerId'));
-                });
-                console.log(stores.length);
-                store.filterBy(function(record) {
-                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
-                }, this);*/
 
 /*
  * File: app/view/FavoriteView.js
@@ -67123,6 +67196,151 @@ Ext.define('Ext.direct.Manager', {
 //store.load();
 
 /*
+ * File: app/view/LatestBuzz2.js
+ *
+ * This file was generated by Sencha Architect version 3.2.0.
+ * http://www.sencha.com/products/architect/
+ *
+ * This file requires use of the Sencha Touch 2.4.x library, under independent license.
+ * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
+ * details see http://www.sencha.com/license or contact license@sencha.com.
+ *
+ * This file will be auto-generated each and everytime you save your project.
+ *
+ * Do NOT hand edit this file.
+ */
+(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz2', Ext.dataview.DataView, {
+    config: {
+        height: '100%',
+        html: '',
+        id: 'latestbuzz12',
+        itemId: 'latestbuzz12',
+        padding: '5 5 5 5',
+        style: 'background:#fff!important;word-wrap:break-word;',
+        styleHtmlContent: true,
+        allowDeselect: true,
+        deferEmptyText: false,
+        store: 'MyDealsStore',
+        itemTpl: [
+            '',
+            '<!--<div style="border:2px groove #c0c0c0;margin:5px 5px 5px 5px;padding:1px 1px 1px 1px;">',
+            '<div style="font-size:4vw;color:#00529D;height:6vh">{businessName}</div>',
+            '<div style="font-size:3vw;color:black;text-align:right;margin:5px 5px 5px 5px;">{dealName}</div>',
+            '<tpl if="dealEndDate &lt; todayplusfivedays">',
+            '<div style="font-size:2.5vw;color:grey;text-align:right;">Ends {dealEndDate}</div>',
+            '<tpl else>',
+            '<div style="font-size:2.5vw;color:grey;text-align:right;">Ends {dealEndDate}</div>',
+            '</tpl>',
+            '<div><img src="{dealPictureURL}" height="100vh" width="100%"/></div>',
+            '',
+            '',
+            '',
+            '',
+            '<!--<div style="font-size:3vw;font-family:Arial;">{dealPictureURL}</div> -->',
+            '<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>',
+            '    <div class="list-item">',
+            '        ',
+            '            <img class="photo" src="{dealPictureURL}"  />',
+            '            ',
+            '        ',
+            '        <div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:0px 5px 5px 5px;"><b>{dealName}</b></div>',
+            '        <div style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500"><b>{businessName}</b></div>',
+            '        ',
+            '        <div style="font-size:2.8vw;text-align:left;word-wrap: break-word;padding:0px 0px 0px 5px;">{dealDescription}</div>',
+            '        ',
+            '        <div style="font-size:2.8vw;color:grey;text-align:left;padding:5px 5px 5px 5px;">{dealStartDate} - {dealEndDate}</div>'
+        ],
+        listeners: [
+            {
+                fn: 'onLatestbuzzItemTap',
+                event: 'itemtap'
+            },
+            {
+                fn: 'onLatestbuzzPainted',
+                single: true,
+                event: 'painted'
+            }
+        ]
+    },
+    onLatestbuzzItemTap: function(dataview, index, target, record, e, eOpts) {
+        if (e.target === 'favDealBtn') {
+            Ext.get('favDealBtn').setHtml('New Value');
+        }
+        var pic = Ext.Viewport.add({
+                xtype: 'dealpicture'
+            });
+        /*console.log("Data View is: ") ;
+        console.log(dataview) ;
+        console.log("Index is: " + index) ;
+        console.log("Target is: ") ;
+        console.log(target) ;
+        console.log("Event is: ") ;
+        console.log(e) ;
+        console.log("Event Options is: ") ;
+        console.log(eOpts) ;*/
+        pic.setRecord(record);
+        Ext.getStore('LocalStore').add(record);
+        //Ext.Viewport.add(pic);
+        Ext.Viewport.setActiveItem(pic);
+        //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
+        //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
+        var showPosition;
+        if (navigator.geolocation) {
+            //if you have the geolocation, get the zipcode from local store on app launch
+            //navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            // var latitude = position.coords.latitude;
+            // var longitude = position.coords.longitude;
+            var userLocationStore = Ext.getStore('UserLocation');
+            var zipcode = userLocationStore.getAt(0).get('zipcode');
+            var latitude = userLocationStore.getAt(0).get('latitude');
+            var longitude = userLocationStore.getAt(0).get('longitude');
+            console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+            // api call for postal code and track event
+            //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+            //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+            //analytics.addCustomDimension('1', record.get('customerId'));
+            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+        } else // });
+        // });
+        {
+            //geolocation not happening
+            console.log("Gelocation not working");
+            analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
+        }
+    },
+    onLatestbuzzPainted: function(element, eOpts) {}
+}, 0, [
+    "latestbuzz2"
+], [
+    "component",
+    "container",
+    "dataview",
+    "latestbuzz2"
+], {
+    "component": true,
+    "container": true,
+    "dataview": true,
+    "latestbuzz2": true
+}, [
+    "widget.latestbuzz2"
+], 0, [
+    LocalBuzzDemo.view,
+    'LatestBuzz2'
+], 0));
+/* var store = Ext.getStore('MyDealsStore');
+                store.clearFilter();
+                store.load();
+                var store1 = Ext.getStore('StoreCalculateDistances');
+                var stores = [];
+                store1.each(function(record) {
+                    Ext.Array.include(stores, record.get('customerId'));
+                });
+                console.log(stores.length);
+                store.filterBy(function(record) {
+                    return Ext.Array.indexOf(stores, record.get('customerId')) !== -1;
+                }, this);*/
+
+/*
  * File: app/view/DealImage.js
  *
  * This file was generated by Sencha Architect version 3.2.0.
@@ -67257,9 +67475,10 @@ Ext.application({
         'DealsPanel',
         'DealsPanel1',
         'WelcomeScreen',
-        'LatestBuzz',
+        'LatestBuzz2',
         'DealImage',
-        'Info'
+        'Info',
+        'LatestBuzz'
     ],
     controllers: [
         'LocalBuzzDemo'
