@@ -65315,8 +65315,10 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            // if(record.get('pictureURL'))
-            //   this.down('#storeImage').setHtml('<img src = "'+record.get('pictureURL')+'" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            console.log(record.get('pictureURL'));
+            if (record.get('pictureURL')) {
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            }
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
