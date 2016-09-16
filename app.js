@@ -64908,6 +64908,7 @@ Ext.define('Ext.direct.Manager', {
     },
     onGetStoreInfoBtnTap: function(button, e, eOpts) {
         var view;
+        var record = Ext.getStore('LocalStore').getAt(0);
         if (Ext.Viewport.getComponent('Info')) {
             Ext.Viewport.getComponent('Info').destroy();
             console.log('Info exists');
