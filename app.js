@@ -64649,12 +64649,22 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'component',
+                cls: 'contact-name',
+                disabled: true,
+                docked: 'top',
+                id: 'nameTxt6',
+                itemId: 'nameTxt4',
+                padding: '0 0 0 15',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                width: '65%'
+            },
+            {
+                xtype: 'component',
                 cls: [
                     'contact-name',
                     'dealimage'
                 ],
                 disabled: true,
-                docked: 'top',
                 height: '40vh',
                 id: 'dealimage',
                 itemId: 'dealimage',
@@ -64841,6 +64851,17 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
+                id: 'nameTxt7',
+                itemId: 'nameTxt5',
+                padding: '0 0 0 15',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                top: '52%',
+                width: '65%'
+            },
+            {
+                xtype: 'component',
+                cls: 'contact-name',
+                disabled: true,
                 height: '',
                 html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
                 id: 'nameTxt2',
@@ -64848,7 +64869,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '40%',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '52%',
+                top: '53%',
                 width: '65%'
             },
             {
@@ -65046,6 +65067,7 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
+            this.down('#nameTxt6').setHtml(record.get('dealName'));
             this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
@@ -66175,7 +66197,11 @@ Ext.define('Ext.direct.Manager', {
             '<div style="border:2px dotted #c0c0c0;margin:0px 2px 2px 2px;"/>',
             '    <div class="list-item">',
             '        ',
-            '            <img class="photo" src="{dealPictureURL}"  />',
+            '           <tpl if= "dealImageURL">',
+            '            <img class="photo" src="{dealImageURL}"  />',
+            '            <tpl else>',
+            '               <img class="photo" src="resources/img/localbuzzicon.png" />',
+            '        </tpl>',
             '            ',
             '        ',
             '        <div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;"><b>{dealName}</b></div>',
