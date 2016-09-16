@@ -64876,10 +64876,11 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'button',
                 handler: function(button, e) {
                     var record = Ext.getStore('LocalStore').getAt(0);
-                    var info = this.getContactinfo();
-                    info.setRecord(record);
-                    Ext.Viewport.add(info);
-                    Ext.Viewport.setActiveItem(info);
+                    var view = Ext.Viewport.add({
+                            xtype: 'contactinfo'
+                        });
+                    Ext.Viewport.setActiveItem(view);
+                    view.setRecord(record);
                 },
                 height: '11vh',
                 id: 'getStoreInfoBtn',
@@ -64921,7 +64922,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            Ext.getCmp('getStoreInfoBtn').setHtml('About ' + businessName);
+            Ext.getCmp('getStoreInfoBtn').setHtml('<h4 About ' + businessName + '/h4>');
         }
     }
 }, 0, [
