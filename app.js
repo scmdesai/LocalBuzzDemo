@@ -64904,7 +64904,9 @@ Ext.define('Ext.direct.Manager', {
         Ext.getCmp('nameTxt8').element.addListener('tap', function() {
             var view = Ext.Viewport.getComponent('Info');
             Ext.Viewport.setActiveItem(view);
-            view.setRecord(record);
+            var storeInfo = Ext.getStore('MyJsonPStore');
+            var rec = storeInfo.findRecord(customerId, record.get('customerId'));
+            view.setRecord(rec);
         });
     },
     setRecord: function(record) {
@@ -65261,10 +65263,6 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onFavbuttonTap',
                 event: 'tap',
                 delegate: '#favbutton'
-            },
-            {
-                fn: 'onInfoPainted',
-                event: 'painted'
             }
         ]
     },
@@ -65296,44 +65294,6 @@ Ext.define('Ext.direct.Manager', {
         //console.log(customerId + isPressed);
         record.set('isFavorite', isPressed);
         store.sync();
-    },
-    onInfoPainted: function(element, eOpts) {
-        var record = Ext.getStore('LocalStore').getAt(0);
-        console.log('Info painted');
-        console.log('Record is : ' + record.get('pictureURL'));
-        console.log('Record is : ' + record.get('phoneNumber'));
-        if (record) {
-            var name = record.get('businessName');
-            var isFavorite = record.get('isFavorite');
-            var customerId = record.get('customerId');
-            var store = Ext.getStore('UserPreferences');
-            if (store.getAllCount() !== 0) {
-                store.each(function(rec) {
-                    if (rec.get('customerId') == customerId) {
-                        isFavorite = rec.get('isFavorite');
-                    }
-                });
-            }
-            //console.log(customerId + isFavorite );
-            this.down('#nameTxt').setHtml(name);
-            console.log(record.get('pictureURL'));
-            if (record.get('pictureURL')) {
-                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
-            }
-            // console.log(store.getData());
-            if (isFavorite === true) {
-                this.down('#favbutton').setCls('fill-star');
-            } else //store.setData({'isFavorite':isFavorite});
-            {
-                this.down('#favbutton').setCls('empty-star');
-            }
-            // this.down('#favoriteview')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
-            this.down('#favbutton')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
-            //this.down('contactpic').setData(record.data);
-            var ds = Ext.StoreManager.lookup('MyDealsStore');
-            ds.clearFilter();
-            ds.filter('customerId', customerId);
-        }
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
