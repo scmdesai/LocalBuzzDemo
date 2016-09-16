@@ -65763,9 +65763,8 @@ Ext.define('Ext.direct.Manager', {
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
         Ext.getStore('LocalStore').add(record);
-        var pic = Ext.Viewport.add({
-                xtype: 'dealpicture1'
-            });
+        //var pic = Ext.Viewport.add({xtype:'dealpicture'});
+        var pic = Ext.Viewport.getComponent('dealPicture');
         pic.setRecord(record);
         Ext.Viewport.setActiveItem(pic);
     },
