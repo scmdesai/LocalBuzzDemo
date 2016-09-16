@@ -64874,20 +64874,6 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'button',
-                handler: function(button, e) {
-                    var record = Ext.getStore('LocalStore').getAt(0);
-                    var view;
-                    if (Ext.Viewport.getComponent('Info')) {
-                        Ext.Viewport.getComponent('Info').destroy();
-                        console.log('Info exists');
-                    }
-                    view = Ext.Viewport.add({
-                        xtype: 'contactinfo'
-                    });
-                    view.setRecord(record);
-                    Ext.Viewport.setActiveItem(view);
-                    view.setRecord(record);
-                },
                 height: '11vh',
                 id: 'getStoreInfoBtn',
                 itemId: 'getStoreInfoBtn',
@@ -64929,6 +64915,18 @@ Ext.define('Ext.direct.Manager', {
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
             Ext.getCmp('getStoreInfoBtn').setHtml('About ' + businessName);
+            Ext.getCmp('getStoreInfoBtn').addListener('tap', function() {
+                var view;
+                if (Ext.Viewport.getComponent('Info')) {
+                    Ext.Viewport.getComponent('Info').destroy();
+                    console.log('Info exists');
+                }
+                view = Ext.Viewport.add({
+                    xtype: 'contactinfo'
+                });
+                view.setRecord(record);
+                Ext.Viewport.setActiveItem(view);
+            });
         }
     }
 }, 0, [
