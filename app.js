@@ -64922,7 +64922,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            Ext.getCmp('getStoreInfoBtn').setHtml('<h4 About ' + businessName + '/h4>');
+            Ext.getCmp('getStoreInfoBtn').setHtml('About ' + businessName);
         }
     }
 }, 0, [
