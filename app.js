@@ -65190,7 +65190,7 @@ Ext.define('Ext.direct.Manager', {
             '    '
         ],
         layout: {
-            type: 'vbox',
+            type: 'hbox',
             align: 'stretchmax'
         },
         items: [
@@ -65269,8 +65269,10 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'contact-name',
                 disabled: true,
                 docked: 'top',
+                height: '8vh',
                 id: 'nameTxt6',
                 itemId: 'nameTxt4',
+                margin: '5 5 0 5',
                 padding: '0 0 0 15',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                 width: '100%'
@@ -65287,8 +65289,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'dealimage',
                 left: '2%',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0',
-                top: '1%',
-                width: '95%',
+                width: '96vw',
                 listeners: [
                     {
                         fn: function(element, eOpts) {
@@ -65378,125 +65379,133 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'component',
-                cls: 'contact-name',
-                disabled: true,
-                id: 'nameTxt3',
-                itemId: 'nameTxt3',
-                margin: '10 5 5 5',
-                minHeight: '8vh',
-                style: 'font-family:Arial;font-size:4vw',
-                top: '41vh',
-                width: '98%',
-                listeners: [
+                xtype: 'container',
+                docked: 'bottom',
+                height: '40vh',
+                layout: {
+                    type: 'vbox',
+                    align: 'stretchmax'
+                },
+                items: [
                     {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                var record = Ext.getStore('LocalStore').getAt(0);
-                                var dealDescription = record.get('dealDescription').toString();
-                                if (dealDescription) {
-                                    console.log('dealDescription is : ' + dealDescription);
-                                    //find if the url is nested(example appsonmobile.com/about-us)
-                                    var content = dealDescription.split('/');
-                                    if (content.length > 1) {
-                                        var index = content.length - 1;
-                                        //Find where url begins
-                                        var temp = dealDescription.split('.');
-                                        //this will have the starting of the string till the first part of the url (eg www. or images.)
-                                        console.log(temp[0]);
-                                        //extract only the first part of the url
-                                        var temp2 = temp[0].split(' ');
-                                        console.log(temp2.length);
-                                        var i = temp2.length;
-                                        var temp3 = temp2[i - 1];
-                                        console.log(temp3);
-                                        //the first part of the url is the firstIndex
-                                        var firstIndex = dealDescription.indexOf(temp3);
-                                        var lastIndex = dealDescription.lastIndexOf('/');
-                                        var tmp = content[index].split(' ');
-                                        var lastPartURLIndex = tmp[0].length;
-                                        var lastPartURLData = content[index];
-                                        var lastPartURL = lastPartURLData.substring(0, lastPartURLIndex);
-                                        //copy the entire url till the last '/' and then add the last part
-                                        var url = dealDescription.substring(firstIndex, lastIndex) + '/' + lastPartURL;
-                                        console.log('url is :' + url);
-                                        //if the url already contains http or https..directly open the link else add http
-                                        if (url) {
-                                            dealDescription.link(url);
-                                            if (url.indexOf("http") < 0) {
-                                                window.open("http://" + url, '_system', 'location=yes');
-                                            } else {
-                                                window.open(url, '_system', 'location=yes');
-                                            }
-                                        }
-                                    } else //if there is no nesting ( example www.google.com,appsonmobile.com,news.google.com)
-                                    {
-                                        var temp111 = dealDescription.split('.');
-                                        if (temp111.length > 1) {
-                                            console.log(temp111[0]);
-                                            var temp211 = temp111[0].split(' ');
-                                            console.log(temp211.length);
-                                            var i11 = temp211.length;
-                                            var temp311 = temp211[i11 - 1];
-                                            console.log(temp311);
-                                            var firstIndex11 = dealDescription.indexOf(temp311);
-                                            var url11;
-                                            var lastIndex11 = dealDescription.indexOf(' ', firstIndex11);
-                                            if (lastIndex11 < 0) {
-                                                lastIndex11 = dealDescription.length;
-                                            }
-                                            url11 = dealDescription.substring(firstIndex11, lastIndex11);
-                                            console.log('url is :' + url11);
-                                            if (url11) {
-                                                dealDescription.link(url11);
-                                                if (url11.indexOf("http") < 0) {
-                                                    window.open("http://" + url11, '_system', 'location=yes');
-                                                } else {
-                                                    window.open(url11, '_system', 'location=yes');
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        docked: 'top',
+                        id: 'nameTxt3',
+                        itemId: 'nameTxt3',
+                        margin: '10 5 5 5',
+                        minHeight: '8vh',
+                        style: 'font-family:Arial;font-size:4vw',
+                        width: '100%',
+                        listeners: [
+                            {
+                                fn: function(element, eOpts) {
+                                    element.addListener('tap', function() {
+                                        var record = Ext.getStore('LocalStore').getAt(0);
+                                        var dealDescription = record.get('dealDescription').toString();
+                                        if (dealDescription) {
+                                            console.log('dealDescription is : ' + dealDescription);
+                                            //find if the url is nested(example appsonmobile.com/about-us)
+                                            var content = dealDescription.split('/');
+                                            if (content.length > 1) {
+                                                var index = content.length - 1;
+                                                //Find where url begins
+                                                var temp = dealDescription.split('.');
+                                                //this will have the starting of the string till the first part of the url (eg www. or images.)
+                                                console.log(temp[0]);
+                                                //extract only the first part of the url
+                                                var temp2 = temp[0].split(' ');
+                                                console.log(temp2.length);
+                                                var i = temp2.length;
+                                                var temp3 = temp2[i - 1];
+                                                console.log(temp3);
+                                                //the first part of the url is the firstIndex
+                                                var firstIndex = dealDescription.indexOf(temp3);
+                                                var lastIndex = dealDescription.lastIndexOf('/');
+                                                var tmp = content[index].split(' ');
+                                                var lastPartURLIndex = tmp[0].length;
+                                                var lastPartURLData = content[index];
+                                                var lastPartURL = lastPartURLData.substring(0, lastPartURLIndex);
+                                                //copy the entire url till the last '/' and then add the last part
+                                                var url = dealDescription.substring(firstIndex, lastIndex) + '/' + lastPartURL;
+                                                console.log('url is :' + url);
+                                                //if the url already contains http or https..directly open the link else add http
+                                                if (url) {
+                                                    dealDescription.link(url);
+                                                    if (url.indexOf("http") < 0) {
+                                                        window.open("http://" + url, '_system', 'location=yes');
+                                                    } else {
+                                                        window.open(url, '_system', 'location=yes');
+                                                    }
+                                                }
+                                            } else //if there is no nesting ( example www.google.com,appsonmobile.com,news.google.com)
+                                            {
+                                                var temp111 = dealDescription.split('.');
+                                                if (temp111.length > 1) {
+                                                    console.log(temp111[0]);
+                                                    var temp211 = temp111[0].split(' ');
+                                                    console.log(temp211.length);
+                                                    var i11 = temp211.length;
+                                                    var temp311 = temp211[i11 - 1];
+                                                    console.log(temp311);
+                                                    var firstIndex11 = dealDescription.indexOf(temp311);
+                                                    var url11;
+                                                    var lastIndex11 = dealDescription.indexOf(' ', firstIndex11);
+                                                    if (lastIndex11 < 0) {
+                                                        lastIndex11 = dealDescription.length;
+                                                    }
+                                                    url11 = dealDescription.substring(firstIndex11, lastIndex11);
+                                                    console.log('url is :' + url11);
+                                                    if (url11) {
+                                                        dealDescription.link(url11);
+                                                        if (url11.indexOf("http") < 0) {
+                                                            window.open("http://" + url11, '_system', 'location=yes');
+                                                        } else {
+                                                            window.open(url11, '_system', 'location=yes');
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                            });
-                        },
-                        event: 'painted'
+                                    });
+                                },
+                                event: 'painted'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        docked: 'top',
+                        id: 'nameTxt7',
+                        itemId: 'nameTxt5',
+                        margin: '10 5 5 5',
+                        padding: '0 0 0 15',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw'
+                    },
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        height: '4vh',
+                        html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
+                        id: 'nameTxt2',
+                        itemId: 'nameTxt2',
+                        margin: '10 5 5 5',
+                        right: '0%',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw'
+                    },
+                    {
+                        xtype: 'button',
+                        height: '8vh',
+                        id: 'nameTxt8',
+                        itemId: 'nameTxt8',
+                        margin: '40 5 0 5',
+                        ui: 'confirm'
                     }
                 ]
-            },
-            {
-                xtype: 'component',
-                cls: 'contact-name',
-                disabled: true,
-                id: 'nameTxt7',
-                itemId: 'nameTxt5',
-                padding: '0 0 0 15',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
-                top: '52vh',
-                width: '65%'
-            },
-            {
-                xtype: 'button',
-                id: 'nameTxt8',
-                itemId: 'nameTxt8',
-                left: '25vw',
-                top: '66%',
-                ui: 'confirm',
-                width: '50%'
-            },
-            {
-                xtype: 'component',
-                cls: 'contact-name',
-                disabled: true,
-                height: '4vh',
-                html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
-                id: 'nameTxt2',
-                itemId: 'nameTxt2',
-                left: '40%',
-                margin: '10 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '53vh',
-                width: '65%'
             }
         ],
         listeners: [
