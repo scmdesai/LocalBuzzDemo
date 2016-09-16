@@ -64907,17 +64907,10 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     onGetStoreInfoBtnTap: function(button, e, eOpts) {
-        var view;
         var record = Ext.getStore('LocalStore').getAt(0);
-        if (Ext.Viewport.getComponent('Info')) {
-            Ext.Viewport.getComponent('Info').destroy();
-            console.log('Info exists');
-            view = Ext.Viewport.add({
-                xtype: 'contactinfo'
-            });
-            view.setRecord(record);
-            Ext.Viewport.setActiveItem(view);
-        }
+        var view = Ext.Viewport.getComponent('Info');
+        view.setRecord(record);
+        Ext.Viewport.setActiveItem(view);
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
