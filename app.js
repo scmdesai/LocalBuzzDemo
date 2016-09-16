@@ -64785,7 +64785,7 @@ Ext.define('Ext.direct.Manager', {
 
                 });*/
                     //store.filter('dealStatus','Active');
-                    Ext.getCmp('nameTxt8').show();
+                    Ext.getCmp('nameTxt8').hide();
                     var view = Ext.Viewport.add({
                             xtype: 'DealsPanel'
                         });
