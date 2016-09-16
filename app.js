@@ -65269,11 +65269,11 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'contact-name',
                 disabled: true,
                 docked: 'top',
-                height: '8vh',
+                height: '9vh',
                 id: 'nameTxt6',
                 itemId: 'nameTxt4',
-                margin: '5 5 0 5',
-                padding: '5 0 5 0',
+                margin: '5 5 5 5',
+                padding: '5 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                 width: '98%'
             },
@@ -65381,7 +65381,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 docked: 'bottom',
-                height: '40vh',
+                height: '39vh',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
@@ -67456,11 +67456,11 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'contact-name',
                 disabled: true,
                 docked: 'top',
-                height: '8vh',
+                height: '9vh',
                 id: 'nameTxt15',
                 itemId: 'nameTxt4',
-                margin: '5 5 0 5',
-                padding: '5 0 5 0',
+                margin: '5 5 5 5',
+                padding: '5 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                 width: '98%'
             },
@@ -67488,7 +67488,7 @@ Ext.define('Ext.direct.Manager', {
                                             xtype: 'DealImage'
                                         });
                                     view.setRecord(record);
-                                    view.showBy(Ext.get('dealPicture'));
+                                    view.showBy(Ext.get('dealPicture2'));
                                 });
                             } else {
                                 element.addListener('tap', function() {
@@ -67568,7 +67568,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 docked: 'bottom',
-                height: '40vh',
+                height: '39vh',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
