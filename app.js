@@ -65067,15 +65067,17 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
-            this.down('#nameTxt6').setHtml(record.get('dealName'));
-            this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
+            if (record.get('dealImageURL')) {
+                this.down('#nameTxt6').setHtml(record.get('dealName'));
+                this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
+            }
             this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
             Ext.getCmp('phoneNumber1').setValue(rec.get('phoneNumber'));
-            Ext.getCmp('phoneNumber1').setStyle('font-size:4vw;font-family: Arial;');
+            Ext.getCmp('phoneNumber1').setStyle('font-size:3vw;font-family: Arial;');
             Ext.getCmp('website3').setValue(rec.get('websiteDisplayName'));
             Ext.getCmp('website2').setValue(rec.get('website'));
             Ext.getCmp('address1').setValue(rec.get('address'));
