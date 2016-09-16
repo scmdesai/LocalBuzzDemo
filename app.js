@@ -65476,15 +65476,13 @@ Ext.define('Ext.direct.Manager', {
                 width: '65%'
             },
             {
-                xtype: 'component',
-                cls: 'contact-name',
-                disabled: true,
+                xtype: 'button',
                 id: 'nameTxt8',
-                itemId: 'nameTxt6',
-                padding: '0 0 0 15',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
-                top: '75%',
-                width: '65%'
+                itemId: 'nameTxt8',
+                left: '25vw',
+                top: '66%',
+                ui: 'confirm',
+                width: '50%'
             },
             {
                 xtype: 'component',
