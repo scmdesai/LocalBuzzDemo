@@ -64926,7 +64926,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '0 0 10 10',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '85%',
+                top: '82%',
                 width: '90%',
                 clearIcon: false,
                 name: 'websiteDisplayName',
