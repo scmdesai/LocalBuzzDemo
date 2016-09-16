@@ -64876,9 +64876,15 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'button',
                 handler: function(button, e) {
                     var record = Ext.getStore('LocalStore').getAt(0);
-                    var view = Ext.Viewport.add({
-                            xtype: 'contactinfo'
-                        });
+                    var view;
+                    if (Ext.Viewport.getComponent('Info')) {
+                        Ext.Viewport.getComponent('Info').destroy();
+                        console.log('Info exists');
+                    }
+                    view = Ext.Viewport.add({
+                        xtype: 'contactinfo'
+                    });
+                    view.setRecord(record);
                     Ext.Viewport.setActiveItem(view);
                     view.setRecord(record);
                 },
