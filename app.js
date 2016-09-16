@@ -64905,7 +64905,7 @@ Ext.define('Ext.direct.Manager', {
             var view = Ext.Viewport.getComponent('Info');
             Ext.Viewport.setActiveItem(view);
             var storeInfo = Ext.getStore('MyJsonPStore');
-            var rec = storeInfo.findRecord(customerId, record.get('customerId'));
+            var rec = storeInfo.findRecord('customerId', record.get('customerId'));
             view.setRecord(rec);
         });
     },
