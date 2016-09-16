@@ -64851,7 +64851,6 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
-                html: 'deal',
                 id: 'nameTxt7',
                 itemId: 'nameTxt5',
                 padding: '0 0 0 15',
@@ -65069,6 +65068,7 @@ Ext.define('Ext.direct.Manager', {
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
             this.down('#nameTxt6').setHtml(record.get('dealName'));
+            this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
             this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
