@@ -64656,7 +64656,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 padding: '0 0 0 15',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
-                width: '65%'
+                width: '100%'
             },
             {
                 xtype: 'component',
@@ -64855,7 +64855,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt5',
                 padding: '0 0 0 15',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
-                top: '55%',
+                top: '57%',
                 width: '65%'
             },
             {
@@ -64869,7 +64869,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '40%',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '56%',
+                top: '58%',
                 width: '65%'
             },
             {
@@ -64926,7 +64926,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '0 0 10 10',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '80%',
+                top: '85%',
                 width: '90%',
                 clearIcon: false,
                 name: 'websiteDisplayName',
