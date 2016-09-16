@@ -67777,7 +67777,7 @@ Ext.application({
         'DealImage',
         'Info',
         'LatestBuzz',
-        'dealPicture2'
+        'DealPicture2'
     ],
     controllers: [
         'LocalBuzzDemo'
