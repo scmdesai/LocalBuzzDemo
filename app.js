@@ -64854,7 +64854,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'nameTxt7',
                 itemId: 'nameTxt5',
                 padding: '0 0 0 15',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
                 top: '54%',
                 width: '65%'
             },
