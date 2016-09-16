@@ -67686,6 +67686,7 @@ Ext.define('Ext.direct.Manager', {
     },
     onDealPictureShow: function(component, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
+        console.log('DealPic2');
         if (record.get('dealImageURL')) {
             this.down('#dealimage1').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
             this.down('#nameTxt11').show();
@@ -67696,6 +67697,7 @@ Ext.define('Ext.direct.Manager', {
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
+        Ext.getStore('LocalStore').getAt(0);
         if (record) {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
@@ -67705,9 +67707,6 @@ Ext.define('Ext.direct.Manager', {
                 this.down('#nameTxt12').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
             }
             this.down('#nameTxt11').setHtml(record.get('dealDescription'));
-            var store = Ext.getStore('MyJsonPStore');
-            //store.filter('businessName', businessName);
-            var rec = store.findRecord('businessName', businessName);
         }
     }
 }, 0, [
@@ -67730,6 +67729,9 @@ Ext.define('Ext.direct.Manager', {
     0,
     'dealPicture2'
 ], 0));
+// var store = Ext.getStore('MyJsonPStore');
+//store.filter('businessName', businessName);
+//var rec = store.findRecord('businessName', businessName);
 //var rec = store.getAt(0);
 //this.down('#nameTxt8').setHtml('<h2>About '+businessName+'</h2>');
 
