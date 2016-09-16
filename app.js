@@ -64893,7 +64893,7 @@ Ext.define('Ext.direct.Manager', {
     },
     onDealPictureShow: function(component, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
-        console.log(Ext.Viewport.getAt(1).getItemId());
+        console.log(Ext.Viewport.getActiveItem().getItemId());
         /*console.log(Ext.Viewport.getAt(1).getItemId());
         console.log(Ext.Viewport.getAt(2).getItemId());
         console.log(Ext.Viewport.getAt(3).getItemId());*/
