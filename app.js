@@ -65520,6 +65520,7 @@ Ext.define('Ext.direct.Manager', {
         Ext.getCmp('nameTxt8').show();
         Ext.getCmp('nameTxt8').element.addListener('tap', function() {
             var view;
+            Ext.Viewport.getActiveItem().destroy();
             if (Ext.Viewport.getComponent('Info')) {
                 view = Ext.Viewport.getComponent('Info');
             } else {
