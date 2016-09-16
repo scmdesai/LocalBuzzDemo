@@ -64873,174 +64873,19 @@ Ext.define('Ext.direct.Manager', {
                 width: '65%'
             },
             {
-                xtype: 'textareafield',
-                cls: [
-                    'icon-location1',
-                    'customfield'
-                ],
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                id: 'address1',
-                itemId: 'address1',
-                margin: '0 0 0 5',
-                padding: '15 5 0 5',
-                style: 'font-size:4.2vw;font-family:Arial;brder:none!important',
-                styleHtmlContent: true,
-                top: '90%',
-                width: '95%',
-                clearIcon: false,
-                name: 'address',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                if (Ext.getCmp('address1').getValue()) {
-                                    var queryString = encodeURIComponent(Ext.getCmp('address1').getValue());
-                                    var url;
-                                    if (Ext.os.is('Android')) {
-                                        url = 'geo:0,0?q=' + queryString;
-                                    } else {
-                                        url = 'maps:q=' + queryString;
-                                    }
-                                    //Ext.device.Device.openURL(url);
-                                    window.open(url, '_system');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-globe1',
-                disabled: false,
-                docked: 'bottom',
-                height: '7vh',
-                hidden: false,
-                id: 'website3',
-                itemId: 'website3',
-                minHeight: '',
-                padding: '0 0 10 10',
-                style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
-                styleHtmlContent: true,
-                top: '82%',
-                width: '90%',
-                clearIcon: false,
-                name: 'websiteDisplayName',
-                placeHolder: 'Not Listed',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                var url = Ext.getCmp('website2').getValue();
-                                if (url) {
-                                    window.open(url, '_system', 'location=yes');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-email1',
-                height: '7vh',
-                id: 'email1',
-                itemId: 'email1',
-                margin: '0 0 0 5',
-                padding: '5 0 0 10',
-                style: 'font-family:Arial;font-size:4.5vw',
-                styleHtmlContent: true,
-                top: '75%',
-                width: '90%',
-                clearIcon: false,
-                inputCls: '',
-                label: '',
-                name: 'emailAddress',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                /* cordova.plugins.email.open({
-
-
-                                to:          Ext.getCmp('email').getValue(), // email addresses for TO field
-                                isHtml:    false, // indicats if the body is HTML or plain text
-                                });*/
-                                if (Ext.getCmp('email1').getValue()) {
-                                    window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-                                    null, [
-                                        Ext.getCmp('email1').getValue()
-                                    ], // TO: must be null or an array
-                                    null, // CC: must be null or an array
-                                    null, // BCC: must be null or an array
-                                    null, // FILES: can be null, a string, or an array
-                                    null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
-                                    null);
-                                }
-                            });
-                        },
-                        // called when sh*t hits the fan
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-phone1',
-                disabled: false,
-                docked: 'bottom',
-                height: '7vh',
-                hidden: false,
-                html: '',
-                id: 'phoneNumber1',
-                itemId: 'phoneNumber1',
-                margin: '0 0 0 5',
-                padding: '0 0 5 5',
-                style: 'font-size:2vw !important',
-                styleHtmlContent: true,
-                top: '66%',
-                width: '90%',
-                clearIcon: false,
-                name: 'phoneNumber',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                // console.log(Ext.getCmp('phoneNumber').getValue());
-                                var numberToDial = Ext.getCmp('phoneNumber1').getValue();
-                                //window.location = 'tel:'+ numberToDial ;
-                                if (numberToDial) {
-                                    window.open('tel:' + numberToDial, '_system');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-globe',
-                disabled: false,
-                height: '',
-                hidden: true,
-                id: 'website2',
-                itemId: 'website2',
-                margin: '0 15 0 15',
-                maxHeight: '30%',
-                minHeight: '',
-                styleHtmlContent: true,
-                clearIcon: false,
-                name: 'website',
-                readOnly: true
+                xtype: 'button',
+                handler: function(button, e) {
+                    var record = Ext.getStore('LocalStore').getAt(0);
+                    var info = this.getContactinfo();
+                    info.setRecord(record);
+                    Ext.Viewport.add(info);
+                    Ext.Viewport.setActiveItem(info);
+                },
+                height: '11vh',
+                id: 'getStoreInfoBtn',
+                itemId: 'getStoreInfoBtn',
+                top: '70%',
+                ui: 'plain'
             }
         ],
         listeners: [
@@ -65076,12 +64921,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            Ext.getCmp('phoneNumber1').setValue(rec.get('phoneNumber'));
-            Ext.getCmp('phoneNumber1').setStyle('font-size:3vw;font-family: Arial;');
-            Ext.getCmp('website3').setValue(rec.get('websiteDisplayName'));
-            Ext.getCmp('website2').setValue(rec.get('website'));
-            Ext.getCmp('address1').setValue(rec.get('address'));
-            Ext.getCmp('email1').setValue(rec.get('emailAddress'));
+            Ext.getCmp('getStoreInfoBtn').setHtml('About ' + businessName);
         }
     }
 }, 0, [
