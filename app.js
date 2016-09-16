@@ -65205,11 +65205,7 @@ Ext.define('Ext.direct.Manager', {
                         handler: function(button, e) {
                             Ext.Viewport.getActiveItem().destroy();
                             Ext.getStore('LocalStore').removeAt(0);
-                            if (Ext.Viewport.getComponent('DealsPanel')) {
-                                Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
-                            } else {
-                                Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
-                            }
+                            Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
                             var store = Ext.getStore('MyJsonPStore');
                             var dealStore = Ext.getStore('MyDealsStore');
                             store.clearFilter();
@@ -67388,15 +67384,7 @@ Ext.define('Ext.direct.Manager', {
                         handler: function(button, e) {
                             Ext.Viewport.getActiveItem().destroy();
                             Ext.getStore('LocalStore').removeAt(0);
-                            if (Ext.Viewport.getComponent('DealsPanel')) {
-                                Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
-                            } else {
-                                Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
-                            }
-                            var store = Ext.getStore('MyJsonPStore');
-                            var dealStore = Ext.getStore('MyDealsStore');
-                            store.clearFilter();
-                            dealStore.clearFilter();
+                            Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                         },
                         centered: false,
                         cls: 'icon-back-button',
