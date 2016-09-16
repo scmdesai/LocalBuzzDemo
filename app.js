@@ -64902,7 +64902,14 @@ Ext.define('Ext.direct.Manager', {
             this.down('#nameTxt3').hide();
         }
         Ext.getCmp('nameTxt8').element.addListener('tap', function() {
-            var view = Ext.Viewport.getComponent('Info');
+            var view;
+            if (Ext.Viewport.getComponent('Info')) {
+                view = Ext.Viewport.getComponent('Info');
+            } else {
+                view = Ext.Viewport.add({
+                    xtype: 'contactinfo'
+                });
+            }
             Ext.Viewport.setActiveItem(view);
             var storeInfo = Ext.getStore('MyJsonPStore');
             var rec = storeInfo.findRecord('customerId', record.get('customerId'));
