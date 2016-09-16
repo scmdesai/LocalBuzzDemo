@@ -65261,6 +65261,10 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onFavbuttonTap',
                 event: 'tap',
                 delegate: '#favbutton'
+            },
+            {
+                fn: 'onInfoPainted',
+                event: 'painted'
             }
         ]
     },
@@ -65292,6 +65296,40 @@ Ext.define('Ext.direct.Manager', {
         //console.log(customerId + isPressed);
         record.set('isFavorite', isPressed);
         store.sync();
+    },
+    onInfoPainted: function(element, eOpts) {
+        var record = Ext.getStore('LocalStore').getAt(0);
+        if (record) {
+            var name = record.get('businessName');
+            var isFavorite = record.get('isFavorite');
+            var customerId = record.get('customerId');
+            var store = Ext.getStore('UserPreferences');
+            if (store.getAllCount() !== 0) {
+                store.each(function(rec) {
+                    if (rec.get('customerId') == customerId) {
+                        isFavorite = rec.get('isFavorite');
+                    }
+                });
+            }
+            //console.log(customerId + isFavorite );
+            this.down('#nameTxt').setHtml(name);
+            if (record.get('pictureURL')) {
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            }
+            // console.log(store.getData());
+            if (isFavorite === true) {
+                this.down('#favbutton').setCls('fill-star');
+            } else //store.setData({'isFavorite':isFavorite});
+            {
+                this.down('#favbutton').setCls('empty-star');
+            }
+            // this.down('#favoriteview')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
+            this.down('#favbutton')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
+            //this.down('contactpic').setData(record.data);
+            var ds = Ext.StoreManager.lookup('MyDealsStore');
+            ds.clearFilter();
+            ds.filter('customerId', customerId);
+        }
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
