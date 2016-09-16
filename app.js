@@ -65530,6 +65530,7 @@ Ext.define('Ext.direct.Manager', {
             Ext.Viewport.setActiveItem(view);
             var storeInfo = Ext.getStore('MyJsonPStore');
             var rec = storeInfo.findRecord('customerId', record.get('customerId'));
+            Ext.getStore('LocalStore').removeAt(0);
             view.setRecord(rec);
         });
     },
