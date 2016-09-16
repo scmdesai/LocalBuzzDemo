@@ -65386,7 +65386,7 @@ Ext.define('Ext.direct.Manager', {
                 margin: '10 5 5 5',
                 minHeight: '8vh',
                 style: 'font-family:Arial;font-size:4vw',
-                top: '39vh',
+                top: '41vh',
                 width: '98%',
                 listeners: [
                     {
@@ -65472,7 +65472,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt5',
                 padding: '0 0 0 15',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
-                top: '57%',
+                top: '52vh',
                 width: '65%'
             },
             {
@@ -65488,14 +65488,14 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
-                height: '',
+                height: '4vh',
                 html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
                 id: 'nameTxt2',
                 itemId: 'nameTxt2',
                 left: '40%',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
-                top: '58%',
+                top: '53vh',
                 width: '65%'
             }
         ],
@@ -67475,7 +67475,7 @@ Ext.define('Ext.direct.Manager', {
                                             xtype: 'DealImage'
                                         });
                                     view.setRecord(record);
-                                    view.showBy(Ext.get('dealPicture1'));
+                                    view.showBy(Ext.get('dealPicture2'));
                                 });
                             } else {
                                 element.addListener('tap', function() {
