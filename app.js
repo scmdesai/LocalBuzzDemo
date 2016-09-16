@@ -64785,6 +64785,7 @@ Ext.define('Ext.direct.Manager', {
 
                 });*/
                     //store.filter('dealStatus','Active');
+                    Ext.getCmp('nameTxt8').show();
                     var view = Ext.Viewport.add({
                             xtype: 'DealsPanel'
                         });
@@ -65199,6 +65200,7 @@ Ext.define('Ext.direct.Manager', {
                         handler: function(button, e) {
                             Ext.Viewport.getActiveItem().destroy();
                             Ext.getStore('LocalStore').removeAt(0);
+                            Ext.getCmp('nameTxt8').show();
                             if (Ext.Viewport.getComponent('DealsPanel')) {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                             } else {
