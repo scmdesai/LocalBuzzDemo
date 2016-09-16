@@ -65075,6 +65075,7 @@ Ext.define('Ext.direct.Manager', {
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
             Ext.getCmp('phoneNumber1').setValue(rec.get('phoneNumber'));
+            Ext.getCmp('phoneNumber1').setStyle('font-size:2vw;font-family: Arial;');
             Ext.getCmp('website3').setValue(rec.get('websiteDisplayName'));
             Ext.getCmp('website2').setValue(rec.get('website'));
             Ext.getCmp('address1').setValue(rec.get('address'));
