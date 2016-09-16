@@ -65203,11 +65203,11 @@ Ext.define('Ext.direct.Manager', {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                             } else {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
-                                var store = Ext.getStore('MyJsonPStore');
-                                var dealStore = Ext.getStore('MyDealsStore');
-                                store.clearFilter();
-                                dealStore.clearFilter();
                             }
+                            var store = Ext.getStore('MyJsonPStore');
+                            var dealStore = Ext.getStore('MyDealsStore');
+                            store.clearFilter();
+                            dealStore.clearFilter();
                         },
                         centered: false,
                         cls: 'icon-back-button',
@@ -65539,9 +65539,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            if (!Ext.Viewport.getComponent('DealsPanel')) {
-                this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
-            }
+            this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
         }
     }
 }, 0, [
