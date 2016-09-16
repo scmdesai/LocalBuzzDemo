@@ -64874,17 +64874,24 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'button',
-                height: '11vh',
+                height: '9vh',
                 id: 'getStoreInfoBtn',
                 itemId: 'getStoreInfoBtn',
+                left: '20%',
                 top: '70%',
-                ui: 'confirm'
+                ui: 'confirm',
+                width: '65%'
             }
         ],
         listeners: [
             {
                 fn: 'onDealPictureShow',
                 event: 'show'
+            },
+            {
+                fn: 'onGetStoreInfoBtnTap',
+                event: 'tap',
+                delegate: '#getStoreInfoBtn'
             }
         ]
     },
@@ -64897,6 +64904,18 @@ Ext.define('Ext.direct.Manager', {
         } else {
             this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             this.down('#nameTxt3').hide();
+        }
+    },
+    onGetStoreInfoBtnTap: function(button, e, eOpts) {
+        var view;
+        if (Ext.Viewport.getComponent('Info')) {
+            Ext.Viewport.getComponent('Info').destroy();
+            console.log('Info exists');
+            view = Ext.Viewport.add({
+                xtype: 'contactinfo'
+            });
+            view.setRecord(record);
+            Ext.Viewport.setActiveItem(view);
         }
     },
     setRecord: function(record) {
@@ -64914,7 +64933,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            Ext.getCmp('getStoreInfoBtn').setHtml('<h4>About' + businessName + '</h4>');
+            Ext.getCmp('getStoreInfoBtn').setHtml('<h4>About ' + businessName + '</h4>');
         }
     }
 }, 0, [
