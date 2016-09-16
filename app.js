@@ -64909,7 +64909,6 @@ Ext.define('Ext.direct.Manager', {
     onGetStoreInfoBtnTap: function(button, e, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
         var view = Ext.Viewport.getComponent('Info');
-        view.setRecord(record);
         Ext.Viewport.setActiveItem(view);
     },
     setRecord: function(record) {
