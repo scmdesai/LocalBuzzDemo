@@ -65776,6 +65776,8 @@ Ext.define('Ext.direct.Manager', {
         Ext.getStore('LocalStore').add(record);
         var pic;
         //var pic = Ext.Viewport.add({xtype:'dealpicture'});
+        console.log(Ext.Viewport.getActiveItem().getItemId());
+        console.log(Ext.Viewport.getActiveItem().getItemIndex());
         if (Ext.Viewport.getComponent('dealPicture')) {
             pic = Ext.Viewport.getComponent('dealPicture');
         } else {
