@@ -64924,6 +64924,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
+            console.log(Ext.Viewport.getAt(2));
             this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
         }
     }
