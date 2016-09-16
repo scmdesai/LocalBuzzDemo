@@ -65782,7 +65782,7 @@ Ext.define('Ext.direct.Manager', {
             pic = Ext.Viewport.getComponent('dealPicture2');
         } else {
             pic = Ext.Viewport.add({
-                xtype: 'dealpicture2'
+                xtype: 'dealPicture2'
             });
         }
         pic.setRecord(record);
