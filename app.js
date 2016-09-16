@@ -65300,7 +65300,7 @@ Ext.define('Ext.direct.Manager', {
     onInfoPainted: function(element, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
         console.log('Info painted');
-        console.log(record);
+        console.log('Record is : ' + record);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
