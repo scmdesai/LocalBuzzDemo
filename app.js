@@ -65965,7 +65965,7 @@ Ext.define('Ext.direct.Manager', {
             this.down('#nameTxt3').show();
         } else {
             //this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
-            this.down('#dealimage').setHtml('<div background = "resources/img/buzz-background.png"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></div>');
+            this.down('#dealimage').setHtml('<div background = url(resources/img/buzz-background.png)><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></div>');
             this.down('#nameTxt3').hide();
         }
         //Ext.getCmp('nameTxt8').show();
