@@ -65835,7 +65835,7 @@ Ext.define('Ext.direct.Manager', {
         	}
         });*/
         Ext.Viewport.getActiveItem().destroy();
-        Ext.Viewport.setActiveItem(1);
+        Ext.Viewport.setActiveItem(2);
     },
     onFavoritesActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         var store = Ext.getStore('UserPreferences');
