@@ -64785,7 +64785,6 @@ Ext.define('Ext.direct.Manager', {
 
                 });*/
                     //store.filter('dealStatus','Active');
-                    Ext.getCmp('nameTxt8').hide();
                     var view = Ext.Viewport.add({
                             xtype: 'DealsPanel'
                         });
@@ -65540,7 +65539,9 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
+            if (!Ext.Viewport.getComponent('DealsPanel')) {
+                this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
+            }
         }
     }
 }, 0, [
