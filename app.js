@@ -64894,9 +64894,10 @@ Ext.define('Ext.direct.Manager', {
     onDealPictureShow: function(component, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
         //console.log(Ext.Viewport.getActiveItem().getItemId());
-        /*console.log(Ext.Viewport.getAt(1).getItemId());
+        console.log(Ext.Viewport.getAt(0).getItemId());
+        console.log(Ext.Viewport.getAt(1).getItemId());
         console.log(Ext.Viewport.getAt(2).getItemId());
-        console.log(Ext.Viewport.getAt(3).getItemId());*/
+        console.log(Ext.Viewport.getAt(3).getItemId());
         if (record.get('dealImageURL')) {
             this.down('#dealimage').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
             this.down('#nameTxt3').show();
@@ -65784,7 +65785,7 @@ Ext.define('Ext.direct.Manager', {
         Ext.getStore('LocalStore').add(record);
         var pic;
         //var pic = Ext.Viewport.add({xtype:'dealpicture'});
-        console.log(Ext.Viewport.getActiveItem().getItemId());
+        //console.log(Ext.Viewport.getActiveItem().getItemId());
         if (Ext.Viewport.getComponent('dealPicture')) {
             pic = Ext.Viewport.getComponent('dealPicture');
         } else {
