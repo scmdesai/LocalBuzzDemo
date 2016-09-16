@@ -67140,9 +67140,15 @@ Ext.define('Ext.direct.Manager', {
         if (e.target === 'favDealBtn') {
             Ext.get('favDealBtn').setHtml('New Value');
         }
-        var pic = Ext.Viewport.add({
+        var pic;
+        if (Ext.Viewport.getComponent('dealPicture')) {
+            pic = Ext.Viewport.getComponent('dealPicture');
+        } else {
+            pic = Ext.Viewport.add({
                 xtype: 'dealpicture'
             });
+        }
+        //var pic = Ext.Viewport.add({xtype:'dealpicture'});
         /*console.log("Data View is: ") ;
         console.log(dataview) ;
         console.log("Index is: " + index) ;
