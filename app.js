@@ -64862,6 +64862,17 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: 'contact-name',
                 disabled: true,
+                id: 'nameTxt8',
+                itemId: 'nameTxt6',
+                padding: '0 0 0 15',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:3vw',
+                top: '75%',
+                width: '65%'
+            },
+            {
+                xtype: 'component',
+                cls: 'contact-name',
+                disabled: true,
                 height: '',
                 html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
                 id: 'nameTxt2',
@@ -64871,27 +64882,12 @@ Ext.define('Ext.direct.Manager', {
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw',
                 top: '58%',
                 width: '65%'
-            },
-            {
-                xtype: 'button',
-                height: '9vh',
-                id: 'getStoreInfoBtn',
-                itemId: 'getStoreInfoBtn',
-                left: '20%',
-                top: '70%',
-                ui: 'confirm',
-                width: '65%'
             }
         ],
         listeners: [
             {
                 fn: 'onDealPictureShow',
                 event: 'show'
-            },
-            {
-                fn: 'onGetStoreInfoBtnTap',
-                event: 'tap',
-                delegate: '#getStoreInfoBtn'
             }
         ]
     },
@@ -64905,11 +64901,11 @@ Ext.define('Ext.direct.Manager', {
             this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             this.down('#nameTxt3').hide();
         }
-    },
-    onGetStoreInfoBtnTap: function(button, e, eOpts) {
-        var record = Ext.getStore('LocalStore').getAt(0);
-        var view = Ext.Viewport.getComponent('Info');
-        Ext.Viewport.setActiveItem(view);
+        Ext.getCmp('nameTxt8').addListener('tap', function() {
+            var view = Ext.Viewport.getComponent('Info');
+            Ext.Viewport.setActiveItem(view);
+            view.setRecord(record);
+        });
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
@@ -64926,7 +64922,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            Ext.getCmp('getStoreInfoBtn').setHtml('<h4>About ' + businessName + '</h4>');
+            this.down('#nameTxt8').setHtml('<h4>About ' + businessName + '</h4>');
         }
     }
 }, 0, [
