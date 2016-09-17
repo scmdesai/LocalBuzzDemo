@@ -65729,7 +65729,7 @@ Ext.define('Ext.direct.Manager', {
                     'dealimage'
                 ],
                 disabled: true,
-                height: '55vh',
+                height: '78vh',
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
@@ -65998,11 +65998,10 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
-            if (record.get('dealImageURL')) {
-                this.down('#nameTxt6').setHtml(record.get('dealName'));
-                this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
-            }
-            this.down('#nameTxt3').setHtml(record.get('dealDescription'));
+            if (record.get('dealImageURL')) {}
+            //this.down('#nameTxt6').setHtml(record.get('dealName'));
+            // this.down('#nameTxt7').setHtml('Valid from '+record.get('dealStartDate')+'-'+record.get('dealEndDate'));
+            // this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
