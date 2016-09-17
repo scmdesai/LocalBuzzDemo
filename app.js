@@ -65714,7 +65714,7 @@ Ext.define('Ext.direct.Manager', {
                 disabled: true,
                 docked: 'top',
                 height: '9vh',
-                hidden: true,
+                hidden: false,
                 id: 'nameTxt6',
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
@@ -65729,7 +65729,7 @@ Ext.define('Ext.direct.Manager', {
                     'dealimage'
                 ],
                 disabled: true,
-                height: '78vh',
+                height: '40vh',
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
@@ -65827,7 +65827,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 docked: 'bottom',
-                height: '10vh',
+                height: '39vh',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
@@ -65838,13 +65838,13 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'contact-name',
                         disabled: true,
                         docked: 'top',
-                        hidden: true,
+                        hidden: false,
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
                         style: 'font-family:Arial;font-size:4vw;',
-                        width: '100%',
+                        width: '98%',
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
@@ -65965,13 +65965,13 @@ Ext.define('Ext.direct.Manager', {
     onDealPictureShow: function(component, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
         if (record.get('dealImageURL')) {
-            //this.down('#dealimage').setHtml('<div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
-            this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
+            this.down('#dealimage').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
+            // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            // this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
+            this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background-image:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
-            this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
+            // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').hide();
         }
         //Ext.getCmp('nameTxt8').show();
@@ -65998,10 +65998,11 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
-            if (record.get('dealImageURL')) {}
-            //this.down('#nameTxt6').setHtml(record.get('dealName'));
-            // this.down('#nameTxt7').setHtml('Valid from '+record.get('dealStartDate')+'-'+record.get('dealEndDate'));
-            // this.down('#nameTxt3').setHtml(record.get('dealDescription'));
+            if (record.get('dealImageURL')) {
+                this.down('#nameTxt6').setHtml(record.get('dealName'));
+                this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
+            }
+            this.down('#nameTxt3').setHtml(record.get('dealDescription'));
             var store = Ext.getStore('MyJsonPStore');
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
