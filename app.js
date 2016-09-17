@@ -65827,7 +65827,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 docked: 'bottom',
-                height: '39vh',
+                height: '20vh',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
