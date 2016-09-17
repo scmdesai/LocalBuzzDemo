@@ -64793,7 +64793,10 @@ Ext.define('Ext.direct.Manager', {
                             xtype: 'DealsPanel'
                         });
                     }
-                    Ext.Viewport.setActiveItem(view);
+                    Ext.Viewport.setActiveItem(view, {
+                        type: 'slide',
+                        direction: 'right'
+                    });
                 },
                 docked: 'top',
                 height: '7%',
@@ -66209,7 +66212,10 @@ Ext.define('Ext.direct.Manager', {
         pic.setRecord(record);
         Ext.getStore('LocalStore').add(record);
         //Ext.Viewport.add(pic);
-        Ext.Viewport.setActiveItem(pic);
+        Ext.Viewport.setActiveItem(pic, {
+            type: 'slide',
+            direction: 'right'
+        });
         //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
         //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
         var showPosition;
