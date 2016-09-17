@@ -65732,7 +65732,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;',
                 width: '96vw',
                 listeners: [
                     {
@@ -65840,7 +65840,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
-                        style: 'font-family:Arial;font-size:4vw',
+                        style: 'font-family:Arial;font-size:4vw;',
                         width: '100%',
                         listeners: [
                             {
@@ -65965,7 +65965,7 @@ Ext.define('Ext.direct.Manager', {
             this.down('#nameTxt3').show();
         } else {
             //this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
-            this.down('#dealimage').setHtml('<div background = url("resources/img/buzz-background.png")><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></div>');
+            this.down('#dealimage').setHtml('<div style="background-image:url(resources/img/buzz-background.png);width:98%;height:40vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             this.down('#nameTxt3').hide();
         }
         //Ext.getCmp('nameTxt8').show();
