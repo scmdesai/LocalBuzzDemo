@@ -65728,11 +65728,11 @@ Ext.define('Ext.direct.Manager', {
                     'dealimage'
                 ],
                 disabled: true,
-                height: '40vh',
+                height: '45vh',
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'color:white;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;',
+                style: 'color:white;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;',
                 width: '96vw',
                 listeners: [
                     {
