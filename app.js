@@ -64151,7 +64151,7 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
         items: [
@@ -64553,7 +64553,7 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         id: 'Info',
         itemId: 'Info',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: 'background-color:#fff;border:2px groove #C0C0C0',
         ui: 'dark',
         hideOnMaskTap: false,
@@ -64959,7 +64959,7 @@ Ext.define('Ext.direct.Manager', {
     config: {
         cls: 'tpl-l0uxnqjl',
         height: '100%',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
@@ -65010,7 +65010,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'listofdeals',
         itemId: 'listofdeals',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: '',
         styleHtmlContent: true,
         allowDeselect: true,
@@ -65623,7 +65623,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: 'background:#fff;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
@@ -66057,7 +66057,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'latestbuzz1',
         itemId: 'latestbuzz1',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: '',
         styleHtmlContent: true,
         width: '100%',
@@ -66280,6 +66280,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
+        showAnimation: 'card',
         style: 'background:#fff;',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
@@ -66865,7 +66866,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel',
         itemId: 'DealsPanel',
         padding: '5 5 5 5',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: 'background:#fff',
         scrollable: false,
         layout: {
@@ -66999,7 +67000,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel1',
         itemId: 'DealsPanel1',
         padding: '5 5 5 5',
-        showAnimation: 'slide',
+        showAnimation: 'card',
         style: 'background:#fff',
         scrollable: false,
         layout: {
