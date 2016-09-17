@@ -65966,7 +65966,7 @@ Ext.define('Ext.direct.Manager', {
         } else {
             // this.down('#dealimage').setHtml('<img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background-image:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
-            this.down('#dealimage').setHtml('<div class="quote-container"><i class="pin"></i><blockquote class="note yellow">We cannot solve problems by using the same kind of thinking we used when we created them.<cite class="author">Albert Einstein</cite></blockquote></div>');
+            this.down('#dealimage').setHtml('<div class="quote-container"><i class="pin"></i><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').hide();
         }
         //Ext.getCmp('nameTxt8').show();
