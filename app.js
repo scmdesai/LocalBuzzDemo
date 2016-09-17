@@ -64151,6 +64151,7 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
+        showAnimation: 'slide',
         style: 'background:#FFF;color:#00529D!important',
         styleHtmlContent: true,
         items: [
@@ -64552,6 +64553,7 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         id: 'Info',
         itemId: 'Info',
+        showAnimation: 'slide',
         style: 'background-color:#fff;border:2px groove #C0C0C0',
         ui: 'dark',
         hideOnMaskTap: false,
@@ -64793,10 +64795,7 @@ Ext.define('Ext.direct.Manager', {
                             xtype: 'DealsPanel'
                         });
                     }
-                    Ext.Viewport.setActiveItem(view, {
-                        type: 'slide',
-                        direction: 'right'
-                    });
+                    Ext.Viewport.setActiveItem(view);
                 },
                 docked: 'top',
                 height: '7%',
@@ -64960,6 +64959,7 @@ Ext.define('Ext.direct.Manager', {
     config: {
         cls: 'tpl-l0uxnqjl',
         height: '100%',
+        showAnimation: 'slide',
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
@@ -65010,6 +65010,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'listofdeals',
         itemId: 'listofdeals',
+        showAnimation: 'slide',
         style: '',
         styleHtmlContent: true,
         allowDeselect: true,
@@ -65622,6 +65623,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
+        showAnimation: 'slide',
         style: 'background:#fff;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
@@ -66055,6 +66057,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'latestbuzz1',
         itemId: 'latestbuzz1',
+        showAnimation: 'slide',
         style: '',
         styleHtmlContent: true,
         width: '100%',
@@ -66212,10 +66215,7 @@ Ext.define('Ext.direct.Manager', {
         pic.setRecord(record);
         Ext.getStore('LocalStore').add(record);
         //Ext.Viewport.add(pic);
-        Ext.Viewport.setActiveItem(pic, {
-            type: 'slide',
-            direction: 'right'
-        });
+        Ext.Viewport.setActiveItem(pic);
         //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
         //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
         var showPosition;
@@ -66865,6 +66865,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel',
         itemId: 'DealsPanel',
         padding: '5 5 5 5',
+        showAnimation: 'slide',
         style: 'background:#fff',
         scrollable: false,
         layout: {
@@ -66998,6 +66999,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel1',
         itemId: 'DealsPanel1',
         padding: '5 5 5 5',
+        showAnimation: 'slide',
         style: 'background:#fff',
         scrollable: false,
         layout: {
@@ -67131,6 +67133,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealImage',
         itemId: 'DealImage',
         margin: '10 10 10 0',
+        showAnimation: 'slide',
         style: 'border:1px solid #00529D;background:#fff',
         width: '95%',
         scrollable: true,
@@ -67186,6 +67189,7 @@ Ext.define('Ext.direct.Manager', {
                 mouseWheel: true,
                 wheelAction: 'zoom'
             });
+        sh;
     }
 }, 0, [
     "DealImage"
