@@ -65926,7 +65926,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'contact-name',
                         disabled: true,
                         docked: 'top',
-                        hidden: true,
+                        hidden: false,
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
