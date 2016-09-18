@@ -195,11 +195,12 @@ $list-header-bg-color: $base-color;
 
 /* photos */
 .photo {
-    border: 1px solid #999; 
+    /*border: 1px solid #999; */
     margin:5px 5px 5px 5px;
     width: 22vw;
     height: 15vh;
     float: left;
+    background:rga(255,255,240,0.5);
     
     
 }
