@@ -65624,7 +65624,7 @@ Ext.define('Ext.direct.Manager', {
         margin: '',
         padding: '5 5 5 5',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+        style: 'background:rgba(248,248,255,1)!important;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
         tpl: [
@@ -66013,7 +66013,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h3>About ' + businessName + '</h3>');
+            this.down('#nameTxt8').setHtml('<h5>About ' + businessName + '</h5>');
         }
     }
 }, 0, [
