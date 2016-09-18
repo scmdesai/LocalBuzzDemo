@@ -65623,7 +65623,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
-        showAnimation: 'pop',
+        showAnimation: 'card',
         style: 'background:#fff;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
@@ -65739,7 +65739,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'dealimage',
                 left: '2%',
                 padding: '0 0 5 0',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;background:rgba(248.248,255,1);',
                 width: '96vw',
                 listeners: [
                     {
