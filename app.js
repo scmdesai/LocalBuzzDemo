@@ -65724,7 +65724,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
                 padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:rgba(248,248,255,1)!important',
                 width: '98%'
             },
             {
@@ -65833,6 +65833,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'container',
                 docked: 'bottom',
                 height: '39vh',
+                style: 'background:rgba(248,248,255,1)!important',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
