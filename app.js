@@ -65624,7 +65624,7 @@ Ext.define('Ext.direct.Manager', {
         margin: '',
         padding: '5 5 5 5',
         showAnimation: 'card',
-        style: 'background:#fff;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+        style: 'background:rgba(248,248,255,1);word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
         tpl: [
@@ -65739,7 +65739,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'dealimage',
                 left: '2%',
                 padding: '0 0 5 0',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;background:rgba(248,248,255,1)',
+                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;background:transparent',
                 width: '96vw',
                 listeners: [
                     {
@@ -66013,7 +66013,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h2>About ' + businessName + '</h2>');
+            this.down('#nameTxt8').setHtml('<h3>About ' + businessName + '</h3>');
         }
     }
 }, 0, [
