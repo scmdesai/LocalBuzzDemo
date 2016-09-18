@@ -65739,7 +65739,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'dealimage',
                 left: '2%',
                 padding: '0 0 5 0',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;background:rgba(248.248,255,1);',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#FFF;border:2px dotted #c0c0c0;background:rgba(248,248,255,1)',
                 width: '96vw',
                 listeners: [
                     {
