@@ -65623,7 +65623,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
-        showAnimation: 'card',
+        showAnimation: 'pop',
         style: 'background:rgba(248,248,255,1);word-wrap:break-word;font-family:Arial;font-size:5.5vw',
         width: '100%',
         scrollable: true,
