@@ -65729,7 +65729,10 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'component',
-                cls: 'dealimage',
+                cls: [
+                    'dealimage',
+                    'w3-card-4'
+                ],
                 disabled: true,
                 height: '40vh',
                 id: 'dealimage',
