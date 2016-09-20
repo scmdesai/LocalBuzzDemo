@@ -65011,7 +65011,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'listofdeals',
         itemId: 'listofdeals',
         showAnimation: 'pop',
-        style: '',
+        style: 'background:rgba(248,248,255,1);',
         styleHtmlContent: true,
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
@@ -65724,7 +65724,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
                 padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:rgba(248,248,255,1)!important',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:transparent',
                 width: '98%'
             },
             {
@@ -65848,7 +65848,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
-                        style: 'font-family:Arial;font-size:4vw;',
+                        style: 'font-family:Arial;font-size:4vw;background:rgba(248,248,255,1)!important;',
                         width: '98%',
                         listeners: [
                             {
@@ -65935,7 +65935,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw'
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw;background:rgba(248,248,255,1)!important;'
                     },
                     {
                         xtype: 'component',
@@ -65947,7 +65947,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt2',
                         margin: '10 5 5 5',
                         right: '0%',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw'
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:rgba(248,248,255,1)!important;'
                     },
                     {
                         xtype: 'button',
@@ -65970,7 +65970,7 @@ Ext.define('Ext.direct.Manager', {
     onDealPictureShow: function(component, eOpts) {
         var record = Ext.getStore('LocalStore').getAt(0);
         if (record.get('dealImageURL')) {
-            this.down('#dealimage').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
+            this.down('#dealimage').setHtml('<div><img src="' + record.get('dealImageURL') + '" style="height:39vh;width:100%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
