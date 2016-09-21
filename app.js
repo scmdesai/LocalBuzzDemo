@@ -66019,7 +66019,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h5>About ' + businessName + '</h5>');
+            this.down('#nameTxt8').setHtml('<h5><b>About ' + businessName + '</b></h5>');
         }
     }
 }, 0, [
