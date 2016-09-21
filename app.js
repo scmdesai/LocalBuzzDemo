@@ -64564,8 +64564,7 @@ Ext.define('Ext.direct.Manager', {
         hideOnMaskTap: false,
         layout: 'vbox',
         modal: false,
-        scrollable: 'both',
-        enableSubmissionForm: false,
+        scrollable: true,
         items: [
             {
                 xtype: 'toolbar',
@@ -64621,7 +64620,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'storeImage',
                 itemId: 'storeImage',
                 left: '2%',
-                width: '96%'
+                width: '97%'
             },
             {
                 xtype: 'textfield',
