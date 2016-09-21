@@ -66024,6 +66024,7 @@ Ext.define('Ext.direct.Manager', {
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
+        console.log('Deal Picture showing' + record.get('dealName'));
         if (record) {
             var name = record.get('itemName');
             var businessName = record.get('businessName');
