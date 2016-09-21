@@ -64910,7 +64910,8 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
             var customerId = record.get('customerId');
-            var businessInfo = record.get('businessInfo');
+            var businessInfo = record.get('businessInfo').toString();
+            console.log(businessInfo);
             var store = Ext.getStore('UserPreferences');
             if (store.getAllCount() !== 0) {
                 store.each(function(rec) {
@@ -64921,7 +64922,7 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            this.down('#businessInfo').setHtml(businessInfo);
+            this.down('#businessInfo').setValue(businessInfo);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
             }
