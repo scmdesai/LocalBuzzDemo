@@ -64560,7 +64560,6 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'Info',
         showAnimation: 'slide',
         style: 'background:#fff;overflow-y:scroll',
-        styleHtmlContent: true,
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
@@ -64922,7 +64921,7 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            this.down('#businessInfo').setValue(businessInfo);
+            //this.down('#businessInfo').setValue(businessInfo);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
             }
