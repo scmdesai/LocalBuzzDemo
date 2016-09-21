@@ -26,7 +26,7 @@ $list-header-bg-color: $base-color;
 }
 
 .toolbarCls {
-    background:transparent !important;
+    background:#fff !important;
     border-bottom:1px solid #C0C0C0 !important;
 }
 
@@ -211,7 +211,7 @@ $list-header-bg-color: $base-color;
     float: left;
     margin-right: 10px;
     width: 22vw;
-    height: 15vh;
+    height: 16vh;
 }
 
 .list-item h1 {
@@ -226,12 +226,11 @@ $list-header-bg-color: $base-color;
 .photo {
     /*border: 1px solid #999; */
     margin:5px 5px 5px 5px;
-    padding:5px 5px 5px 5px;
     width: 22vw;
     height: 16vh;
     float: left;
     background:none;
-
+    padding:5px 5px 5px 5px;
 
 }
 
