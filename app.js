@@ -64561,7 +64561,7 @@ Ext.define('Ext.direct.Manager', {
         style: 'background:#fff;overflow-y:scroll;',
         styleHtmlContent: true,
         ui: 'dark',
-        width: '100%',
+        width: '95%',
         hideOnMaskTap: false,
         modal: false,
         scrollable: true,
