@@ -64558,7 +64558,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'slide',
-        style: 'background:#fff',
+        style: 'background:#fff;overflow-y:scroll',
         ui: 'dark',
         width: '100%',
         hideOnMaskTap: false,
@@ -64880,10 +64880,6 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onFavbuttonTap',
                 event: 'tap',
                 delegate: '#favbutton'
-            },
-            {
-                fn: 'onInfoPainted',
-                event: 'painted'
             }
         ]
     },
@@ -64915,10 +64911,6 @@ Ext.define('Ext.direct.Manager', {
         //console.log(customerId + isPressed);
         record.set('isFavorite', isPressed);
         store.sync();
-    },
-    onInfoPainted: function(element, eOpts) {
-        var panel = Ext.getCmp('Info');
-        panel.body.scroll("b", bottom, true);
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
