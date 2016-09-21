@@ -66222,10 +66222,10 @@ Ext.define('Ext.direct.Manager', {
         ]
     },
     onLatestbuzz1ItemTap: function(dataview, index, target, record, e, eOpts) {
-        console.log('Got record ' + record.get('dealName'));
         if (e.target === 'favDealBtn') {
             Ext.get('favDealBtn').setHtml('New Value');
         }
+        console.log('Got record ' + record.get('dealName'));
         var pic;
         if (Ext.Viewport.getComponent('dealPicture')) {
             pic = Ext.Viewport.getComponent('dealPicture');
