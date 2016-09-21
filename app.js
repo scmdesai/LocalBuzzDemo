@@ -66221,6 +66221,10 @@ Ext.define('Ext.direct.Manager', {
             {
                 fn: 'onLatestbuzz1ItemTap',
                 event: 'itemtap'
+            },
+            {
+                fn: 'onLatestbuzz1Select',
+                event: 'select'
             }
         ]
     },
@@ -66272,6 +66276,9 @@ Ext.define('Ext.direct.Manager', {
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
+    },
+    onLatestbuzz1Select: function(dataview, record, eOpts) {
+        console.log(record.get('dealName'));
     },
     initialize: function() {
         Ext.dataview.List.prototype.initialize.call(this);
