@@ -64551,19 +64551,24 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.component.DataItem, {
     config: {
         disabled: false,
         fullscreen: false,
+        height: '100%',
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'slide',
         style: 'background:#fff;',
         styleHtmlContent: true,
         ui: 'dark',
-        width: '95%',
         hideOnMaskTap: false,
         modal: false,
+        scrollable: true,
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
+        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64714,6 +64719,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
+                top: '46vh',
                 width: '95%',
                 clearIcon: false,
                 name: 'address',
@@ -64836,6 +64842,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
+                top: '55vh',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64903,7 +64910,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.dataview.DataView.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.dataview.component.DataItem.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64943,12 +64950,12 @@ Ext.define('Ext.direct.Manager', {
 ], [
     "component",
     "container",
-    "dataview",
+    "dataitem",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
-    "dataview": true,
+    "dataitem": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
