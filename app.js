@@ -64551,7 +64551,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.component.DataItem, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.List, {
     config: {
         disabled: false,
         fullscreen: false,
@@ -64564,11 +64564,8 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
-        scrollable: true,
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax'
-        },
+        disableSelection: true,
+        store: 'MyJsonPStore',
         items: [
             {
                 xtype: 'toolbar',
@@ -64910,7 +64907,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.dataview.component.DataItem.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.dataview.List.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64950,12 +64947,14 @@ Ext.define('Ext.direct.Manager', {
 ], [
     "component",
     "container",
-    "dataitem",
+    "dataview",
+    "list",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
-    "dataitem": true,
+    "dataview": true,
+    "list": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
@@ -65652,7 +65651,7 @@ Ext.define('Ext.direct.Manager', {
         showAnimation: 'slide',
         style: 'background:#fff',
         width: '100%',
-        scrollable: true,
+        scrollable: false,
         tpl: [
             '<!--<tpl if="dealImageURL">',
             '<div><img src="{dealImageURL}" style="margin: 0px 5px 0px 5px;height:250px;width:95%;border:none;"/></div>',
