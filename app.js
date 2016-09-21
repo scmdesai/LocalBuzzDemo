@@ -64551,16 +64551,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
         fullscreen: false,
-        height: '100%',
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'slide',
         style: 'background:#fff',
         ui: 'dark',
+        width: '100%',
         hideOnMaskTap: false,
         modal: false,
         scrollable: true,
@@ -64880,6 +64880,10 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onFavbuttonTap',
                 event: 'tap',
                 delegate: '#favbutton'
+            },
+            {
+                fn: 'onInfoPainted',
+                event: 'painted'
             }
         ]
     },
@@ -64912,8 +64916,12 @@ Ext.define('Ext.direct.Manager', {
         record.set('isFavorite', isPressed);
         store.sync();
     },
+    onInfoPainted: function(element, eOpts) {
+        var panel = Ext.getCmp('Info');
+        panel.body.scroll("b", bottom, true);
+    },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64954,11 +64962,13 @@ Ext.define('Ext.direct.Manager', {
     "component",
     "container",
     "panel",
+    "formpanel",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
     "panel": true,
+    "formpanel": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
