@@ -66340,7 +66340,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'tabbar',
         itemId: 'tabbar',
         minHeight: '',
-        style: 'background: rgba(248,248,255,1)',
+        style: 'background: #fff;',
         modal: true,
         layout: {
             type: 'card',
@@ -66354,7 +66354,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-localbuzzicon_latest',
                 id: 'LatestBuzz',
                 itemId: 'LatestBuzz',
-                style: 'background: rgba(248,248,255,1)',
+                style: 'background: #fff;',
                 ui: 'dark',
                 layout: 'vbox',
                 modal: true,
@@ -66387,7 +66387,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-search',
                 id: 'SearchBusiness',
                 itemId: 'SearchBusiness',
-                style: 'background: rgba(248,248,255,1)',
+                style: 'background: #fff;',
                 ui: 'dark',
                 layout: 'hbox',
                 modal: true,
@@ -66456,7 +66456,7 @@ Ext.define('Ext.direct.Manager', {
                 height: '100%',
                 itemId: 'Favorites',
                 margin: '1 1 1 1',
-                style: 'background: rgba(248,248,255,1)',
+                style: 'background: #fff;',
                 modal: false,
                 items: [
                     {
