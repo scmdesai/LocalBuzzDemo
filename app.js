@@ -65630,7 +65630,7 @@ Ext.define('Ext.direct.Manager', {
         margin: '',
         padding: '5 5 5 5',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);',
+        style: 'background:rgba(248,248,255,1)',
         width: '100%',
         scrollable: true,
         tpl: [
