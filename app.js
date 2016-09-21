@@ -64152,7 +64152,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);color:#00529D!important',
+        style: 'background:#fff;',
         styleHtmlContent: true,
         items: [
             {
@@ -64555,7 +64555,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);border:2px groove #C0C0C0',
+        style: 'background:#fff',
         ui: 'dark',
         hideOnMaskTap: false,
         layout: 'vbox',
@@ -64965,7 +64965,7 @@ Ext.define('Ext.direct.Manager', {
         cls: 'tpl-l0uxnqjl',
         height: '100%',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);',
+        style: 'background:#fff',
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
@@ -65017,7 +65017,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'listofdeals',
         itemId: 'listofdeals',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);',
+        style: 'background:#fff;',
         styleHtmlContent: true,
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
@@ -65630,7 +65630,7 @@ Ext.define('Ext.direct.Manager', {
         margin: '',
         padding: '5 5 5 5',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1);',
+        style: 'background:#fff',
         width: '100%',
         scrollable: true,
         tpl: [
@@ -65838,7 +65838,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'container',
                 docked: 'bottom',
                 height: '39vh',
-                style: 'background:rgba(248,248,255,1)!important',
+                style: 'background:fff',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
@@ -65854,7 +65854,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
-                        style: 'font-family:Arial;font-size:4vw;background:rgba(248,248,255,1)!important;',
+                        style: 'font-family:Arial;font-size:4vw;background:#fff',
                         width: '98%',
                         listeners: [
                             {
@@ -65941,7 +65941,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw;background:rgba(248,248,255,1)!important;'
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw;background:fff'
                     },
                     {
                         xtype: 'component',
@@ -65953,7 +65953,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt2',
                         margin: '10 5 5 5',
                         right: '0%',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:rgba(248,248,255,1)!important;'
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fff'
                     },
                     {
                         xtype: 'button',
@@ -66288,7 +66288,7 @@ Ext.define('Ext.direct.Manager', {
     config: {
         itemId: 'favoriteview',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1)',
+        style: 'background:#fff',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
         store: 'MyJsonPStore',
@@ -66875,7 +66875,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'DealsPanel',
         padding: '5 5 5 5',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1)',
+        style: 'background:#fff',
         scrollable: false,
         layout: {
             type: 'vbox',
@@ -67009,7 +67009,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'DealsPanel1',
         padding: '5 5 5 5',
         showAnimation: 'pop',
-        style: 'background:rgba(248,248,255,1)',
+        style: 'background:#fff',
         scrollable: false,
         layout: {
             type: 'vbox',
@@ -67143,7 +67143,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'DealImage',
         margin: '10 10 10 0',
         showAnimation: 'pop',
-        style: 'border:1px solid #00529D;background:rgba(248,248,255,1)',
+        style: 'border:1px solid #00529D;background:#fff',
         width: '95%',
         scrollable: true,
         tpl: [
@@ -67164,7 +67164,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'toolbar',
                 docked: 'top',
-                style: 'background:rgba(248,248,255,1);border:none',
+                style: 'background:#fff',
                 ui: 'plain',
                 items: [
                     {
