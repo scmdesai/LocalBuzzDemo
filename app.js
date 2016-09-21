@@ -63796,6 +63796,9 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 name: 'longitude'
+            },
+            {
+                name: 'businessInfo'
             }
         ]
     }
@@ -64551,6 +64554,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
+        fullscreen: false,
         height: '100%',
         id: 'Info',
         itemId: 'Info',
@@ -64560,7 +64564,7 @@ Ext.define('Ext.direct.Manager', {
         hideOnMaskTap: false,
         layout: 'vbox',
         modal: false,
-        scrollable: 'vertical',
+        scrollable: true,
         enableSubmissionForm: false,
         items: [
             {
@@ -64635,7 +64639,7 @@ Ext.define('Ext.direct.Manager', {
                 minHeight: '',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '75%',
+                top: '85%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64657,6 +64661,47 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
+                xtype: 'textareafield',
+                cls: [
+                    'icon-location1',
+                    'customfield'
+                ],
+                disabled: false,
+                height: '9vh',
+                id: 'businessInfo',
+                itemId: 'businessInfo',
+                padding: '10 5 0 10',
+                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
+                styleHtmlContent: true,
+                top: '53%',
+                width: '95%',
+                clearIcon: false,
+                inputCls: 'customfield2_input',
+                name: 'address',
+                readOnly: true,
+                listeners: [
+                    {
+                        fn: function(element, eOpts) {
+                            element.addListener('tap', function() {
+                                if (Ext.getCmp('address').getValue()) {
+                                    console.log('Address button tapped');
+                                    var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
+                                    var url;
+                                    if (Ext.os.is('Android')) {
+                                        url = 'geo:0,0?q=' + queryString;
+                                    } else {
+                                        url = 'maps:q=' + queryString;
+                                    }
+                                    //Ext.device.Device.openURL(url);
+                                    window.open(url, '_system');
+                                }
+                            });
+                        },
+                        event: 'painted'
+                    }
+                ]
+            },
+            {
                 xtype: 'textfield',
                 cls: [
                     'icon-email',
@@ -64669,7 +64714,7 @@ Ext.define('Ext.direct.Manager', {
                 margin: '5 5 5 5',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
-                top: '63%',
+                top: '73%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64722,7 +64767,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '15 10 10 10',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
-                top: '53%',
+                top: '63%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64802,7 +64847,7 @@ Ext.define('Ext.direct.Manager', {
                     Ext.Viewport.setActiveItem(view);
                 },
                 docked: 'top',
-                height: '7%',
+                height: '8vh',
                 margin: '0 5 0 15',
                 style: 'font-family:Arial;font-size:5vw',
                 top: '45%',
@@ -64824,7 +64869,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
-                top: '88%',
+                top: '98%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -65746,7 +65791,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fefefb;',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb',
                 width: '96vw',
                 listeners: [
                     {
