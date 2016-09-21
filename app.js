@@ -64564,7 +64564,7 @@ Ext.define('Ext.direct.Manager', {
         hideOnMaskTap: false,
         layout: 'vbox',
         modal: false,
-        scrollable: true,
+        scrollable: 'both',
         enableSubmissionForm: false,
         items: [
             {
@@ -64631,7 +64631,7 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: false,
                 docked: 'bottom',
-                height: '11vh',
+                height: '9vh',
                 hidden: false,
                 id: 'website1',
                 itemId: 'website1',
@@ -64639,7 +64639,7 @@ Ext.define('Ext.direct.Manager', {
                 minHeight: '',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '85%',
+                top: '83%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64662,10 +64662,6 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textareafield',
-                cls: [
-                    'icon-location1',
-                    'customfield'
-                ],
                 disabled: false,
                 height: '9vh',
                 id: 'businessInfo',
@@ -64676,30 +64672,8 @@ Ext.define('Ext.direct.Manager', {
                 top: '53%',
                 width: '95%',
                 clearIcon: false,
-                inputCls: 'customfield2_input',
                 name: 'address',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                if (Ext.getCmp('address').getValue()) {
-                                    console.log('Address button tapped');
-                                    var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
-                                    var url;
-                                    if (Ext.os.is('Android')) {
-                                        url = 'geo:0,0?q=' + queryString;
-                                    } else {
-                                        url = 'maps:q=' + queryString;
-                                    }
-                                    //Ext.device.Device.openURL(url);
-                                    window.open(url, '_system');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
+                readOnly: true
             },
             {
                 xtype: 'textfield',
@@ -64708,13 +64682,13 @@ Ext.define('Ext.direct.Manager', {
                     'customfield2'
                 ],
                 docked: 'bottom',
-                height: '11vh',
+                height: '9vh',
                 id: 'email',
                 itemId: 'email',
                 margin: '5 5 5 5',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
-                top: '73%',
+                top: '70%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64758,7 +64732,7 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: false,
                 docked: 'bottom',
-                height: '11vh',
+                height: '9vh',
                 hidden: false,
                 html: '',
                 id: 'phoneNumber',
@@ -64869,7 +64843,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
-                top: '98%',
+                top: '93%',
                 width: '95%',
                 clearIcon: false,
                 inputCls: 'customfield2_input',
@@ -64942,6 +64916,7 @@ Ext.define('Ext.direct.Manager', {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
             var customerId = record.get('customerId');
+            var businessInfo = record.get('businessInfo');
             var store = Ext.getStore('UserPreferences');
             if (store.getAllCount() !== 0) {
                 store.each(function(rec) {
@@ -64952,6 +64927,7 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
+            this.down('#businessInfo').setHtml(businessInfo);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
             }
@@ -66927,7 +66903,7 @@ Ext.define('Ext.direct.Manager', {
         padding: '5 5 5 5',
         showAnimation: 'slide',
         style: 'background:#fff',
-        scrollable: false,
+        scrollable: true,
         layout: {
             type: 'vbox',
             align: 'stretchmax',
