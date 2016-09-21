@@ -66221,15 +66221,10 @@ Ext.define('Ext.direct.Manager', {
             {
                 fn: 'onLatestbuzz1ItemTap',
                 event: 'itemtap'
-            },
-            {
-                fn: 'onLatestbuzz1ItemTap1',
-                event: 'itemtap'
             }
         ]
     },
-    onLatestbuzz1ItemTap: function(dataview, index, target, record, e, eOpts) {},
-    onLatestbuzz1ItemTap1: function(dataview, index, target, record, e, eOpts) {
+    onLatestbuzz1ItemTap: function(dataview, index, target, record, e, eOpts) {
         if (e.target === 'favDealBtn') {
             Ext.get('favDealBtn').setHtml('New Value');
         }
@@ -66283,6 +66278,7 @@ Ext.define('Ext.direct.Manager', {
     },
     initialize: function() {
         Ext.dataview.List.prototype.initialize.call(this);
+        console.log('Latest Buzz initialized');
     }
 }, 0, [
     "latestbuzz"
