@@ -64663,6 +64663,53 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
+                xtype: 'button',
+                handler: function(button, e) {
+                    //var store = Ext.getStore('MyDealsStore');
+                    //var date = new Date();
+                    //var today = Ext.Date.format(date,'n/j/Y');
+                    //var test = Ext.Date.add(date,Ext.Date.DAY,0);
+                    //var today = Ext.Date.format(test,'n/j/Y');
+                    //store.clearFilter();
+                    //store.load();
+                    /*store.each(function(rec)
+                    {
+
+
+                    //console.log('Deal End Date: ' + rec.get('dealEndDate'));
+                    //console.log('Tdays date is : ' + today);
+
+                    if(rec.get('dealEndDate') < today) {
+
+                        console.log(rec.get('dealName'));
+                        rec.set('dealStatus','Expired');
+
+
+
+                    }
+
+
+
+                });*/
+                    //store.filter('dealStatus','Active');
+                    var view;
+                    if (Ext.Viewport.getComponent('DealsPanel')) {
+                        view = Ext.Viewport.getComponent('DealsPanel');
+                    } else {
+                        view = Ext.Viewport.add({
+                            xtype: 'DealsPanel'
+                        });
+                    }
+                    Ext.Viewport.setActiveItem(view);
+                },
+                height: '8vh',
+                margin: '0 5 0 15',
+                style: 'font-family:Arial;font-size:5vw',
+                ui: 'confirm',
+                width: '90%',
+                text: 'Get The Latest Buzz!'
+            },
+            {
                 xtype: 'textareafield',
                 disabled: false,
                 height: '9vh',
@@ -64778,54 +64825,6 @@ Ext.define('Ext.direct.Manager', {
                 clearIcon: false,
                 name: 'website',
                 readOnly: true
-            },
-            {
-                xtype: 'button',
-                handler: function(button, e) {
-                    //var store = Ext.getStore('MyDealsStore');
-                    //var date = new Date();
-                    //var today = Ext.Date.format(date,'n/j/Y');
-                    //var test = Ext.Date.add(date,Ext.Date.DAY,0);
-                    //var today = Ext.Date.format(test,'n/j/Y');
-                    //store.clearFilter();
-                    //store.load();
-                    /*store.each(function(rec)
-                    {
-
-
-                    //console.log('Deal End Date: ' + rec.get('dealEndDate'));
-                    //console.log('Tdays date is : ' + today);
-
-                    if(rec.get('dealEndDate') < today) {
-
-                        console.log(rec.get('dealName'));
-                        rec.set('dealStatus','Expired');
-
-
-
-                    }
-
-
-
-                });*/
-                    //store.filter('dealStatus','Active');
-                    var view;
-                    if (Ext.Viewport.getComponent('DealsPanel')) {
-                        view = Ext.Viewport.getComponent('DealsPanel');
-                    } else {
-                        view = Ext.Viewport.add({
-                            xtype: 'DealsPanel'
-                        });
-                    }
-                    Ext.Viewport.setActiveItem(view);
-                },
-                docked: 'top',
-                height: '8vh',
-                margin: '0 5 0 15',
-                style: 'font-family:Arial;font-size:5vw',
-                ui: 'confirm',
-                width: '90%',
-                text: 'Get The Latest Buzz!'
             },
             {
                 xtype: 'textareafield',
@@ -67259,6 +67258,11 @@ Ext.define('Ext.direct.Manager', {
 // @require @packageOverrides
 Ext.Loader.setConfig({});
 Ext.application({
+    viewport: {
+        scrollable: true,
+        preventPanning: false,
+        xclass: 'Ext.viewport.Viewport'
+    },
     flagCurrentLocation: false,
     models: [
         'Contact',
