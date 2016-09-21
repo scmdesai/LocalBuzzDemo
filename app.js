@@ -64559,7 +64559,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'slide',
-        style: 'background:#fff;',
+        style: 'background:#fff;overflow-y:scroll',
         styleHtmlContent: true,
         ui: 'dark',
         hideOnMaskTap: false,
