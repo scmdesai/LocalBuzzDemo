@@ -65158,6 +65158,9 @@ Ext.define('Ext.direct.Manager', {
             '',
             ''
         ]
+    },
+    initialize: function() {
+        Ext.dataview.List.prototype.initialize.call(this);
     }
 }, 0, [
     "listofdeals"
@@ -66092,6 +66095,7 @@ Ext.define('Ext.direct.Manager', {
         selectedCls: 'list-item-selected',
         store: 'MyDealsStore',
         onItemDisclosure: false,
+        useSimpleItems: false,
         itemTpl: [
             '',
             '',
@@ -66272,6 +66276,9 @@ Ext.define('Ext.direct.Manager', {
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
+    },
+    initialize: function() {
+        Ext.dataview.List.prototype.initialize.call(this);
     }
 }, 0, [
     "latestbuzz"
@@ -66380,7 +66387,6 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'LatestBuzz',
                 style: 'background: #fff;',
                 ui: 'dark',
-                layout: 'vbox',
                 modal: false,
                 listeners: [
                     {
@@ -66900,11 +66906,6 @@ Ext.define('Ext.direct.Manager', {
         padding: '5 5 5 5',
         showAnimation: 'slide',
         style: 'background:#fff',
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax',
-            pack: 'center'
-        },
         items: [
             {
                 xtype: 'toolbar',
@@ -66937,8 +66938,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'listofdeals',
                 height: '90%',
-                minHeight: '90%',
-                flex: 1
+                minHeight: '90%'
             }
         ],
         listeners: [
