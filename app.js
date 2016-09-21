@@ -64551,7 +64551,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
     config: {
         disabled: false,
         fullscreen: false,
@@ -64562,9 +64562,12 @@ Ext.define('Ext.direct.Manager', {
         style: 'background:#fff',
         ui: 'dark',
         hideOnMaskTap: false,
-        layout: 'vbox',
         modal: false,
         scrollable: true,
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
+        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64910,7 +64913,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64951,13 +64954,11 @@ Ext.define('Ext.direct.Manager', {
     "component",
     "container",
     "panel",
-    "formpanel",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
     "panel": true,
-    "formpanel": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
