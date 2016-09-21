@@ -66092,7 +66092,6 @@ Ext.define('Ext.direct.Manager', {
         selectedCls: 'list-item-selected',
         store: 'MyDealsStore',
         onItemDisclosure: false,
-        useSimpleItems: false,
         itemTpl: [
             '',
             '',
@@ -66382,7 +66381,7 @@ Ext.define('Ext.direct.Manager', {
                 style: 'background: #fff;',
                 ui: 'dark',
                 layout: 'vbox',
-                modal: true,
+                modal: false,
                 listeners: [
                     {
                         fn: function(element, eOpts) {
