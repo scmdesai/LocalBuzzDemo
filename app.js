@@ -64551,24 +64551,19 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.DataView, {
     config: {
         disabled: false,
         fullscreen: false,
         id: 'Info',
         itemId: 'Info',
         showAnimation: 'slide',
-        style: 'background:#fff;overflow-y:scroll;',
+        style: 'background:#fff;',
         styleHtmlContent: true,
         ui: 'dark',
         width: '95%',
         hideOnMaskTap: false,
         modal: false,
-        scrollable: true,
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax'
-        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64705,6 +64700,7 @@ Ext.define('Ext.direct.Manager', {
                 height: '8vh',
                 margin: '0 5 0 15',
                 style: 'font-family:Arial;font-size:5vw',
+                top: '40vh',
                 ui: 'confirm',
                 width: '90%',
                 text: 'Get The Latest Buzz!'
@@ -64907,7 +64903,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.dataview.DataView.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64947,14 +64943,12 @@ Ext.define('Ext.direct.Manager', {
 ], [
     "component",
     "container",
-    "panel",
-    "formpanel",
+    "dataview",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
-    "panel": true,
-    "formpanel": true,
+    "dataview": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
@@ -67260,7 +67254,6 @@ Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
         scrollable: true,
-        preventPanning: false,
         xclass: 'Ext.viewport.Viewport'
     },
     flagCurrentLocation: false,
