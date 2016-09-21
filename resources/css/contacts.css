@@ -26,7 +26,7 @@ $list-header-bg-color: $base-color;
 }
 
 .toolbarCls {
-    background:rgba(248,248,255,1) !important;
+    background:transparent !important;
     border-bottom:1px solid #C0C0C0 !important;
 }
 
@@ -120,6 +120,18 @@ $list-header-bg-color: $base-color;
     font-family:Arial;
     font-size:3vw;
     border-bottom:2px ridge #c0c0c0;
+    background:#fff;
+
+}
+
+.customfield2_input {
+
+    
+    font-weight:normal;
+    vertical-align:middle;
+    font-family:Arial;
+    font-size:3vw;
+    background:#fff;
 
 }
 
@@ -133,7 +145,7 @@ $list-header-bg-color: $base-color;
     font-family:Arial;
     font-size:4vw;
     border-bottom:none;   
-
+    background:#fff;
 
 
 
@@ -153,7 +165,24 @@ $list-header-bg-color: $base-color;
     vertical-align:middle;
     font-family:Arial;
     border-radius:7px;
+    background:#fff;
 
+
+
+
+
+
+}
+
+.searchfield1 {
+    
+   
+    font-size:5vw;
+    font-weight:normal;
+    text-align:center;
+    vertical-align:middle;
+    font-family:Arial;
+    background:#fff;
 
 
 
@@ -197,12 +226,13 @@ $list-header-bg-color: $base-color;
 .photo {
     /*border: 1px solid #999; */
     margin:5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
     width: 22vw;
-    height: 13vh;
+    height: 16vh;
     float: left;
-    background:rga(255,255,240,0.5);
-    
-    
+    background:none;
+
+
 }
 
 
