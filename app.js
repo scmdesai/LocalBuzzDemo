@@ -64561,7 +64561,6 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
-        scrollable: true,
         items: [
             {
                 xtype: 'toolbar',
@@ -64615,12 +64614,23 @@ Ext.define('Ext.direct.Manager', {
                 height: '100%',
                 id: 'infoPanel',
                 itemId: 'infoPanel',
-                scrollable: true,
+                style: 'overflow:scroll',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
                 },
                 items: [
+                    {
+                        xtype: 'component',
+                        disabled: true,
+                        docked: 'top',
+                        height: '40vh',
+                        id: 'storeImage',
+                        itemId: 'storeImage',
+                        left: '2%',
+                        margin: '5 10 5 0',
+                        width: '95%'
+                    },
                     {
                         xtype: 'button',
                         handler: function(button, e) {
@@ -64661,7 +64671,6 @@ Ext.define('Ext.direct.Manager', {
                             }
                             Ext.Viewport.setActiveItem(view);
                         },
-                        docked: 'top',
                         height: '8vh',
                         margin: '5 5 0 15',
                         style: 'font-family:Arial;font-size:5vw',
@@ -64700,6 +64709,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '10 5 0 10',
                         style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                         styleHtmlContent: true,
+                        top: '90vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64744,6 +64754,7 @@ Ext.define('Ext.direct.Manager', {
                         minHeight: '',
                         style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                         styleHtmlContent: true,
+                        top: '80vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64777,6 +64788,7 @@ Ext.define('Ext.direct.Manager', {
                         margin: '5 5 5 5',
                         style: 'font-size:4.5vw;font-family: arial',
                         styleHtmlContent: true,
+                        top: '70vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64862,35 +64874,11 @@ Ext.define('Ext.direct.Manager', {
                         padding: '10 5 0 10',
                         style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                         styleHtmlContent: true,
+                        top: '50vh',
                         width: '95%',
                         clearIcon: false,
                         name: 'mytextarea',
                         readOnly: true
-                    },
-                    {
-                        xtype: 'component',
-                        disabled: true,
-                        docked: 'top',
-                        height: '40vh',
-                        id: 'storeImage',
-                        itemId: 'storeImage',
-                        left: '2%',
-                        margin: '5 10 5 0',
-                        width: '95%'
-                    }
-                ],
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            var myScroll = new IScroll('#infoPanel', {
-                                    zoom: true,
-                                    scrollX: true,
-                                    scrollY: true,
-                                    mouseWheel: true,
-                                    wheelAction: 'zoom'
-                                });
-                        },
-                        event: 'painted'
                     }
                 ]
             }
@@ -64939,7 +64927,7 @@ Ext.define('Ext.direct.Manager', {
             var isFavorite = record.get('isFavorite');
             var customerId = record.get('customerId');
             var businessInfo = record.get('businessInfo');
-            console.log(businessInfo);
+            //console.log(businessInfo);
             var store = Ext.getStore('UserPreferences');
             if (store.getAllCount() !== 0) {
                 store.each(function(rec) {
@@ -64950,7 +64938,9 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            this.down('#businessInfo').setValue(businessInfo);
+            if (businessInfo) {
+                this.down('#businessInfo').setValue(businessInfo);
+            }
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
             }
@@ -66200,12 +66190,69 @@ Ext.define('Ext.direct.Manager', {
             {
                 fn: 'onLatestbuzzPainted',
                 event: 'painted'
+            },
+            {
+                fn: 'onLatestbuzzItemTap',
+                event: 'itemtap'
             }
         ]
     },
     onLatestbuzzPainted: function(element, eOpts) {
         var dealStore = Ext.getStore('MyDealsStore');
         dealStore.clearFilter();
+    },
+    onLatestbuzzItemTap: function(dataview, index, target, record, e, eOpts) {
+        Ext.getStore('LocalStore').add(record);
+        var pic;
+        //var pic = Ext.Viewport.add({xtype:'dealpicture'});
+        //console.log(Ext.Viewport.getActiveItem().getItemId());
+        if (Ext.Viewport.getComponent('dealPicture')) {
+            pic = Ext.Viewport.getComponent('dealPicture');
+        } else {
+            pic = Ext.Viewport.add({
+                xtype: 'dealPicture'
+            });
+        }
+        pic.setRecord(record);
+        Ext.Viewport.setActiveItem(pic);
+        //var pic = this.getDealpicture();
+        /*console.log("Data View is: ") ;
+        console.log(dataview) ;
+        console.log("Index is: " + index) ;
+        console.log("Target is: ") ;
+        console.log(target) ;
+        console.log("Event is: ") ;
+        console.log(e) ;
+        console.log("Event Options is: ") ;
+        console.log(eOpts) ;*/
+        //
+        //_gaq.push(['_trackEvent', 'Images', 'Click', 'Deal Picture', 0]);
+        //analytics.trackEvent(record.get('customerId'), 'DealClick', record.get('dealName'));
+        var showPosition;
+        if (navigator.geolocation) {
+            //if you have the geolocation, get the zipcode from local store on app launch
+            //navigator.geolocation.getCurrentPosition(function showPosition(position) {
+            // var latitude = position.coords.latitude;
+            // var longitude = position.coords.longitude;
+            var userLocationStore = Ext.getStore('UserLocation');
+            if (userLocationStore.getAt(0)) {
+                var zipcode = userLocationStore.getAt(0).get('zipcode');
+                var latitude = userLocationStore.getAt(0).get('latitude');
+                var longitude = userLocationStore.getAt(0).get('longitude');
+                console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+                // api call for postal code and track event
+                //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+                //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+                //analytics.addCustomDimension('1', record.get('customerId'));
+                analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+            }
+        } else // });
+        // });
+        {
+            //geolocation not happening
+            console.log("Gelocation not working");
+            analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
+        }
     }
 }, 0, [
     "latestbuzz"
