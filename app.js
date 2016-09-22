@@ -64553,7 +64553,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
-        fullscreen: true,
+        fullscreen: false,
         height: '100%',
         id: 'Info',
         itemId: 'Info',
@@ -64883,7 +64883,11 @@ Ext.define('Ext.direct.Manager', {
                     {
                         fn: function(element, eOpts) {
                             var myScroll = new IScroll('#infoPanel', {
-                                    scrollY: true
+                                    zoom: true,
+                                    scrollX: true,
+                                    scrollY: true,
+                                    mouseWheel: true,
+                                    wheelAction: 'zoom'
                                 });
                         },
                         event: 'painted'
