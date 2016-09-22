@@ -65626,9 +65626,11 @@ Ext.define('Ext.direct.Manager', {
                             Ext.Viewport.getActiveItem().destroy();
                             Ext.getStore('LocalStore').removeAt(0);
                             if (Ext.Viewport.getComponent('DealsPanel')) {
+                                console.log('DealsPanel');
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('DealsPanel'));
                             } else {
                                 Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
+                                console.log('tabbar');
                                 var store = Ext.getStore('MyJsonPStore');
                                 var dealStore = Ext.getStore('MyDealsStore');
                                 store.clearFilter();
