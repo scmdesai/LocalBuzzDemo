@@ -64615,6 +64615,10 @@ Ext.define('Ext.direct.Manager', {
                 docked: 'top',
                 height: '100%',
                 layout: 'vbox',
+                scrollable: {
+                    direction: 'vertical',
+                    directionLock: true
+                },
                 items: [
                     {
                         xtype: 'button',
@@ -65602,8 +65606,7 @@ Ext.define('Ext.direct.Manager', {
     ],
     config: {
         cls: 'icon-share',
-        fullscreen: false,
-        height: '100%',
+        fullscreen: true,
         html: '',
         id: 'dealPicture',
         itemId: 'dealPicture',
@@ -65612,6 +65615,7 @@ Ext.define('Ext.direct.Manager', {
         showAnimation: 'slide',
         style: 'background:#fff',
         width: '100%',
+        scrollable: false,
         tpl: [
             '<!--<tpl if="dealImageURL">',
             '<div><img src="{dealImageURL}" style="margin: 0px 5px 0px 5px;height:250px;width:95%;border:none;"/></div>',
@@ -65927,7 +65931,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'component',
                         cls: 'contact-name',
                         disabled: true,
-                        height: '3vh',
+                        height: '4vh',
                         html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
                         id: 'nameTxt2',
                         itemId: 'nameTxt2',
