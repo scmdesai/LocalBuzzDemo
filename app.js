@@ -64987,7 +64987,7 @@ Ext.define('Ext.direct.Manager', {
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
         selectedCls: 'list-item-selected',
-        store: 'MyJsonPStore',
+        store: 'MyDealsStore',
         onItemDisclosure: false,
         useSimpleItems: false,
         itemTpl: [
