@@ -64883,11 +64883,7 @@ Ext.define('Ext.direct.Manager', {
                     {
                         fn: function(element, eOpts) {
                             var myScroll = new IScroll('#infoPanel', {
-                                    zoom: true,
-                                    scrollX: true,
-                                    scrollY: true,
-                                    mouseWheel: true,
-                                    wheelAction: 'zoom'
+                                    scrollY: true
                                 });
                         },
                         event: 'painted'
