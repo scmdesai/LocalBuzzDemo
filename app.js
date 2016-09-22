@@ -64562,7 +64562,8 @@ Ext.define('Ext.direct.Manager', {
         scrollable: true,
         tpl: [
             '',
-            '<div><img src={pictureURL}</div>',
+            '<div> <img src={pictureURL} style="height:40vh;width:100%;" ></div>',
+            '<div> {businessName}</div>',
             '',
             ' ',
             '    ',
@@ -64572,12 +64573,100 @@ Ext.define('Ext.direct.Manager', {
             type: 'vbox',
             align: 'stretchmax'
         },
+        items: [
+            {
+                xtype: 'toolbar',
+                cls: 'toolbarCls',
+                docked: 'top',
+                hidden: false,
+                tpl: [
+                    '<div style="color:#00529D;"><b> {businessName}</b><div>'
+                ],
+                items: [
+                    {
+                        xtype: 'button',
+                        cls: 'icon-back-button',
+                        height: '100%',
+                        hidden: false,
+                        itemId: 'infoBackBtn',
+                        style: 'font-family:Arial;',
+                        styleHtmlContent: true,
+                        ui: 'plain',
+                        listeners: [
+                            {
+                                fn: function(component, eOpts) {
+                                    if (Ext.os.is('Android')) {
+                                        this.setHidden(true);
+                                    }
+                                },
+                                event: 'initialize',
+                                order: 'after'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'button',
+                        docked: 'right',
+                        hidden: false,
+                        itemId: 'favbutton',
+                        style: 'font-size:6vw',
+                        ui: 'plain'
+                    },
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        height: '',
+                        html: '<b>Business Name</b>',
+                        id: 'nameTxt',
+                        itemId: 'nameTxt',
+                        padding: '0 0 0 15',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                        width: '65%'
+                    }
+                ]
+            }
+        ],
         listeners: [
+            {
+                fn: 'onFavbuttonTap',
+                event: 'tap',
+                delegate: '#favbutton'
+            },
             {
                 fn: 'onDealImageShow',
                 event: 'show'
             }
         ]
+    },
+    onFavbuttonTap: function(button, e, eOpts) {
+        var store = Ext.getStore('UserPreferences');
+        //store.clearFilter();
+        var pressingCls = 'x-button-pressed';
+        button.element.toggleCls(pressingCls);
+        var isPressed = button.element.hasCls(pressingCls);
+        var record = this.getRecord();
+        var customerId = record.get('customerId');
+        store.add({
+            'customerId': customerId,
+            'isFavorite': isPressed
+        });
+        if (isPressed === true) {
+            button.setCls('fill-star');
+        } else // localStorage.setItem('customerId',record.get('customerId'));
+        // localStorage.setItem('isFavorite', isPressed);
+        // store.add({'customerId':customerId,'isFavorite':isPressed});
+        //  store.sync();
+        {
+            button.setCls('empty-star');
+            // localStorage.removeItem('customerId');
+            // localStorage.removeItem('isFavorite
+            store.findRecord('customerId', customerId).destroy();
+            store.sync();
+        }
+        //console.log(customerId + isPressed);
+        record.set('isFavorite', isPressed);
+        store.sync();
     },
     onDealImageShow: function(component, eOpts) {
         var myScroll = new IScroll('#wrapper', {
@@ -64587,6 +64676,39 @@ Ext.define('Ext.direct.Manager', {
                 mouseWheel: true,
                 wheelAction: 'zoom'
             });
+    },
+    setRecord: function(record) {
+        (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
+        if (record) {
+            var name = record.get('businessName');
+            var isFavorite = record.get('isFavorite');
+            var customerId = record.get('customerId');
+            var businessInfo = record.get('businessInfo');
+            //console.log(businessInfo);
+            var store = Ext.getStore('UserPreferences');
+            if (store.getAllCount() !== 0) {
+                store.each(function(rec) {
+                    if (rec.get('customerId') == customerId) {
+                        isFavorite = rec.get('isFavorite');
+                    }
+                });
+            }
+            //console.log(customerId + isFavorite );
+            this.down('#nameTxt').setHtml(name);
+            // console.log(store.getData());
+            if (isFavorite === true) {
+                this.down('#favbutton').setCls('fill-star');
+            } else //store.setData({'isFavorite':isFavorite});
+            {
+                this.down('#favbutton').setCls('empty-star');
+            }
+            // this.down('#favoriteview')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
+            this.down('#favbutton')[isFavorite ? 'addCls' : 'removeCls']('x-button-pressed');
+            //this.down('contactpic').setData(record.data);
+            var ds = Ext.StoreManager.lookup('MyDealsStore');
+            ds.clearFilter();
+            ds.filter('customerId', customerId);
+        }
     }
 }, 0, [
     "contactinfo"
@@ -66950,25 +67072,13 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'favbutton',
                         style: 'font-size:6vw',
                         ui: 'plain'
-                    },
-                    {
-                        xtype: 'component',
-                        cls: 'contact-name',
-                        disabled: true,
-                        height: '',
-                        html: '<b>Business Name</b>',
-                        id: 'nameTxt',
-                        itemId: 'nameTxt',
-                        padding: '0 0 0 15',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
-                        width: '65%'
                     }
                 ]
             }
         ],
         listeners: [
             {
-                fn: 'onFavbuttonTap',
+                fn: 'onFavbuttonTap1',
                 event: 'tap',
                 delegate: '#favbutton'
             },
@@ -66978,7 +67088,7 @@ Ext.define('Ext.direct.Manager', {
             }
         ]
     },
-    onFavbuttonTap: function(button, e, eOpts) {
+    onFavbuttonTap1: function(button, e, eOpts) {
         var store = Ext.getStore('UserPreferences');
         //store.clearFilter();
         var pressingCls = 'x-button-pressed';
