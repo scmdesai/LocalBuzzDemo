@@ -64551,7 +64551,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
         fullscreen: false,
@@ -64563,7 +64563,6 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
-        store: 'MyJsonPStore',
         items: [
             {
                 xtype: 'toolbar',
@@ -64700,7 +64699,7 @@ Ext.define('Ext.direct.Manager', {
                 height: '8vh',
                 margin: '0 5 0 15',
                 style: 'font-family:Arial;font-size:5vw',
-                top: '40vh',
+                top: '41vh',
                 ui: 'confirm',
                 width: '90%',
                 text: 'Get The Latest Buzz!'
@@ -64714,7 +64713,7 @@ Ext.define('Ext.direct.Manager', {
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
-                top: '48vh',
+                top: '49vh',
                 width: '95%',
                 clearIcon: false,
                 name: 'address',
@@ -64905,7 +64904,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     setRecord: function(record) {
-        (arguments.callee.$previous || Ext.dataview.List.prototype.setRecord).apply(this, arguments);
+        (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
         if (record) {
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
@@ -64946,14 +64945,14 @@ Ext.define('Ext.direct.Manager', {
 ], [
     "component",
     "container",
-    "dataview",
-    "list",
+    "panel",
+    "formpanel",
     "contactinfo"
 ], {
     "component": true,
     "container": true,
-    "dataview": true,
-    "list": true,
+    "panel": true,
+    "formpanel": true,
     "contactinfo": true
 }, [
     "widget.contactinfo"
