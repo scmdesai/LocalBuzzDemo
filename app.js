@@ -64555,12 +64555,13 @@ Ext.define('Ext.direct.Manager', {
     config: {
         disabled: false,
         fullscreen: false,
-        height: '100%',
+        height: '90%',
         id: 'Info',
         itemId: 'Info',
         style: 'background:#fff;overflow:scroll;',
         ui: 'dark',
         hideOnMaskTap: false,
+        layout: 'card',
         modal: false,
         scrollable: 'vertical',
         items: [
@@ -64613,7 +64614,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'panel',
                 docked: 'top',
-                height: '100%',
+                height: '90%',
                 id: 'infoPanel',
                 itemId: 'infoPanel',
                 scrollable: 'vertical',
