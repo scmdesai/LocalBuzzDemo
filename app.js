@@ -64678,7 +64678,7 @@ Ext.define('Ext.direct.Manager', {
                 hidden: false,
                 id: 'infoPanel',
                 itemId: 'infoPanel',
-                style: 'overflow:scroll;',
+                style: 'overflow:scroll;background:#fff',
                 top: '50vh',
                 hideOnMaskTap: false,
                 layout: {
@@ -64874,7 +64874,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'icon-globe',
                         disabled: false,
                         height: '',
-                        hidden: false,
+                        hidden: true,
                         id: 'website',
                         itemId: 'website',
                         margin: '0 15 0 15',
@@ -64956,6 +64956,9 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
+            this.down('#phoneNumber').setHtml(record.get('phoneNumber'));
+            this.down('#email').setHtml(record.get('emailAddress'));
+            this.down('#website1').setHtml(record.get('websiteDisplayName'));
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
