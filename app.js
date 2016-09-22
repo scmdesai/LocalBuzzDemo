@@ -65291,6 +65291,19 @@ Ext.define('Ext.direct.Manager', {
         ds.clearFilter();
     },
     onListOfDealsItemTap: function(dataview, index, target, record, e, eOpts) {
+        Ext.getStore('LocalStore').add(record);
+        var pic;
+        //var pic = Ext.Viewport.add({xtype:'dealpicture'});
+        //console.log(Ext.Viewport.getActiveItem().getItemId());
+        if (Ext.Viewport.getComponent('dealPicture')) {
+            pic = Ext.Viewport.getComponent('dealPicture');
+        } else {
+            pic = Ext.Viewport.add({
+                xtype: 'dealPicture'
+            });
+        }
+        pic.setRecord(record);
+        Ext.Viewport.setActiveItem(pic);
         //var pic = this.getDealpicture();
         /*console.log("Data View is: ") ;
         console.log(dataview) ;
@@ -65329,19 +65342,6 @@ Ext.define('Ext.direct.Manager', {
             console.log("Gelocation not working");
             analytics.trackEvent(record.get('dealName'), 'DealClick', 'Unknown');
         }
-        Ext.getStore('LocalStore').add(record);
-        var pic;
-        //var pic = Ext.Viewport.add({xtype:'dealpicture'});
-        //console.log(Ext.Viewport.getActiveItem().getItemId());
-        if (Ext.Viewport.getComponent('dealPicture')) {
-            pic = Ext.Viewport.getComponent('dealPicture');
-        } else {
-            pic = Ext.Viewport.add({
-                xtype: 'dealPicture'
-            });
-        }
-        pic.setRecord(record);
-        Ext.Viewport.setActiveItem(pic);
     },
     onDealBackBtnTap: function(button, e, eOpts) {
         /*var ds = Ext.StoreManager.lookup('MyJsonPStore');
@@ -65394,8 +65394,8 @@ Ext.define('Ext.direct.Manager', {
         	}
         });*/
         Ext.Viewport.getActiveItem().destroy();
+        Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('Info'));
     },
-    //Ext.Viewport.setActiveItem(2);
     onFavoritesActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         var store = Ext.getStore('UserPreferences');
         var records = [];
@@ -65639,12 +65639,12 @@ Ext.define('Ext.direct.Manager', {
                         },
                         centered: false,
                         cls: 'icon-back-button',
-                        height: '100%',
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
                         ui: 'plain',
+                        width: '20%',
                         text: '',
                         listeners: [
                             {
@@ -65715,7 +65715,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb',
+                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb',
                 width: '96vw',
                 listeners: [
                     {
@@ -65977,8 +65977,8 @@ Ext.define('Ext.direct.Manager', {
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
-        console.log('Deal Picture showing' + record.get('dealName'));
         if (record) {
+            console.log('Deal Picture showing' + record.get('dealName'));
             var name = record.get('itemName');
             var businessName = record.get('businessName');
             this.down('#nameTxt1').setHtml(record.get('businessName'));
@@ -66677,7 +66677,6 @@ Ext.define('Ext.direct.Manager', {
                     {
                         xtype: 'button',
                         cls: 'icon-back-button',
-                        height: '100%',
                         itemId: 'dealBackBtn',
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
