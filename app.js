@@ -64562,7 +64562,7 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
-        scrollable: true,
+        scrollable: 'vertical',
         items: [
             {
                 xtype: 'toolbar',
@@ -64617,6 +64617,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'infoPanel',
                 itemId: 'infoPanel',
                 style: 'overflow:scroll',
+                scrollable: 'vertical',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
@@ -67277,8 +67278,12 @@ Ext.define('Ext.direct.Manager', {
 Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
-        scrollable: true,
-        xclass: 'Ext.viewport.Viewport'
+        scrollable: 'vertical',
+        xclass: 'Ext.viewport.Viewport',
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
+        }
     },
     flagCurrentLocation: false,
     models: [
