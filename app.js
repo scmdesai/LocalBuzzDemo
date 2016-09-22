@@ -62527,7 +62527,8 @@ Ext.define('Ext.direct.Manager', {
             }
         }
         if (target && target.nodeType === 1 && !this.isInputRegex.test(target.tagName)) {
-            e.preventDefault();
+            //e.preventDefault();
+            return;
         }
     },
     addWindowListener: function(eventName, fn, capturing) {
@@ -67274,6 +67275,10 @@ Ext.define('Ext.direct.Manager', {
 // @require @packageOverrides
 Ext.Loader.setConfig({});
 Ext.application({
+    viewport: {
+        scrollable: true,
+        xclass: 'Ext.viewport.Viewport'
+    },
     flagCurrentLocation: false,
     models: [
         'Contact',
