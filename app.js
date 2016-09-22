@@ -66959,7 +66959,6 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealImage',
         itemId: 'DealImage',
         margin: '10 10 10 0',
-        showAnimation: 'pop',
         style: 'border:1px solid #00529D;background:#fff',
         width: '95%',
         scrollable: true,
