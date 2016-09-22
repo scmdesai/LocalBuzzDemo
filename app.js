@@ -64555,10 +64555,10 @@ Ext.define('Ext.direct.Manager', {
     config: {
         disabled: false,
         fullscreen: false,
-        height: '90%',
+        height: '100%',
         id: 'Info',
         itemId: 'Info',
-        style: 'background:#fff;overflow:scroll;',
+        style: 'background:#fff;',
         ui: 'dark',
         hideOnMaskTap: false,
         layout: 'card',
@@ -64612,16 +64612,12 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'panel',
+                xtype: 'list',
                 docked: 'top',
-                height: '90%',
+                height: '100%',
                 id: 'infoPanel',
                 itemId: 'infoPanel',
-                scrollable: 'vertical',
-                layout: {
-                    type: 'vbox',
-                    align: 'stretchmax'
-                },
+                style: 'overflow:scroll;',
                 items: [
                     {
                         xtype: 'component',
@@ -67278,7 +67274,10 @@ Ext.define('Ext.direct.Manager', {
 Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
-        scrollable: 'vertical',
+        defaults: {
+            scrollable: true
+        },
+        scrollable: true,
         xclass: 'Ext.viewport.Viewport'
     },
     flagCurrentLocation: false,
