@@ -64553,16 +64553,16 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
     config: {
-        height: '70%',
+        height: '100%',
         id: 'Info',
         itemId: 'Info',
         margin: '10 10 10 0',
         style: 'border:1px solid #00529D;background:#fff',
-        width: '95%',
+        width: '100%',
         scrollable: true,
         tpl: [
             '',
-            '<div>Test</div>',
+            '<div><img src={pictureURL}</div>',
             '',
             ' ',
             '    ',
