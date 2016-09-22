@@ -64563,6 +64563,7 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
+        store: 'MyJsonPStore',
         items: [
             {
                 xtype: 'toolbar',
