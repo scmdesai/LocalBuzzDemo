@@ -65025,7 +65025,7 @@ Ext.define('Ext.direct.Manager', {
             '          </tpl>-->',
             '',
             '',
-            '<div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;"><b>{dealName}</b></div>',
+            '<div style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;"><b>{businessName}</b></div>',
             '',
             '',
             '',
