@@ -64612,7 +64612,7 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'list',
+                xtype: 'panel',
                 docked: 'top',
                 height: '100%',
                 id: 'infoPanel',
@@ -64887,6 +64887,10 @@ Ext.define('Ext.direct.Manager', {
                 fn: 'onFavbuttonTap',
                 event: 'tap',
                 delegate: '#favbutton'
+            },
+            {
+                fn: 'onInfoPainted',
+                event: 'painted'
             }
         ]
     },
@@ -64918,6 +64922,15 @@ Ext.define('Ext.direct.Manager', {
         //console.log(customerId + isPressed);
         record.set('isFavorite', isPressed);
         store.sync();
+    },
+    onInfoPainted: function(element, eOpts) {
+        var myScroll = new IScroll('#Info', {
+                zoom: true,
+                scrollX: true,
+                scrollY: true,
+                mouseWheel: true,
+                wheelAction: 'zoom'
+            });
     },
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.form.Panel.prototype.setRecord).apply(this, arguments);
