@@ -66171,7 +66171,7 @@ Ext.define('Ext.direct.Manager', {
                         html: '<h2 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px">Local Buzz</h2>'
                     },
                     {
-                        xtype: 'list1'
+                        xtype: 'listofdeals'
                     }
                 ]
             },
