@@ -64154,7 +64154,6 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
     config: {
-        showAnimation: 'pop',
         style: 'background:#fff;',
         styleHtmlContent: true,
         items: [
@@ -64558,7 +64557,6 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         id: 'Info',
         itemId: 'Info',
-        showAnimation: 'slide',
         style: 'background:#fff;',
         ui: 'dark',
         hideOnMaskTap: false,
@@ -65011,7 +65009,6 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'listofdeals',
         itemId: 'listofdeals',
-        showAnimation: 'pop',
         style: 'background:#fff',
         styleHtmlContent: true,
         allowDeselect: true,
@@ -66066,7 +66063,6 @@ Ext.define('Ext.direct.Manager', {
     config: {
         cls: 'tpl-l0uxnqjl',
         height: '100%',
-        showAnimation: 'pop',
         style: 'background:#fff',
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
@@ -66115,7 +66111,6 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
-        showAnimation: 'pop',
         style: 'background:#fff',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
@@ -66699,7 +66694,6 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel',
         itemId: 'DealsPanel',
         padding: '5 5 5 5',
-        showAnimation: 'slide',
         style: 'background:#fff',
         items: [
             {
@@ -66825,7 +66819,6 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel1',
         itemId: 'DealsPanel1',
         padding: '5 5 5 5',
-        showAnimation: 'pop',
         style: 'background:#fff',
         scrollable: false,
         layout: {
