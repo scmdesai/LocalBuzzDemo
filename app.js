@@ -64554,7 +64554,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.form.Panel, {
     config: {
         disabled: false,
-        fullscreen: true,
+        fullscreen: false,
         height: '100%',
         id: 'Info',
         itemId: 'Info',
@@ -64611,15 +64611,13 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'panel',
+                xtype: 'formpanel',
                 docked: 'top',
                 height: '100%',
-                id: 'infoPanel',
-                itemId: 'infoPanel',
-                scrollable: true,
-                layout: {
-                    type: 'vbox',
-                    align: 'stretchmax'
+                layout: 'vbox',
+                scrollable: {
+                    direction: 'vertical',
+                    directionLock: true
                 },
                 items: [
                     {
@@ -64878,20 +64876,6 @@ Ext.define('Ext.direct.Manager', {
                         left: '2%',
                         margin: '5 10 5 0',
                         width: '95%'
-                    }
-                ],
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            var myScroll = new IScroll('#infoPanel', {
-                                    zoom: true,
-                                    scrollX: true,
-                                    scrollY: true,
-                                    mouseWheel: true,
-                                    wheelAction: 'zoom'
-                                });
-                        },
-                        event: 'painted'
                     }
                 ]
             }
@@ -65239,14 +65223,9 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     onContactItemTap: function(dataview, index, target, record, e, eOpts) {
-        var info;
-        if (Ext.Viewport.getComponent('Info')) {
-            info = Ext.Viewport.getComponent('Info');
-        } else {
-            info = this.getContactinfo();
-            Ext.Viewport.add(info);
-        }
+        var info = this.getContactinfo();
         info.setRecord(record);
+        Ext.Viewport.add(info);
         Ext.Viewport.setActiveItem(info);
     },
     //console.log(info);
@@ -65627,15 +65606,16 @@ Ext.define('Ext.direct.Manager', {
     ],
     config: {
         cls: 'icon-share',
-        fullscreen: false,
-        height: '100%',
+        fullscreen: true,
         html: '',
         id: 'dealPicture',
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
+        showAnimation: 'slide',
         style: 'background:#fff',
         width: '100%',
+        scrollable: false,
         tpl: [
             '<!--<tpl if="dealImageURL">',
             '<div><img src="{dealImageURL}" style="margin: 0px 5px 0px 5px;height:250px;width:95%;border:none;"/></div>',
@@ -65951,7 +65931,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'component',
                         cls: 'contact-name',
                         disabled: true,
-                        height: '3vh',
+                        height: '4vh',
                         html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
                         id: 'nameTxt2',
                         itemId: 'nameTxt2',
@@ -67015,6 +66995,7 @@ Ext.define('Ext.direct.Manager', {
                 mouseWheel: true,
                 wheelAction: 'zoom'
             });
+        sh;
     }
 }, 0, [
     "DealImage"
