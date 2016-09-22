@@ -64558,7 +64558,7 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         id: 'Info',
         itemId: 'Info',
-        style: 'background:#fff;',
+        style: 'background:#fff;overflow:scroll;',
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
@@ -64616,7 +64616,6 @@ Ext.define('Ext.direct.Manager', {
                 height: '100%',
                 id: 'infoPanel',
                 itemId: 'infoPanel',
-                style: 'overflow:scroll',
                 scrollable: 'vertical',
                 layout: {
                     type: 'vbox',
