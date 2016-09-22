@@ -66278,7 +66278,7 @@ Ext.define('Ext.direct.Manager', {
         }
     },
     onLatestbuzz1Select: function(dataview, record, eOpts) {
-        console.log('record selected');
+        console.log(record.get('dealName'));
     },
     initialize: function() {
         Ext.dataview.List.prototype.initialize.call(this);
