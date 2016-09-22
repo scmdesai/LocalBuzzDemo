@@ -67279,11 +67279,7 @@ Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
         scrollable: 'vertical',
-        xclass: 'Ext.viewport.Viewport',
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax'
-        }
+        xclass: 'Ext.viewport.Viewport'
     },
     flagCurrentLocation: false,
     models: [
