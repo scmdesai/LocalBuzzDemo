@@ -65644,7 +65644,6 @@ Ext.define('Ext.direct.Manager', {
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
                         ui: 'plain',
-                        width: '20%',
                         text: '',
                         listeners: [
                             {
