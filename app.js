@@ -65311,15 +65311,17 @@ Ext.define('Ext.direct.Manager', {
             // var latitude = position.coords.latitude;
             // var longitude = position.coords.longitude;
             var userLocationStore = Ext.getStore('UserLocation');
-            var zipcode = userLocationStore.getAt(0).get('zipcode');
-            var latitude = userLocationStore.getAt(0).get('latitude');
-            var longitude = userLocationStore.getAt(0).get('longitude');
-            console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
-            // api call for postal code and track event
-            //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
-            //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
-            //analytics.addCustomDimension('1', record.get('customerId'));
-            analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+            if (userLocationStore.getAt(0)) {
+                var zipcode = userLocationStore.getAt(0).get('zipcode');
+                var latitude = userLocationStore.getAt(0).get('latitude');
+                var longitude = userLocationStore.getAt(0).get('longitude');
+                console.log('LatestBuzz View Analytics' + latitude + "," + longitude + "," + zipcode);
+                // api call for postal code and track event
+                //  $.getJSON("http://api.geonames.org/findNearbyPostalCodesJSON?lat=" + latitude + "&lng=" + longitude + "&username=1234_5678", function(json) {
+                //analytics.trackEvent(record.get('dealName'),DealClick', json.postalCodes[0].postalCode);
+                //analytics.addCustomDimension('1', record.get('customerId'));
+                analytics.trackEvent(record.get('dealName'), zipcode, record.get('customerId'));
+            }
         } else // });
         // });
         {
@@ -65392,8 +65394,8 @@ Ext.define('Ext.direct.Manager', {
         	}
         });*/
         Ext.Viewport.getActiveItem().destroy();
-        Ext.Viewport.setActiveItem(2);
     },
+    //Ext.Viewport.setActiveItem(2);
     onFavoritesActivate: function(newActiveItem, container, oldActiveItem, eOpts) {
         var store = Ext.getStore('UserPreferences');
         var records = [];
