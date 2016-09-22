@@ -64561,6 +64561,7 @@ Ext.define('Ext.direct.Manager', {
         ui: 'dark',
         hideOnMaskTap: false,
         modal: false,
+        scrollable: true,
         items: [
             {
                 xtype: 'toolbar',
