@@ -64559,20 +64559,16 @@ Ext.define('Ext.direct.Manager', {
         margin: '10 10 10 0',
         style: 'border:1px solid #00529D;background:#fff',
         width: '100%',
+        layout: 'card',
         scrollable: true,
         tpl: [
             '',
             '<div> <img src={pictureURL} style="height:40vh;width:100%;" ></div>',
-            '<div> {businessName}</div>',
+            '',
             '',
             ' ',
-            '    ',
             ''
         ],
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax'
-        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64625,6 +64621,271 @@ Ext.define('Ext.direct.Manager', {
                         width: '65%'
                     }
                 ]
+            },
+            {
+                xtype: 'button',
+                handler: function(button, e) {
+                    //var store = Ext.getStore('MyDealsStore');
+                    //var date = new Date();
+                    //var today = Ext.Date.format(date,'n/j/Y');
+                    //var test = Ext.Date.add(date,Ext.Date.DAY,0);
+                    //var today = Ext.Date.format(test,'n/j/Y');
+                    //store.clearFilter();
+                    //store.load();
+                    /*store.each(function(rec)
+                    {
+
+
+                    //console.log('Deal End Date: ' + rec.get('dealEndDate'));
+                    //console.log('Tdays date is : ' + today);
+
+                    if(rec.get('dealEndDate') < today) {
+
+                        console.log(rec.get('dealName'));
+                        rec.set('dealStatus','Expired');
+
+
+
+                    }
+
+
+
+                });*/
+                    //store.filter('dealStatus','Active');
+                    var view;
+                    if (Ext.Viewport.getComponent('DealsPanel')) {
+                        view = Ext.Viewport.getComponent('DealsPanel');
+                    } else {
+                        view = Ext.Viewport.add({
+                            xtype: 'DealsPanel'
+                        });
+                    }
+                    Ext.Viewport.setActiveItem(view);
+                },
+                height: '8vh',
+                hidden: false,
+                margin: '5 5 0 15',
+                style: 'font-family:Arial;font-size:5vw',
+                top: '41vh',
+                ui: 'confirm',
+                width: '90%',
+                text: 'Get The Latest Buzz!'
+            },
+            {
+                xtype: 'panel',
+                docked: 'bottom',
+                height: '50%',
+                hidden: false,
+                id: 'infoPanel',
+                itemId: 'infoPanel',
+                style: 'overflow:scroll;',
+                top: '50vh',
+                hideOnMaskTap: false,
+                layout: {
+                    type: 'vbox',
+                    align: 'stretchmax'
+                },
+                items: [
+                    {
+                        xtype: 'textfield',
+                        cls: [
+                            'icon-globe',
+                            'customfield2'
+                        ],
+                        disabled: false,
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        id: 'website1',
+                        itemId: 'website1',
+                        margin: '5 5 5 5',
+                        minHeight: '',
+                        style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
+                        styleHtmlContent: true,
+                        width: '95%',
+                        clearIcon: false,
+                        inputCls: 'customfield2_input',
+                        name: 'websiteDisplayName',
+                        placeHolder: 'Not Listed',
+                        readOnly: true,
+                        listeners: [
+                            {
+                                fn: function(element, eOpts) {
+                                    element.addListener('tap', function() {
+                                        var url = Ext.getCmp('website').getValue();
+                                        if (url) {
+                                            window.open(url, '_system', 'location=yes');
+                                        }
+                                    });
+                                },
+                                event: 'painted'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'textareafield',
+                        cls: [
+                            'icon-location1',
+                            'customfield'
+                        ],
+                        disabled: false,
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        id: 'address',
+                        itemId: 'address',
+                        padding: '10 5 0 10',
+                        style: 'font-size:4.2vw;font-family:Arial;border-top:none',
+                        styleHtmlContent: true,
+                        width: '95%',
+                        clearIcon: false,
+                        inputCls: 'customfield2_input',
+                        name: 'address',
+                        placeHolder: 'Not Listed',
+                        readOnly: true,
+                        listeners: [
+                            {
+                                fn: function(element, eOpts) {
+                                    element.addListener('tap', function() {
+                                        if (Ext.getCmp('address').getValue()) {
+                                            console.log('Address button tapped');
+                                            var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
+                                            var url;
+                                            if (Ext.os.is('Android')) {
+                                                url = 'geo:0,0?q=' + queryString;
+                                            } else {
+                                                url = 'maps:q=' + queryString;
+                                            }
+                                            //Ext.device.Device.openURL(url);
+                                            window.open(url, '_system');
+                                        }
+                                    });
+                                },
+                                event: 'painted'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'textfield',
+                        cls: [
+                            'icon-email',
+                            'customfield2'
+                        ],
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        id: 'email',
+                        itemId: 'email',
+                        margin: '5 5 5 5',
+                        style: 'font-size:4.5vw;font-family: arial',
+                        styleHtmlContent: true,
+                        width: '95%',
+                        clearIcon: false,
+                        inputCls: 'customfield2_input',
+                        label: '',
+                        name: 'emailAddress',
+                        placeHolder: 'Not Listed',
+                        readOnly: true,
+                        listeners: [
+                            {
+                                fn: function(element, eOpts) {
+                                    element.addListener('tap', function() {
+                                        /* cordova.plugins.email.open({
+
+
+                                        to:          Ext.getCmp('email').getValue(), // email addresses for TO field
+                                        isHtml:    false, // indicats if the body is HTML or plain text
+                                        });*/
+                                        if (Ext.getCmp('email').getValue()) {
+                                            window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
+                                            null, [
+                                                Ext.getCmp('email').getValue()
+                                            ], // TO: must be null or an array
+                                            null, // CC: must be null or an array
+                                            null, // BCC: must be null or an array
+                                            null, // FILES: can be null, a string, or an array
+                                            null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
+                                            null);
+                                        }
+                                    });
+                                },
+                                // called when sh*t hits the fan
+                                event: 'painted'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'textfield',
+                        cls: [
+                            'icon-phone',
+                            'customfield2'
+                        ],
+                        disabled: false,
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        html: '',
+                        id: 'phoneNumber',
+                        itemId: 'phoneNumber',
+                        margin: '5 5 5 5',
+                        padding: '15 10 10 10',
+                        style: 'font-size:4.5vw;font-family: arial',
+                        styleHtmlContent: true,
+                        width: '95%',
+                        clearIcon: false,
+                        inputCls: 'customfield2_input',
+                        name: 'phoneNumber',
+                        placeHolder: 'Not Listed',
+                        readOnly: true,
+                        listeners: [
+                            {
+                                fn: function(element, eOpts) {
+                                    element.addListener('tap', function() {
+                                        console.log(Ext.getCmp('phoneNumber').getValue());
+                                        var numberToDial = Ext.getCmp('phoneNumber').getValue();
+                                        // window.location = 'tel:'+ numberToDial ;
+                                        if (numberToDial) {
+                                            window.open('tel:' + numberToDial, '_system');
+                                        }
+                                    });
+                                },
+                                event: 'painted'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'textareafield',
+                        disabled: false,
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        id: 'businessInfo',
+                        itemId: 'businessInfo',
+                        padding: '10 5 0 10',
+                        style: 'font-size:4.2vw;font-family:Arial;border-top:none',
+                        styleHtmlContent: true,
+                        width: '95%',
+                        clearIcon: false,
+                        name: 'mytextarea',
+                        readOnly: true
+                    },
+                    {
+                        xtype: 'textfield',
+                        cls: 'icon-globe',
+                        disabled: false,
+                        height: '',
+                        hidden: false,
+                        id: 'website',
+                        itemId: 'website',
+                        margin: '0 15 0 15',
+                        maxHeight: '30%',
+                        minHeight: '',
+                        styleHtmlContent: true,
+                        clearIcon: false,
+                        name: 'website',
+                        readOnly: true
+                    }
+                ]
             }
         ],
         listeners: [
@@ -64669,7 +64930,7 @@ Ext.define('Ext.direct.Manager', {
         store.sync();
     },
     onDealImageShow: function(component, eOpts) {
-        var myScroll = new IScroll('#wrapper', {
+        var myScroll = new IScroll('#Info', {
                 zoom: true,
                 scrollX: true,
                 scrollY: true,
@@ -67216,309 +67477,6 @@ Ext.define('Ext.direct.Manager', {
         */
 
 /*
- * File: app/view/MyPanel1.js
- *
- * This file was generated by Sencha Architect version 3.2.0.
- * http://www.sencha.com/products/architect/
- *
- * This file requires use of the Sencha Touch 2.4.x library, under independent license.
- * License of Sencha Architect does not include license for Sencha Touch 2.4.x. For more
- * details see http://www.sencha.com/license or contact license@sencha.com.
- *
- * This file will be auto-generated each and everytime you save your project.
- *
- * Do NOT hand edit this file.
- */
-(Ext.cmd.derive('LocalBuzzDemo.view.MyPanel1', Ext.Panel, {
-    config: {
-        height: '100%',
-        hidden: true,
-        id: 'infoPanel',
-        itemId: 'infoPanel',
-        style: 'overflow:scroll;',
-        hideOnMaskTap: false,
-        items: [
-            {
-                xtype: 'component',
-                disabled: true,
-                docked: 'top',
-                height: '40vh',
-                hidden: true,
-                id: 'storeImage',
-                itemId: 'storeImage',
-                left: '2%',
-                margin: '5 10 5 0',
-                width: '95%'
-            },
-            {
-                xtype: 'button',
-                handler: function(button, e) {
-                    //var store = Ext.getStore('MyDealsStore');
-                    //var date = new Date();
-                    //var today = Ext.Date.format(date,'n/j/Y');
-                    //var test = Ext.Date.add(date,Ext.Date.DAY,0);
-                    //var today = Ext.Date.format(test,'n/j/Y');
-                    //store.clearFilter();
-                    //store.load();
-                    /*store.each(function(rec)
-                    {
-
-
-                    //console.log('Deal End Date: ' + rec.get('dealEndDate'));
-                    //console.log('Tdays date is : ' + today);
-
-                    if(rec.get('dealEndDate') < today) {
-
-                        console.log(rec.get('dealName'));
-                        rec.set('dealStatus','Expired');
-
-
-
-                    }
-
-
-
-                });*/
-                    //store.filter('dealStatus','Active');
-                    var view;
-                    if (Ext.Viewport.getComponent('DealsPanel')) {
-                        view = Ext.Viewport.getComponent('DealsPanel');
-                    } else {
-                        view = Ext.Viewport.add({
-                            xtype: 'DealsPanel'
-                        });
-                    }
-                    Ext.Viewport.setActiveItem(view);
-                },
-                height: '8vh',
-                hidden: true,
-                margin: '5 5 0 15',
-                style: 'font-family:Arial;font-size:5vw',
-                top: '41vh',
-                ui: 'confirm',
-                width: '90%',
-                text: 'Get The Latest Buzz!'
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-globe',
-                disabled: false,
-                height: '',
-                hidden: true,
-                id: 'website',
-                itemId: 'website',
-                margin: '0 15 0 15',
-                maxHeight: '30%',
-                minHeight: '',
-                styleHtmlContent: true,
-                clearIcon: false,
-                name: 'website',
-                readOnly: true
-            },
-            {
-                xtype: 'textareafield',
-                cls: [
-                    'icon-location1',
-                    'customfield'
-                ],
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                hidden: true,
-                id: 'address',
-                itemId: 'address',
-                padding: '10 5 0 10',
-                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
-                styleHtmlContent: true,
-                top: '90vh',
-                width: '95%',
-                clearIcon: false,
-                inputCls: 'customfield2_input',
-                name: 'address',
-                placeHolder: 'Not Listed',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                if (Ext.getCmp('address').getValue()) {
-                                    console.log('Address button tapped');
-                                    var queryString = encodeURIComponent(Ext.getCmp('address').getValue());
-                                    var url;
-                                    if (Ext.os.is('Android')) {
-                                        url = 'geo:0,0?q=' + queryString;
-                                    } else {
-                                        url = 'maps:q=' + queryString;
-                                    }
-                                    //Ext.device.Device.openURL(url);
-                                    window.open(url, '_system');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: [
-                    'icon-globe',
-                    'customfield2'
-                ],
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                hidden: true,
-                id: 'website1',
-                itemId: 'website1',
-                margin: '5 5 5 5',
-                minHeight: '',
-                style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
-                styleHtmlContent: true,
-                top: '80vh',
-                width: '95%',
-                clearIcon: false,
-                inputCls: 'customfield2_input',
-                name: 'websiteDisplayName',
-                placeHolder: 'Not Listed',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                var url = Ext.getCmp('website').getValue();
-                                if (url) {
-                                    window.open(url, '_system', 'location=yes');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: [
-                    'icon-email',
-                    'customfield2'
-                ],
-                docked: 'bottom',
-                height: '9vh',
-                hidden: true,
-                id: 'email',
-                itemId: 'email',
-                margin: '5 5 5 5',
-                style: 'font-size:4.5vw;font-family: arial',
-                styleHtmlContent: true,
-                top: '70vh',
-                width: '95%',
-                clearIcon: false,
-                inputCls: 'customfield2_input',
-                label: '',
-                name: 'emailAddress',
-                placeHolder: 'Not Listed',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                /* cordova.plugins.email.open({
-
-
-                                to:          Ext.getCmp('email').getValue(), // email addresses for TO field
-                                isHtml:    false, // indicats if the body is HTML or plain text
-                                });*/
-                                if (Ext.getCmp('email').getValue()) {
-                                    window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-                                    null, [
-                                        Ext.getCmp('email').getValue()
-                                    ], // TO: must be null or an array
-                                    null, // CC: must be null or an array
-                                    null, // BCC: must be null or an array
-                                    null, // FILES: can be null, a string, or an array
-                                    null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
-                                    null);
-                                }
-                            });
-                        },
-                        // called when sh*t hits the fan
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textfield',
-                cls: [
-                    'icon-phone',
-                    'customfield2'
-                ],
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                hidden: true,
-                html: '',
-                id: 'phoneNumber',
-                itemId: 'phoneNumber',
-                margin: '5 5 5 5',
-                padding: '15 10 10 10',
-                style: 'font-size:4.5vw;font-family: arial',
-                styleHtmlContent: true,
-                top: '60vh',
-                width: '95%',
-                clearIcon: false,
-                inputCls: 'customfield2_input',
-                name: 'phoneNumber',
-                placeHolder: 'Not Listed',
-                readOnly: true,
-                listeners: [
-                    {
-                        fn: function(element, eOpts) {
-                            element.addListener('tap', function() {
-                                console.log(Ext.getCmp('phoneNumber').getValue());
-                                var numberToDial = Ext.getCmp('phoneNumber').getValue();
-                                // window.location = 'tel:'+ numberToDial ;
-                                if (numberToDial) {
-                                    window.open('tel:' + numberToDial, '_system');
-                                }
-                            });
-                        },
-                        event: 'painted'
-                    }
-                ]
-            },
-            {
-                xtype: 'textareafield',
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                hidden: true,
-                id: 'businessInfo',
-                itemId: 'businessInfo',
-                padding: '10 5 0 10',
-                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
-                styleHtmlContent: true,
-                top: '50vh',
-                width: '95%',
-                clearIcon: false,
-                name: 'mytextarea',
-                readOnly: true
-            }
-        ]
-    }
-}, 0, 0, [
-    "component",
-    "container",
-    "panel"
-], {
-    "component": true,
-    "container": true,
-    "panel": true
-}, 0, 0, [
-    LocalBuzzDemo.view,
-    'MyPanel1'
-], 0));
-
-/*
  * File: app.js
  *
  * This file was generated by Sencha Architect version 3.2.0.
@@ -67568,7 +67526,6 @@ Ext.application({
         'Info1',
         'List',
         'LatestBuzz',
-        'MyPanel1',
         'Info'
     ],
     controllers: [
