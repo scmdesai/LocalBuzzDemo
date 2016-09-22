@@ -65006,7 +65006,7 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            ' <div class="list-item" style="background:#fefefb;">',
+            ' <div class="w3-card-4" style="background:#fefefb;">',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
