@@ -65245,7 +65245,7 @@ Ext.define('Ext.direct.Manager', {
         }
         info.setRecord(record);
         //Ext.Viewport.setActiveItem(info);
-        info.showBy(Ext.get('tabbar'), top);
+        info.showBy(Ext.get('tabbar'));
     },
     //console.log(info);
     //var customerId = record.get('customerId');
