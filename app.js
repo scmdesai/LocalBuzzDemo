@@ -64555,7 +64555,7 @@ Ext.define('Ext.direct.Manager', {
     config: {
         disabled: false,
         fullscreen: false,
-        height: '100%',
+        height: '80%',
         id: 'Info',
         itemId: 'Info',
         style: 'background:#fff;',
