@@ -64614,9 +64614,11 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'formpanel',
                 docked: 'top',
                 height: '100%',
-                style: 'overflow-y:scroll',
                 layout: 'vbox',
-                scrollable: true,
+                scrollable: {
+                    direction: 'vertical',
+                    directionLock: true
+                },
                 items: [
                     {
                         xtype: 'button',
