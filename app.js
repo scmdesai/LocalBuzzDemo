@@ -64881,7 +64881,7 @@ Ext.define('Ext.direct.Manager', {
                 listeners: [
                     {
                         fn: function(element, eOpts) {
-                            var myScroll = new IScroll('#w', {
+                            var myScroll = new IScroll('#infoPanel', {
                                     zoom: true,
                                     scrollX: true,
                                     scrollY: true,
@@ -65754,9 +65754,14 @@ Ext.define('Ext.direct.Manager', {
                             if (record.get('dealImageURL')) {
                                 element.addListener('tap', function() {
                                     console.log('DealImage Tap');
-                                    var view = Ext.Viewport.add({
+                                    var view;
+                                    if (Ext.Viewport.getComponent('DealImage')) {
+                                        view = Ext.Viewport.getComponent('DealImage');
+                                    } else {
+                                        view = Ext.Viewport.add({
                                             xtype: 'DealImage'
                                         });
+                                    }
                                     view.setRecord(record);
                                     view.showBy(Ext.get('dealPicture'));
                                 });
