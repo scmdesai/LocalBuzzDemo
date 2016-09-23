@@ -64630,14 +64630,14 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 disabled: true,
                 docked: 'top',
-                height: '10vh',
+                height: '13vh',
                 id: 'businessInfo',
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 5 0',
                 style: 'font-size:4.2vw;font-family:Arial;border:3px inset #c0c0c0',
                 top: '41vh',
-                width: '94vw'
+                width: '96vw'
             },
             {
                 xtype: 'button',
@@ -64683,24 +64683,24 @@ Ext.define('Ext.direct.Manager', {
                 docked: 'top',
                 height: '10vh',
                 hidden: false,
-                margin: '10 5 5 15',
+                margin: '3vh 1vw 1vh 1vw',
                 style: 'font-family:Arial;font-size:5vw',
-                top: '51vh',
+                top: '54vh',
                 ui: 'confirm',
-                width: '90%',
+                width: '98%',
                 text: 'Get The Latest Buzz!'
             },
             {
                 xtype: 'container',
-                height: '26vh',
+                height: '22vh',
                 margin: '10 10 0 10',
-                padding: '5 5 5 5',
-                top: '62vh',
+                top: '67vh',
                 width: '94vw',
                 layout: 'vbox',
                 items: [
                     {
                         xtype: 'container',
+                        margin: '5 5 5 5',
                         layout: 'hbox',
                         items: [
                             {
@@ -64712,10 +64712,9 @@ Ext.define('Ext.direct.Manager', {
                                     }
                                 },
                                 docked: 'left',
-                                height: '11vh',
+                                height: '9vh',
                                 id: 'website1',
                                 itemId: 'website1',
-                                margin: '2 15 5 0',
                                 style: 'background:#00529D',
                                 width: '40%',
                                 iconAlign: 'center',
@@ -64738,10 +64737,9 @@ Ext.define('Ext.direct.Manager', {
                                     }
                                 },
                                 docked: 'right',
-                                height: '11vh',
+                                height: '9vh',
                                 id: 'address',
                                 itemId: 'address',
-                                margin: '2 20 5 0',
                                 style: 'background:#FE7569',
                                 width: '40%',
                                 iconAlign: 'center',
@@ -64752,6 +64750,7 @@ Ext.define('Ext.direct.Manager', {
                     {
                         xtype: 'container',
                         docked: 'top',
+                        margin: '5 5 5 5',
                         layout: 'hbox',
                         items: [
                             {
@@ -64765,9 +64764,8 @@ Ext.define('Ext.direct.Manager', {
                                     }
                                 },
                                 docked: 'left',
-                                height: '11vh',
+                                height: '9vh',
                                 id: 'phoneNumber',
-                                margin: '2 15 5 5',
                                 style: 'background:green',
                                 width: '40%',
                                 iconAlign: 'center',
@@ -64790,10 +64788,9 @@ Ext.define('Ext.direct.Manager', {
                                 },
                                 // called when sh*t hits the fan
                                 docked: 'right',
-                                height: '11vh',
+                                height: '9vh',
                                 id: 'email',
                                 itemId: 'email',
-                                margin: '2 20 5 0',
                                 style: 'background:black;color:white',
                                 width: '40%',
                                 iconAlign: 'center',
