@@ -64634,10 +64634,10 @@ Ext.define('Ext.direct.Manager', {
                 id: 'businessInfo',
                 itemId: 'businessInfo',
                 left: '2%',
-                margin: '5 0 0 0',
+                margin: '5 0 5 0',
                 padding: '5 5 5 10',
-                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
-                top: '50vh',
+                style: 'font-size:4.2vw;font-family:Arial;border:3px inset #c0c0c0',
+                top: '41vh',
                 width: '94vw'
             },
             {
@@ -64682,11 +64682,11 @@ Ext.define('Ext.direct.Manager', {
                     Ext.Viewport.setActiveItem(view);
                 },
                 docked: 'top',
-                height: '8vh',
+                height: '10vh',
                 hidden: false,
                 margin: '10 5 5 15',
                 style: 'font-family:Arial;font-size:5vw',
-                top: '41vh',
+                top: '51vh',
                 ui: 'confirm',
                 width: '90%',
                 text: 'Get The Latest Buzz!'
@@ -64696,7 +64696,7 @@ Ext.define('Ext.direct.Manager', {
                 height: '26vh',
                 margin: '10 10 0 10',
                 padding: '5 5 5 5',
-                top: '60vh',
+                top: '62vh',
                 width: '94vw',
                 layout: 'vbox',
                 items: [
