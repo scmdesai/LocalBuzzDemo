@@ -64681,22 +64681,21 @@ Ext.define('Ext.direct.Manager', {
                 style: 'overflow:scroll;background:#fff',
                 top: '52vh',
                 hideOnMaskTap: false,
-                layout: {
-                    type: 'vbox',
-                    align: 'stretchmax'
-                },
+                layout: 'vbox',
+                scrollable: true,
                 items: [
                     {
                         xtype: 'textareafield',
+                        cls: 'custmfield2',
                         disabled: false,
                         docked: 'bottom',
-                        height: '9vh',
+                        height: '10vh',
                         hidden: false,
                         id: 'businessInfo',
                         itemId: 'businessInfo',
                         maxWidth: '100%',
                         padding: '10 5 0 10',
-                        style: 'font-size:4.2vw;font-family:Arial;border-top:none',
+                        style: 'font-size:4.2vw;font-family:Arial;border-bottom:1px solid #c0c0c0',
                         styleHtmlContent: true,
                         top: '0vh',
                         width: '95%',
