@@ -64635,8 +64635,8 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 0 0',
-                padding: '5 5 5 5',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb;',
+                padding: '5 5 5 10',
+                style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 top: '50vh',
                 width: '94vw'
             },
@@ -64720,7 +64720,7 @@ Ext.define('Ext.direct.Manager', {
                                 style: 'background:#00529D',
                                 width: '40%',
                                 iconAlign: 'center',
-                                iconCls: 'add'
+                                iconCls: 'icon-globe-white'
                             },
                             {
                                 xtype: 'button',
@@ -64798,7 +64798,7 @@ Ext.define('Ext.direct.Manager', {
                                 style: 'background:black;color:white',
                                 width: '40%',
                                 iconAlign: 'center',
-                                iconCls: 'action'
+                                iconCls: 'icon-email-white'
                             }
                         ]
                     }
@@ -67336,11 +67336,9 @@ Ext.application({
         'DealsPanel1',
         'WelcomeScreen',
         'DealImage',
-        null,
         'List',
         'LatestBuzz',
-        'Info',
-        null
+        'Info'
     ],
     controllers: [
         'LocalBuzzDemo'
