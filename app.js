@@ -64635,7 +64635,6 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 5 0',
-                padding: '5 5 5 10',
                 style: 'font-size:4.2vw;font-family:Arial;border:3px inset #c0c0c0',
                 top: '41vh',
                 width: '94vw'
@@ -64967,7 +64966,7 @@ Ext.define('Ext.direct.Manager', {
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
-                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:98%;margin-left:5px;margin-top:2px;"/>');
             }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
