@@ -64636,6 +64636,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 0 0',
+                padding: '5 5 5 5',
                 style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb;',
                 top: '50vh',
                 width: '94vw'
@@ -64841,24 +64842,6 @@ Ext.define('Ext.direct.Manager', {
                 readOnly: true
             },
             {
-                xtype: 'textareafield',
-                cls: 'custmfield2',
-                disabled: false,
-                docked: 'bottom',
-                height: '9vh',
-                hidden: false,
-                id: 'businessInfo12',
-                itemId: 'businessInfo1',
-                padding: '10 5 0 10',
-                style: 'font-size:4.2vw;font-family:Arial;border-bottom:1px solid #c0c0c0',
-                styleHtmlContent: true,
-                top: '0vh',
-                width: '95%',
-                clearIcon: false,
-                name: 'mytextarea',
-                readOnly: true
-            },
-            {
                 xtype: 'textfield',
                 cls: [
                     'icon-email',
@@ -64983,6 +64966,9 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
+            if (record.get('pictureURL')) {
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:95%;margin-left:5px;margin-top:2px;"/>');
+            }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             this.down('#email1').setValue(record.get('emailAddress'));
