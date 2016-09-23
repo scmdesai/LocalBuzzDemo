@@ -64664,7 +64664,7 @@ Ext.define('Ext.direct.Manager', {
                 },
                 height: '8vh',
                 hidden: false,
-                margin: '5 5 0 15',
+                margin: '5 5 5 15',
                 style: 'font-family:Arial;font-size:5vw',
                 top: '41vh',
                 ui: 'confirm',
@@ -64679,13 +64679,31 @@ Ext.define('Ext.direct.Manager', {
                 id: 'infoPanel',
                 itemId: 'infoPanel',
                 style: 'overflow:scroll;background:#fff',
-                top: '50vh',
+                top: '52vh',
                 hideOnMaskTap: false,
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
                 },
                 items: [
+                    {
+                        xtype: 'textareafield',
+                        disabled: false,
+                        docked: 'bottom',
+                        height: '9vh',
+                        hidden: false,
+                        id: 'businessInfo',
+                        itemId: 'businessInfo',
+                        maxWidth: '100%',
+                        padding: '10 5 0 10',
+                        style: 'font-size:4.2vw;font-family:Arial;border-top:none',
+                        styleHtmlContent: true,
+                        top: '0vh',
+                        width: '95%',
+                        clearIcon: false,
+                        name: 'mytextarea',
+                        readOnly: true
+                    },
                     {
                         xtype: 'textfield',
                         cls: [
@@ -64702,6 +64720,7 @@ Ext.define('Ext.direct.Manager', {
                         minHeight: '',
                         style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                         styleHtmlContent: true,
+                        top: '30vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64737,6 +64756,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '10 5 0 10',
                         style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                         styleHtmlContent: true,
+                        top: '40vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64779,6 +64799,7 @@ Ext.define('Ext.direct.Manager', {
                         margin: '5 5 5 5',
                         style: 'font-size:4.5vw;font-family: arial',
                         styleHtmlContent: true,
+                        top: '20vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64822,15 +64843,17 @@ Ext.define('Ext.direct.Manager', {
                         ],
                         disabled: false,
                         docked: 'bottom',
-                        height: '9vh',
+                        height: '10vh',
                         hidden: false,
                         html: '',
                         id: 'phoneNumber',
                         itemId: 'phoneNumber',
                         margin: '5 5 5 5',
+                        maxWidth: '100%',
                         padding: '15 10 10 10',
                         style: 'font-size:4.5vw;font-family: arial',
                         styleHtmlContent: true,
+                        top: '10vh',
                         width: '95%',
                         clearIcon: false,
                         inputCls: 'customfield2_input',
@@ -64854,32 +64877,13 @@ Ext.define('Ext.direct.Manager', {
                         ]
                     },
                     {
-                        xtype: 'textareafield',
-                        disabled: false,
-                        docked: 'bottom',
-                        height: '9vh',
-                        hidden: false,
-                        id: 'businessInfo',
-                        itemId: 'businessInfo',
-                        padding: '10 5 0 10',
-                        style: 'font-size:4.2vw;font-family:Arial;border-top:none',
-                        styleHtmlContent: true,
-                        width: '95%',
-                        clearIcon: false,
-                        name: 'mytextarea',
-                        readOnly: true
-                    },
-                    {
                         xtype: 'textfield',
                         cls: 'icon-globe',
                         disabled: false,
-                        height: '',
                         hidden: true,
                         id: 'website',
                         itemId: 'website',
                         margin: '0 15 0 15',
-                        maxHeight: '30%',
-                        minHeight: '',
                         styleHtmlContent: true,
                         clearIcon: false,
                         name: 'website',
@@ -64956,9 +64960,11 @@ Ext.define('Ext.direct.Manager', {
             }
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
-            this.down('#phoneNumber').setHtml(record.get('phoneNumber'));
-            this.down('#email').setHtml(record.get('emailAddress'));
-            this.down('#website1').setHtml(record.get('websiteDisplayName'));
+            this.down('#businessInfo').setValue(businessInfo);
+            this.down('#phoneNumber').setValue(record.get('phoneNumber'));
+            this.down('#email').setValue(record.get('emailAddress'));
+            this.down('#website1').setValue(record.get('websiteDisplayName'));
+            this.down('#address').setValue(record.get('address'));
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
