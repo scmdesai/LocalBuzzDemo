@@ -64956,13 +64956,13 @@ Ext.define('Ext.direct.Manager', {
             }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('phoneNumber') + '</p>');
+            this.down('#phoneNumber').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em;color:black;">' + record.get('phoneNumber') + '</p>');
             this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('emailAddress') + '</p>');
+            this.down('#email').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('emailAddress') + '</p>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('websiteDisplayName') + '</p>');
+            this.down('#website1').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('websiteDisplayName') + '</p>');
             this.down('#address1').setValue(record.get('address'));
-            this.down('#address').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('address') + '</p>');
+            this.down('#address').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('address') + '</p>');
             this.down('#website12').setValue(record.get('website'));
             // console.log(store.getData());
             if (isFavorite === true) {
