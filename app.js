@@ -64681,122 +64681,111 @@ Ext.define('Ext.direct.Manager', {
                     Ext.Viewport.setActiveItem(view);
                 },
                 docked: 'top',
-                height: '10vh',
+                height: '8vh',
                 hidden: false,
                 margin: '3vh 1vw 1vh 1vw',
                 style: 'font-family:Arial;font-size:5vw',
-                top: '54vh',
+                top: '53vh',
                 ui: 'confirm',
                 width: '98%',
                 text: 'Get The Latest Buzz!'
             },
             {
                 xtype: 'container',
-                height: '22vh',
-                margin: '10 10 0 10',
-                top: '67vh',
-                width: '94vw',
-                layout: 'vbox',
+                height: '25vh',
+                margin: '5 5 5 5',
+                top: '64vh',
+                width: '98%',
+                scrollable: true,
+                layout: {
+                    type: 'vbox',
+                    align: 'start',
+                    pack: 'end'
+                },
                 items: [
                     {
-                        xtype: 'container',
-                        margin: '5 5 5 5',
-                        layout: 'hbox',
-                        items: [
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    var url = Ext.getCmp('website12').getValue();
-                                    if (url) {
-                                        window.open(url, '_system', 'location=yes');
-                                    }
-                                },
-                                docked: 'left',
-                                height: '9vh',
-                                id: 'website1',
-                                itemId: 'website1',
-                                style: 'background:#00529D',
-                                width: '40%',
-                                iconAlign: 'center',
-                                iconCls: 'icon-globe-white'
-                            },
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    if (Ext.getCmp('address1').getValue()) {
-                                        console.log('Address button tapped');
-                                        var queryString = encodeURIComponent(Ext.getCmp('address1').getValue());
-                                        var url;
-                                        if (Ext.os.is('Android')) {
-                                            url = 'geo:0,0?q=' + queryString;
-                                        } else {
-                                            url = 'maps:q=' + queryString;
-                                        }
-                                        //Ext.device.Device.openURL(url);
-                                        window.open(url, '_system');
-                                    }
-                                },
-                                docked: 'right',
-                                height: '9vh',
-                                id: 'address',
-                                itemId: 'address',
-                                style: 'background:#FE7569',
-                                width: '40%',
-                                iconAlign: 'center',
-                                iconCls: 'icon-location'
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            console.log(Ext.getCmp('phoneNumber1').getValue());
+                            var numberToDial = Ext.getCmp('phoneNumber1').getValue();
+                            // window.location = 'tel:'+ numberToDial ;
+                            if (numberToDial) {
+                                window.open('tel:' + numberToDial, '_system');
                             }
-                        ]
+                        },
+                        height: '6vh',
+                        id: 'phoneNumber',
+                        margin: '0 0 2 0',
+                        style: 'background:white;border:3px ridge #c0c0c0;color:black!important;',
+                        width: '98%',
+                        iconCls: 'icon-phone'
                     },
                     {
-                        xtype: 'container',
-                        docked: 'top',
-                        margin: '5 5 5 5',
-                        layout: 'hbox',
-                        items: [
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    console.log(Ext.getCmp('phoneNumber1').getValue());
-                                    var numberToDial = Ext.getCmp('phoneNumber1').getValue();
-                                    // window.location = 'tel:'+ numberToDial ;
-                                    if (numberToDial) {
-                                        window.open('tel:' + numberToDial, '_system');
-                                    }
-                                },
-                                docked: 'left',
-                                height: '9vh',
-                                id: 'phoneNumber',
-                                style: 'background:green',
-                                width: '40%',
-                                iconAlign: 'center',
-                                iconCls: 'icon-phone'
-                            },
-                            {
-                                xtype: 'button',
-                                handler: function(button, e) {
-                                    if (Ext.getCmp('email1').getValue()) {
-                                        window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
-                                        null, [
-                                            Ext.getCmp('email1').getValue()
-                                        ], // TO: must be null or an array
-                                        null, // CC: must be null or an array
-                                        null, // BCC: must be null or an array
-                                        null, // FILES: can be null, a string, or an array
-                                        null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
-                                        null);
-                                    }
-                                },
-                                // called when sh*t hits the fan
-                                docked: 'right',
-                                height: '9vh',
-                                id: 'email',
-                                itemId: 'email',
-                                style: 'background:black;color:white',
-                                width: '40%',
-                                iconAlign: 'center',
-                                iconCls: 'icon-email-white'
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            if (Ext.getCmp('email1').getValue()) {
+                                window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
+                                null, [
+                                    Ext.getCmp('email1').getValue()
+                                ], // TO: must be null or an array
+                                null, // CC: must be null or an array
+                                null, // BCC: must be null or an array
+                                null, // FILES: can be null, a string, or an array
+                                null, // called when sharing worked, but also when the user cancelled sharing via email (I've found no way to detect the difference)
+                                null);
                             }
-                        ]
+                        },
+                        // called when sh*t hits the fan
+                        height: '6vh',
+                        id: 'email',
+                        itemId: 'email',
+                        margin: '0 2 0 0',
+                        style: 'background:white;border:3px ridge #c0c0c0',
+                        width: '98%',
+                        iconAlign: 'center',
+                        iconCls: 'icon-email-white'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            var url = Ext.getCmp('website12').getValue();
+                            if (url) {
+                                window.open(url, '_system', 'location=yes');
+                            }
+                        },
+                        height: '6vh',
+                        id: 'website1',
+                        itemId: 'website1',
+                        margin: '0 0 2 0',
+                        style: 'background:white;border:3px ridge #c0c0c0;color:black;',
+                        width: '98%',
+                        iconAlign: 'center',
+                        iconCls: 'icon-globe-white'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            if (Ext.getCmp('address1').getValue()) {
+                                console.log('Address button tapped');
+                                var queryString = encodeURIComponent(Ext.getCmp('address1').getValue());
+                                var url;
+                                if (Ext.os.is('Android')) {
+                                    url = 'geo:0,0?q=' + queryString;
+                                } else {
+                                    url = 'maps:q=' + queryString;
+                                }
+                                //Ext.device.Device.openURL(url);
+                                window.open(url, '_system');
+                            }
+                        },
+                        height: '6vh',
+                        id: 'address',
+                        itemId: 'address',
+                        margin: '0 0 2 0',
+                        style: 'background:white;border:3px ridge #c0c0c0;color:black;',
+                        width: '98%',
+                        iconAlign: 'center',
+                        iconCls: 'icon-location'
                     }
                 ]
             },
@@ -64967,9 +64956,13 @@ Ext.define('Ext.direct.Manager', {
             }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
+            this.down('#phoneNumber').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('phoneNumber') + '</p>');
             this.down('#email1').setValue(record.get('emailAddress'));
+            this.down('#email').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('emailAddress') + '</p>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
+            this.down('#website1').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('websiteDisplayName') + '</p>');
             this.down('#address1').setValue(record.get('address'));
+            this.down('#address').setHtml('<p style="text-align:left;padding-left:40px">' + record.get('address') + '</p>');
             this.down('#website12').setValue(record.get('website'));
             // console.log(store.getData());
             if (isFavorite === true) {
