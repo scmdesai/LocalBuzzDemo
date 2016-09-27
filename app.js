@@ -64558,6 +64558,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'Info',
         itemId: 'Info',
         style: 'border:1px solid #00529D;background:#fff',
+        styleHtmlContent: true,
         width: '100%',
         items: [
             {
@@ -64718,7 +64719,7 @@ Ext.define('Ext.direct.Manager', {
                                         window.open('tel:' + numberToDial, '_system');
                                     }
                                 },
-                                cls: 'w3-btn',
+                                cls: 'w3-display-container',
                                 docked: 'left',
                                 height: '11vh',
                                 id: 'phoneNumber',
@@ -64976,7 +64977,7 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<br><div style="padding:1px 1px 1px 3px;position:absolute;text-align: left;font-size:0.5em;color:black!important">' + record.get('phoneNumber') + '</div>');
+            this.down('#phoneNumber').setHtml('<br><div class="class="w3-display-bottommiddle w3-container" "style="padding:1px 1px;font-size:0.5em;color:black!important">' + record.get('phoneNumber') + '</div>');
             this.down('#email1').setValue(record.get('emailAddress'));
             this.down('#email').setHtml('<br><div style="padding:1px 1px 1px 5px;left:1vw;position:absolute;text-align: left;font-size:0.5em">' + record.get('emailAddress') + '</div>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
