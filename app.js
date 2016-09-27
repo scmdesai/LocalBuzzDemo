@@ -64553,7 +64553,6 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
     config: {
-        cls: 'w3-container',
         height: '100%',
         id: 'Info',
         itemId: 'Info',
