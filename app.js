@@ -64553,13 +64553,12 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
     config: {
+        cls: 'w3-container',
         height: '100%',
         id: 'Info',
         itemId: 'Info',
         style: 'border:1px solid #00529D;background:#fff',
         width: '100%',
-        layout: 'card',
-        scrollable: true,
         items: [
             {
                 xtype: 'toolbar',
@@ -64719,6 +64718,7 @@ Ext.define('Ext.direct.Manager', {
                                         window.open('tel:' + numberToDial, '_system');
                                     }
                                 },
+                                cls: 'w3-btn',
                                 docked: 'left',
                                 height: '11vh',
                                 id: 'phoneNumber',
