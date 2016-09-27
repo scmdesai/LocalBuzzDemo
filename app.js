@@ -64120,7 +64120,7 @@ Ext.define('Ext.direct.Manager', {
             Ext.Array.include(customerIds, rec.get('customerId'));
         });
         dealParams = customerIds.join();
-        console.log(dealParams);
+        //console.log(dealParams);
         var dealStore = Ext.getStore('MyDealsStore');
         if (customerIds.length > 0) {
             dealStore.load({
@@ -64723,7 +64723,8 @@ Ext.define('Ext.direct.Manager', {
                                 height: '11vh',
                                 id: 'phoneNumber',
                                 style: 'background:white;border-bottom:1px solid #c0c0c0;color:black!important;',
-                                width: '40%',
+                                width: '50%',
+                                iconAlign: 'center',
                                 iconCls: 'icon-phone'
                             },
                             {
@@ -64746,8 +64747,9 @@ Ext.define('Ext.direct.Manager', {
                                 height: '11vh',
                                 id: 'email',
                                 itemId: 'email',
-                                style: 'background:white;border:1px ridge #c0c0c0',
-                                width: '40%',
+                                margin: '0 0 0 5',
+                                style: 'background:white;border:1px ridge #c0c0c0;word-wrap: break-word',
+                                width: '50%',
                                 iconAlign: 'center',
                                 iconCls: 'icon-email-white'
                             }
@@ -64771,8 +64773,8 @@ Ext.define('Ext.direct.Manager', {
                                 height: '11vh',
                                 id: 'website1',
                                 itemId: 'website1',
-                                style: 'background:white;border:1px ridge #c0c0c0;color:black;',
-                                width: '40%',
+                                style: 'background:white;border:1px ridge #c0c0c0;color:black;word-wrap: break-word',
+                                width: '50%',
                                 iconAlign: 'center',
                                 iconCls: 'icon-globe-white'
                             },
@@ -64796,8 +64798,9 @@ Ext.define('Ext.direct.Manager', {
                                 height: '11vh',
                                 id: 'address',
                                 itemId: 'address',
-                                style: 'background:white;border:1px ridge #c0c0c0;color:black;',
-                                width: '40%',
+                                margin: '0 0 0 5',
+                                style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;',
+                                width: '50%',
                                 iconAlign: 'center',
                                 iconCls: 'icon-location'
                             }
@@ -64972,13 +64975,14 @@ Ext.define('Ext.direct.Manager', {
             }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em;color:black;">' + record.get('phoneNumber') + '</p>');
+            //this.down('#phoneNumber').setText(record.get('phoneNumber'));
+            this.down('#phoneNumber').setHtml('<br><br><div style="text-align: left;font-size:0.7em;color:black">' + record.get('phoneNumber') + '</div>');
             this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('emailAddress') + '</p>');
+            this.down('#email').setHtml('<br><div style="padding:1px 1px 1px 1px;left:1vw;position:absolute;text-align: left;font-size:0.7em">' + record.get('emailAddress') + '</div>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('websiteDisplayName') + '</p>');
+            this.down('#website1').setHtml('<br><div style="padding:1px 1px 1px 1px;left:1vw;position:absolute;text-align: left;font-size:0.7em">' + record.get('websiteDisplayName') + '</div>');
             this.down('#address1').setValue(record.get('address'));
-            this.down('#address').setHtml('<p style="text-align:left;padding-left:40px;font-size:0.5em">' + record.get('address') + '</p>');
+            this.down('#address').setHtml('<br><div style="padding:1px 1px 1px 1px;left:1vw;position:absolute;text-align: left;font-size:0.7em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</div>');
             this.down('#website12').setValue(record.get('website'));
             // console.log(store.getData());
             if (isFavorite === true) {
