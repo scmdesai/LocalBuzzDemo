@@ -64764,6 +64764,7 @@ Ext.define('Ext.direct.Manager', {
                         height: '6vh',
                         hidden: false,
                         id: 'phoneNumber',
+                        itemId: 'phoneNumber',
                         style: 'background:white;border:none;',
                         styleHtmlContent: true,
                         width: '98%',
@@ -64955,7 +64956,7 @@ Ext.define('Ext.direct.Manager', {
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
-                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:98%;"/>');
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
             }
             this.down('#businessInfo').setHtml('<div style="overflow:scroll!important">' + businessInfo + '</div>');
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
