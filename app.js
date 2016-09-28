@@ -64959,11 +64959,11 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</span>');
+            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</span>');
             this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</span>');
+            this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</span>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('websiteDisplayName') + '</span>');
+            this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('websiteDisplayName') + '</span>');
             this.down('#address1').setValue(record.get('address'));
             this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</span>');
             this.down('#website12').setValue(record.get('website'));
