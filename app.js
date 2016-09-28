@@ -64752,27 +64752,6 @@ Ext.define('Ext.direct.Manager', {
                     {
                         xtype: 'button',
                         handler: function(button, e) {
-                            console.log(Ext.getCmp('phoneNumber1').getValue());
-                            var numberToDial = Ext.getCmp('phoneNumber1').getValue();
-                            // window.location = 'tel:'+ numberToDial ;
-                            if (numberToDial) {
-                                window.open('tel:' + numberToDial, '_system');
-                            }
-                        },
-                        cls: 'w3-card-4',
-                        docked: 'top',
-                        height: '6vh',
-                        hidden: false,
-                        id: 'phoneNumber',
-                        itemId: 'phoneNumber',
-                        style: 'background:white;border:none;',
-                        styleHtmlContent: true,
-                        width: '98%',
-                        iconCls: 'icon-phone'
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
                             if (Ext.getCmp('email1').getValue()) {
                                 window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
                                 null, [
@@ -64797,6 +64776,28 @@ Ext.define('Ext.direct.Manager', {
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-email-white'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
+                            console.log(Ext.getCmp('phoneNumber1').getValue());
+                            var numberToDial = Ext.getCmp('phoneNumber1').getValue();
+                            // window.location = 'tel:'+ numberToDial ;
+                            if (numberToDial) {
+                                window.open('tel:' + numberToDial, '_system');
+                            }
+                        },
+                        cls: 'w3-card-4',
+                        docked: 'top',
+                        height: '6vh',
+                        hidden: false,
+                        id: 'phoneNumber',
+                        itemId: 'phoneNumber',
+                        margin: '5 0 0 0',
+                        style: 'background:white;border:none;',
+                        styleHtmlContent: true,
+                        width: '98%',
+                        iconCls: 'icon-iphone'
                     },
                     {
                         xtype: 'button',
