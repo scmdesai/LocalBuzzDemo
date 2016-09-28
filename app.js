@@ -64955,7 +64955,7 @@ Ext.define('Ext.direct.Manager', {
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
-                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:98%;margin-left:5px;margin-top:2px;"/>');
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:98%;"/>');
             }
             this.down('#businessInfo').setHtml('<div style="overflow:scroll!important">' + businessInfo + '</div>');
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
