@@ -64757,11 +64757,12 @@ Ext.define('Ext.direct.Manager', {
                                 window.open('tel:' + numberToDial, '_system');
                             }
                         },
+                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'phoneNumber',
-                        style: 'background:white;',
+                        style: 'background:white;border:none;',
                         width: '98%',
                         iconCls: 'icon-phone'
                     },
@@ -64781,12 +64782,13 @@ Ext.define('Ext.direct.Manager', {
                             }
                         },
                         // called when sh*t hits the fan
+                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'email',
                         itemId: 'email',
-                        style: 'background:white;',
+                        style: 'background:white;border:none;',
                         width: '98%',
                         iconCls: 'icon-email-white'
                     },
@@ -64798,12 +64800,13 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system', 'location=yes');
                             }
                         },
+                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'website1',
                         itemId: 'website1',
-                        style: 'background:white;',
+                        style: 'background:white;border:none;',
                         width: '98%',
                         iconCls: 'icon-globe-white'
                     },
@@ -64823,12 +64826,13 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system');
                             }
                         },
+                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'address',
                         itemId: 'address',
-                        style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;',
+                        style: 'background:white;border:none;',
                         width: '98%',
                         iconCls: 'icon-location'
                     }
@@ -64947,13 +64951,13 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<br><div style="color:black;position:absolute;left:12vw;bottom:0;font-size:0.6em">' + record.get('phoneNumber') + '</div>');
+            this.down('#phoneNumber').setHtml('<div style="left:12vw;bottom:2vh;color:black!important;position:absolute;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</div>');
             this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<div style="padding:1px 1px 1px 5px;left:1vw;position:absolute;text-align: left;font-size:0.6em">' + record.get('emailAddress') + '</div>');
+            this.down('#email').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</div>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<div style="padding:1px 1px 1px 3px;left:1vw;position:absolute;text-align: left;font-size:0.6em">' + record.get('websiteDisplayName') + '</div>');
+            this.down('#website1').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('websiteDisplayName') + '</div>');
             this.down('#address1').setValue(record.get('address'));
-            this.down('#address').setHtml('<div style="padding:1px 1px 1px 1px;left:1vw;position:absolute;text-align: left;font-size:0.6em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</div>');
+            this.down('#address').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</div>');
             this.down('#website12').setValue(record.get('website'));
             // console.log(store.getData());
             if (isFavorite === true) {
