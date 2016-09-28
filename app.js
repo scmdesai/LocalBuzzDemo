@@ -64762,6 +64762,7 @@ Ext.define('Ext.direct.Manager', {
                         hidden: false,
                         id: 'phoneNumber',
                         style: 'background:white;border:none;',
+                        styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-phone'
                     },
@@ -64787,6 +64788,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'email',
                         itemId: 'email',
                         style: 'background:white;border:none;',
+                        styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-email-white'
                     },
@@ -64804,6 +64806,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'website1',
                         itemId: 'website1',
                         style: 'background:white;border:none;',
+                        styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-globe-white'
                     },
@@ -64829,6 +64832,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'address',
                         itemId: 'address',
                         style: 'background:white;border:none;',
+                        styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-location'
                     }
@@ -64947,13 +64951,13 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<div style="left:12vw;bottom:2vh;color:black!important;position:absolute;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</div>');
+            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</span>');
             this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</div>');
+            this.down('#email').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</span>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em">' + record.get('websiteDisplayName') + '</div>');
+            this.down('#website1').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('websiteDisplayName') + '</span>');
             this.down('#address1').setValue(record.get('address'));
-            this.down('#address').setHtml('<div style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-style:normal;font-family:Arial;font-size:0.8em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</div>');
+            this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</span>');
             this.down('#website12').setValue(record.get('website'));
             // console.log(store.getData());
             if (isFavorite === true) {
