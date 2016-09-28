@@ -64558,6 +64558,11 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'Info',
         style: 'border:1px solid #00529D;background:#fff',
         styleHtmlContent: true,
+        scrollable: true,
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
+        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64616,7 +64621,7 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: true,
                 docked: 'top',
-                height: '40vh',
+                height: '35vh',
                 hidden: false,
                 id: 'storeImage',
                 itemId: 'storeImage',
@@ -64635,7 +64640,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '2%',
                 margin: '5 0 5 0',
                 style: 'font-size:4.2vw;font-family:Arial;border:2px inset #c0c0c0',
-                top: '41vh',
+                top: '37vh',
                 width: '97%'
             },
             {
@@ -64659,18 +64664,17 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 disabled: false,
                 docked: 'bottom',
-                height: '9vh',
-                hidden: true,
+                height: '7vh',
+                hidden: false,
                 id: 'website121',
                 itemId: 'website121',
                 margin: '5 5 5 5',
                 minHeight: '',
                 style: 'color:black;text-decoration:underline;font-family:Arial;font-size:4.5vw',
                 styleHtmlContent: true,
-                top: '80vh',
+                top: '72vh',
                 width: '95%',
                 clearIcon: false,
-                inputCls: 'customfield2_input',
                 name: 'websiteDisplayName',
                 placeHolder: 'Not Listed',
                 readOnly: true
@@ -64683,16 +64687,15 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 docked: 'bottom',
                 height: '7vh',
-                hidden: true,
+                hidden: false,
                 id: 'email1',
                 itemId: 'email1',
                 margin: '5 5 5 5',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
-                top: '70vh',
+                top: '65vh',
                 width: '95%',
                 clearIcon: false,
-                inputCls: 'customfield2_input',
                 label: '',
                 name: 'emailAddress',
                 placeHolder: 'Not Listed',
@@ -64706,16 +64709,15 @@ Ext.define('Ext.direct.Manager', {
                 ],
                 docked: 'bottom',
                 height: '7vh',
-                hidden: true,
+                hidden: false,
                 id: 'phoneNumber1',
                 itemId: 'phoneNumber1',
                 margin: '5 5 5 5',
                 style: 'font-size:4.5vw;font-family: arial',
                 styleHtmlContent: true,
-                top: '70vh',
+                top: '58vh',
                 width: '95%',
                 clearIcon: false,
-                inputCls: 'customfield2_input',
                 label: '',
                 name: 'phoneNumber',
                 placeHolder: 'Not Listed',
@@ -64730,16 +64732,15 @@ Ext.define('Ext.direct.Manager', {
                 disabled: false,
                 docked: 'bottom',
                 height: '9vh',
-                hidden: true,
+                hidden: false,
                 id: 'address1',
                 itemId: 'address1',
                 padding: '10 5 0 10',
                 style: 'font-size:4.2vw;font-family:Arial;border-top:none',
                 styleHtmlContent: true,
-                top: '90vh',
+                top: '79vh',
                 width: '95%',
                 clearIcon: false,
-                inputCls: 'customfield2_input',
                 name: 'address',
                 placeHolder: 'Not Listed',
                 readOnly: true
@@ -64913,19 +64914,10 @@ Ext.define('Ext.direct.Manager', {
                 hidden: false,
                 margin: '3vh 1vw 1vh 1vw',
                 style: 'font-family:Arial;font-size:5vw',
-                top: '53vh',
+                top: '48vh',
                 ui: 'confirm',
                 width: '98%',
                 text: 'Get The Latest Buzz!'
-            },
-            {
-                xtype: 'textfield',
-                cls: 'icon-phone',
-                id: 'test',
-                itemId: 'test',
-                top: '63vh',
-                width: '100%',
-                labelAlign: 'top'
             }
         ],
         listeners: [
@@ -64984,7 +64976,7 @@ Ext.define('Ext.direct.Manager', {
             //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
-                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:40vh;width:98%;margin-left:5px;margin-top:2px;"/>');
+                this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:98%;margin-left:5px;margin-top:2px;"/>');
             }
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
