@@ -64632,6 +64632,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'component',
+                cls: 'w3-card-4',
                 disabled: true,
                 docked: 'top',
                 height: '14vh',
@@ -64639,7 +64640,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 5 0',
-                style: 'font-size:4.2vw;font-family:Arial;border:2px inset #c0c0c0',
+                style: 'font-size:0.5em;font-family:Arial;font-weight:lighter!important;overflow-y:scroll',
                 top: '37vh',
                 width: '97%'
             },
