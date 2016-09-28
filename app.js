@@ -64784,7 +64784,7 @@ Ext.define('Ext.direct.Manager', {
                             var numberToDial = Ext.getCmp('phoneNumber1').getValue();
                             // window.location = 'tel:'+ numberToDial ;
                             if (numberToDial) {
-                                window.open(numberToDial, '_system');
+                                window.open('tel:' + numberToDial, '_system');
                             }
                         },
                         cls: 'w3-card-4',
