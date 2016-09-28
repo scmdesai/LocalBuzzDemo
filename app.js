@@ -64976,7 +64976,7 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml(businessInfo);
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<br><div style="position:absolute;left:10vw;bottom:0;text-align:center;font-size:0.6em">' + record.get('phoneNumber') + '</div>');
+            this.down('#phoneNumber').setHtml('<br><div style="color:black;position:absolute;left:10vw;bottom:0;text-align:center;font-size:0.6em">' + record.get('phoneNumber') + '</div>');
             this.down('#email1').setValue(record.get('emailAddress'));
             this.down('#email').setHtml('<br><div style="padding:1px 1px 1px 5px;left:1vw;position:absolute;text-align: left;font-size:0.6em">' + record.get('emailAddress') + '</div>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
