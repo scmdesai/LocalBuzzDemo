@@ -64752,6 +64752,28 @@ Ext.define('Ext.direct.Manager', {
                     {
                         xtype: 'button',
                         handler: function(button, e) {
+                            console.log(Ext.getCmp('phoneNumber1').getValue());
+                            var numberToDial = Ext.getCmp('phoneNumber1').getValue();
+                            // window.location = 'tel:'+ numberToDial ;
+                            if (numberToDial) {
+                                window.open('tel:' + numberToDial, '_system', 'location=yes');
+                            }
+                        },
+                        cls: 'w3-card-4',
+                        docked: 'top',
+                        height: '6vh',
+                        hidden: false,
+                        id: 'phoneNumber',
+                        itemId: 'phoneNumber',
+                        margin: '5 0 0 0',
+                        style: 'background:white;border:none;text-decoration: none;',
+                        styleHtmlContent: true,
+                        width: '98%',
+                        iconCls: 'icon-phone'
+                    },
+                    {
+                        xtype: 'button',
+                        handler: function(button, e) {
                             if (Ext.getCmp('email1').getValue()) {
                                 window.plugins.socialsharing.shareViaEmail(null, // can contain HTML tags, but support on Android is rather limited:  http://stackoverflow.com/questions/15136480/how-to-send-html-content-with-image-through-android-default-email-client
                                 null, [
@@ -64776,28 +64798,6 @@ Ext.define('Ext.direct.Manager', {
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-email-white'
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
-                            console.log(Ext.getCmp('phoneNumber1').getValue());
-                            var numberToDial = Ext.getCmp('phoneNumber1').getValue();
-                            // window.location = 'tel:'+ numberToDial ;
-                            if (numberToDial) {
-                                window.open('tel:' + numberToDial, '_system', 'location=yes');
-                            }
-                        },
-                        cls: 'w3-card-4',
-                        docked: 'top',
-                        height: '6vh',
-                        hidden: false,
-                        id: 'phoneNumber',
-                        itemId: 'phoneNumber',
-                        margin: '5 0 0 0',
-                        style: 'background:white;border:none;text-decoration: none;',
-                        styleHtmlContent: true,
-                        width: '98%',
-                        iconCls: 'icon-phone'
                     },
                     {
                         xtype: 'button',
@@ -64962,7 +64962,7 @@ Ext.define('Ext.direct.Manager', {
             this.down('#businessInfo').setHtml('<div style="overflow:scroll!important">' + businessInfo + '</div>');
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('phoneNumber') + '</span>');
+            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em;text-decoration:none!important">' + record.get('phoneNumber') + '</span>');
             this.down('#email1').setValue(record.get('emailAddress'));
             this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:lighter!important;font-family:Arial;font-size:0.8em">' + record.get('emailAddress') + '</span>');
             this.down('#website121').setValue(record.get('websiteDisplayName'));
