@@ -38,7 +38,7 @@
 	
 	<!-- New PhoneGap Plugins -->
 	<gap:plugin name="cordova-plugin-battery-status" source="npm" version="1.1.0" />
-    <gap:plugin name="cordova-plugin-camera" source="npm" version="1.2.0" />
+    <gap:plugin name="cordova-plugin-camera" source="npm" />
     <gap:plugin name="cordova-plugin-media-capture" source="npm" version="1.0.1" />
 	<!-- Comment out the console plugin as it is causing issues on Android -->
     <!-- <gap:plugin name="cordova-plugin-console" source="npm" version="1.0.1" /> -->
@@ -61,7 +61,9 @@
 	
 	
 	<!-- Plugin Added for Push Notification -->
-	<gap:plugin name="phonegap-plugin-push" source="npm" version="1.5.3" />
+	<plugin name="phonegap-plugin-push" source="npm">
+		<param name="SENDER_ID" value="226322216862"/>
+	</plugin>
 	<!-- Plugin Added for Google Analytics -->
 	<gap:plugin name="cordova-plugin-google-analytics"  source="npm" version="0.8.1"/>
 	<!-- End Google Analytics -->
