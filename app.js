@@ -64658,10 +64658,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textfield',
-                cls: [
-                    'icon-globe',
-                    'customfield2'
-                ],
+                cls: 'icon-globe-white',
                 disabled: false,
                 docked: 'bottom',
                 height: '7vh',
@@ -64681,10 +64678,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textfield',
-                cls: [
-                    'icon-email',
-                    'customfield2'
-                ],
+                cls: 'icon-email-white',
                 docked: 'bottom',
                 height: '7vh',
                 hidden: false,
@@ -64703,10 +64697,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textfield',
-                cls: [
-                    'icon-email',
-                    'customfield2'
-                ],
+                cls: 'icon-phone',
                 docked: 'bottom',
                 height: '7vh',
                 hidden: false,
@@ -64725,10 +64716,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textareafield',
-                cls: [
-                    'icon-location1',
-                    'customfield'
-                ],
+                cls: 'icon-location',
                 disabled: false,
                 docked: 'bottom',
                 height: '9vh',
