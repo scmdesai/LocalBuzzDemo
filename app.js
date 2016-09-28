@@ -64640,7 +64640,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 left: '2%',
                 margin: '5 0 5 0',
-                style: 'font-size:0.6em;font-family:Arial;font-weight:lighter!important;overflow-y:scroll',
+                style: 'font-size:0.6em;font-family:Arial;font-weight:lighter!important;overflow:scroll',
                 top: '37vh',
                 width: '97%'
             },
