@@ -64763,8 +64763,7 @@ Ext.define('Ext.direct.Manager', {
                         hidden: false,
                         id: 'phoneNumber',
                         style: 'background:white;border:none;',
-                        width: '98%',
-                        iconCls: 'icon-phone'
+                        width: '98%'
                     },
                     {
                         xtype: 'button',
@@ -64789,8 +64788,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'email',
                         itemId: 'email',
                         style: 'background:white;border:none;',
-                        width: '98%',
-                        iconCls: 'icon-email-white'
+                        width: '98%'
                     },
                     {
                         xtype: 'button',
@@ -64807,8 +64805,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'website1',
                         itemId: 'website1',
                         style: 'background:white;border:none;',
-                        width: '98%',
-                        iconCls: 'icon-globe-white'
+                        width: '98%'
                     },
                     {
                         xtype: 'button',
@@ -64826,7 +64823,6 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system');
                             }
                         },
-                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
