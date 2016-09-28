@@ -64784,7 +64784,7 @@ Ext.define('Ext.direct.Manager', {
                             var numberToDial = Ext.getCmp('phoneNumber1').getValue();
                             // window.location = 'tel:'+ numberToDial ;
                             if (numberToDial) {
-                                window.open('tel:' + numberToDial, '_system');
+                                window.open('tel:' + numberToDial, '_system', 'location=yes');
                             }
                         },
                         cls: 'w3-card-4',
@@ -64794,7 +64794,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'phoneNumber',
                         itemId: 'phoneNumber',
                         margin: '5 0 0 0',
-                        style: 'background:white;border:none;',
+                        style: 'background:white;border:none;text-decoration: none;',
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-phone'
