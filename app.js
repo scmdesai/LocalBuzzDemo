@@ -64920,13 +64920,12 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'textfield',
+                cls: 'icon-phone',
                 id: 'test',
                 itemId: 'test',
-                top: '62vh',
-                width: '98%',
-                labelAlign: 'top',
-                labelCls: '',
-                labelWidth: '100%'
+                top: '63vh',
+                width: '100%',
+                labelAlign: 'top'
             }
         ],
         listeners: [
@@ -64998,7 +64997,6 @@ Ext.define('Ext.direct.Manager', {
             this.down('#address1').setValue(record.get('address'));
             this.down('#address').setHtml('<br><div style="padding:1px 1px 1px 1px;left:1vw;position:absolute;text-align: left;font-size:0.6em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</div>');
             this.down('#website12').setValue(record.get('website'));
-            this.down('#test').setHtml('<i class="fa fa-phone"></i>');
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
