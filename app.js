@@ -64721,8 +64721,7 @@ Ext.define('Ext.direct.Manager', {
                                 docked: 'left',
                                 height: '11vh',
                                 id: 'phoneNumber',
-                                style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;clor:black',
-                                styleHtmlContent: true,
+                                style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;',
                                 width: '50%',
                                 iconAlign: 'center',
                                 iconCls: 'icon-phone'
