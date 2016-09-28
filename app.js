@@ -64721,7 +64721,7 @@ Ext.define('Ext.direct.Manager', {
                                 docked: 'left',
                                 height: '11vh',
                                 id: 'phoneNumber',
-                                style: 'background:white;border-bottom:1px solid #c0c0c0;color:black!important;',
+                                style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;',
                                 width: '50%',
                                 iconAlign: 'center',
                                 iconCls: 'icon-phone'
@@ -64800,7 +64800,7 @@ Ext.define('Ext.direct.Manager', {
                                 margin: '0 0 0 5',
                                 style: 'background:white;border:1px ridge #c0c0c0;color:black;white-space: normal;word-wrap:break-word;',
                                 width: '50%',
-                                iconAlign: 'center',
+                                iconAlign: 'right',
                                 iconCls: 'icon-location'
                             }
                         ]
