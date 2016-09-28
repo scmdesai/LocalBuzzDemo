@@ -64757,13 +64757,13 @@ Ext.define('Ext.direct.Manager', {
                                 window.open('tel:' + numberToDial, '_system');
                             }
                         },
-                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'phoneNumber',
                         style: 'background:white;border:none;',
-                        width: '98%'
+                        width: '98%',
+                        iconCls: 'icon-phone'
                     },
                     {
                         xtype: 'button',
@@ -64781,14 +64781,14 @@ Ext.define('Ext.direct.Manager', {
                             }
                         },
                         // called when sh*t hits the fan
-                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'email',
                         itemId: 'email',
                         style: 'background:white;border:none;',
-                        width: '98%'
+                        width: '98%',
+                        iconCls: 'icon-email-white'
                     },
                     {
                         xtype: 'button',
@@ -64798,14 +64798,14 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system', 'location=yes');
                             }
                         },
-                        cls: 'w3-btn',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
                         id: 'website1',
                         itemId: 'website1',
                         style: 'background:white;border:none;',
-                        width: '98%'
+                        width: '98%',
+                        iconCls: 'icon-globe-white'
                     },
                     {
                         xtype: 'button',
