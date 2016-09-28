@@ -64757,6 +64757,7 @@ Ext.define('Ext.direct.Manager', {
                                 window.open('tel:' + numberToDial, '_system');
                             }
                         },
+                        cls: 'w3-card-4',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
@@ -64782,6 +64783,7 @@ Ext.define('Ext.direct.Manager', {
                             }
                         },
                         // called when sh*t hits the fan
+                        cls: 'w3-card-4',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
@@ -64800,6 +64802,7 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system', 'location=yes');
                             }
                         },
+                        cls: 'w3-card-4',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
@@ -64826,6 +64829,7 @@ Ext.define('Ext.direct.Manager', {
                                 window.open(url, '_system');
                             }
                         },
+                        cls: 'w3-card-4',
                         docked: 'top',
                         height: '7vh',
                         hidden: false,
