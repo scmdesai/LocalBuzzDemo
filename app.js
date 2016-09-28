@@ -64718,7 +64718,6 @@ Ext.define('Ext.direct.Manager', {
                                         window.open('tel:' + numberToDial, '_system');
                                     }
                                 },
-                                cls: 'w3-display-container',
                                 docked: 'left',
                                 height: '11vh',
                                 id: 'phoneNumber',
