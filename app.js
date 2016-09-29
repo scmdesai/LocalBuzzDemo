@@ -64896,6 +64896,14 @@ Ext.define('Ext.direct.Manager', {
                 ui: 'confirm',
                 width: '98%',
                 text: 'Get The Latest Buzz!'
+            },
+            {
+                xtype: 'container',
+                docked: 'top',
+                height: '20%',
+                html: 'The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.',
+                layout: 'fit',
+                scrollable: true
             }
         ],
         listeners: [
@@ -64951,7 +64959,7 @@ Ext.define('Ext.direct.Manager', {
                     }
                 });
             }
-            Ext.getCmp('businessInfo').//console.log(customerId + isFavorite );
+            //console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
