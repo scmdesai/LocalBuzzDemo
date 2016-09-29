@@ -64634,6 +64634,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'businessInfo',
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
+                style: 'font-size:1em;',
                 top: '37vh',
                 width: '98%',
                 layout: 'fit',
@@ -64737,12 +64738,8 @@ Ext.define('Ext.direct.Manager', {
                 margin: '5 0 0 5',
                 top: '61vh',
                 width: '98%',
+                layout: 'fit',
                 scrollable: true,
-                layout: {
-                    type: 'vbox',
-                    align: 'start',
-                    pack: 'end'
-                },
                 items: [
                     {
                         xtype: 'button',
