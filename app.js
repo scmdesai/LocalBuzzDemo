@@ -64553,6 +64553,7 @@ Ext.define('Ext.direct.Manager', {
  */
 (Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
     config: {
+        docked: 'top',
         height: '100%',
         id: 'Info',
         itemId: 'Info',
@@ -64628,19 +64629,15 @@ Ext.define('Ext.direct.Manager', {
                 width: '96vw'
             },
             {
-                xtype: 'component',
-                cls: 'w3-card-4',
-                disabled: true,
-                docked: 'top',
+                xtype: 'container',
                 height: '14vh',
                 id: 'businessInfo',
                 itemId: 'businessInfo',
-                left: '2%',
-                margin: '5 0 5 0',
-                padding: '1 1 1 1',
-                style: 'font-size:0.8em;font-family:Arial;font-weight:normal!important;overflow:scroll',
+                margin: '0 5 0 5',
                 top: '37vh',
-                width: '97%'
+                width: '98%',
+                layout: 'fit',
+                scrollable: true
             },
             {
                 xtype: 'textfield',
@@ -64734,6 +64731,7 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'container',
+                docked: 'top',
                 height: '30vh',
                 hidden: false,
                 margin: '5 0 0 5',
@@ -64896,14 +64894,6 @@ Ext.define('Ext.direct.Manager', {
                 ui: 'confirm',
                 width: '98%',
                 text: 'Get The Latest Buzz!'
-            },
-            {
-                xtype: 'container',
-                docked: 'top',
-                height: '20%',
-                html: 'The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.The Hair Salon offers various services such as, haircuts and styling, facial, makeup, body waxing, nail art and other beauty related services ana on and n and on.',
-                layout: 'fit',
-                scrollable: true
             }
         ],
         listeners: [
