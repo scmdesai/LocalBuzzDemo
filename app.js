@@ -64558,11 +64558,8 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'Info',
         style: 'border:1px solid #00529D;background:#fff',
         styleHtmlContent: true,
+        layout: 'fit',
         scrollable: true,
-        layout: {
-            type: 'vbox',
-            align: 'stretchmax'
-        },
         items: [
             {
                 xtype: 'toolbar',
@@ -64641,7 +64638,7 @@ Ext.define('Ext.direct.Manager', {
                 left: '2%',
                 margin: '5 0 5 0',
                 padding: '1 1 1 1',
-                style: 'font-size:0.6em;font-family:Arial;font-weight:lighter!important;overflow:scroll',
+                style: 'font-size:0.8em;font-family:Arial;font-weight:normal!important;overflow:scroll',
                 top: '37vh',
                 width: '97%'
             },
@@ -64954,7 +64951,7 @@ Ext.define('Ext.direct.Manager', {
                     }
                 });
             }
-            //console.log(customerId + isFavorite );
+            Ext.getCmp('businessInfo').//console.log(customerId + isFavorite );
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
@@ -67302,6 +67299,7 @@ Ext.define('Ext.direct.Manager', {
 Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
+        docked: 'top',
         defaults: {
             scrollable: true
         },
