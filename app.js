@@ -66385,8 +66385,8 @@ Ext.define('Ext.direct.Manager', {
         store: 'MyJsonPStore',
         itemTpl: [
             '',
-            '<div class="w3-card-4 w3-display-container" style= "margin:5px 5px 5px 5px;padding:5px 5px 5px 5px;"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100" height="120px"/>',
-            '<div class="w3-container w3-text-black" style="width:120px;word-break:break-word;font-size:0.8em;font-family:Arial;font-weight:normal">{businessName}</div>',
+            '<div class="w3-card-4 w3-display-container" style= "margin:5px 5px 5px 5px;padding:5px 5px 5px 5px;"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100px" height="120px" style="position: absolute; top: 50%; left: 50%;"/>',
+            '<div class="w3-container w3-text-black" style="width:120px;word-break:break-word;font-size:0.7em;font-family:Arial;font-weight:normal">{businessName}</div>',
             '    </div>',
             '',
             ''
