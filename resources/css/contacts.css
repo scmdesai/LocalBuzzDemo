@@ -30,6 +30,8 @@ $list-header-bg-color: $base-color;
     border-bottom:1px solid #C0C0C0 !important;
 }
 
+
+
 .emptyText {
 
     color: #C0C0C0 !important;
@@ -165,7 +167,7 @@ $list-header-bg-color: $base-color;
     vertical-align:middle;
     font-family:Arial;
     border-radius:7px;
-    background:#fff;
+    background:url(resources/img/whitetexture.png)!important;
 
 
 
@@ -182,7 +184,7 @@ $list-header-bg-color: $base-color;
     text-align:center;
     vertical-align:middle;
     font-family:Arial;
-    background:#fff;
+    background:url(resources/img/whitetexture.png)!important;
 
 
 
