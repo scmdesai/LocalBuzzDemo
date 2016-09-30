@@ -66093,8 +66093,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'latestbuzz',
         itemId: 'latestbuzz',
-        style: 'background:#fff',
-        styleHtmlContent: true,
+        style: 'background :url(resources/img/white_texture.png)',
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
         selectedCls: 'list-item-selected',
@@ -66432,7 +66431,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'tabbar',
         itemId: 'tabbar',
         minHeight: '',
-        style: 'background: #fff;',
+        style: 'background: url(resources/img/white_texture.png)',
         modal: true,
         layout: {
             type: 'card',
@@ -66446,7 +66445,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-localbuzzicon_latest',
                 id: 'LatestBuzz',
                 itemId: 'LatestBuzz',
-                style: 'background: #fff;',
+                style: 'background:url( resources/img/white_texture.png)',
                 ui: 'dark',
                 modal: false,
                 listeners: [
