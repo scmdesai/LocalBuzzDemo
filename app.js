@@ -65771,7 +65771,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background-image: url("resources/img/whiteTexture.png")!important; background-size: 100% 100%;',
+                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background: url(resources/img/whitetexture.png)',
                 width: '96vw',
                 listeners: [
                     {
@@ -66434,7 +66434,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'tabbar',
         itemId: 'tabbar',
         minHeight: '',
-        style: 'background: url(resources/img/white_texture.png)',
+        style: 'background: url(resources/img/whitetexture.png)',
         modal: true,
         layout: {
             type: 'card',
@@ -66448,7 +66448,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-localbuzzicon_latest',
                 id: 'LatestBuzz',
                 itemId: 'LatestBuzz',
-                style: 'background:#fff',
+                style: 'background: url(resources/img/whitetexture.png)',
                 ui: 'dark',
                 modal: false,
                 listeners: [
@@ -66481,7 +66481,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-search',
                 id: 'SearchBusiness',
                 itemId: 'SearchBusiness',
-                style: 'background: #fff;',
+                style: 'background: url(resources/img/whitetexture.png)',
                 ui: 'dark',
                 layout: 'hbox',
                 modal: true,
@@ -66601,6 +66601,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'BuzzNearMe',
                 margin: '1 1 1 1',
                 padding: '',
+                style: 'background: url(resources/img/whitetexture.png)',
                 modal: false,
                 items: [
                     {
