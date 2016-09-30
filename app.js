@@ -64300,7 +64300,7 @@ Ext.define('Ext.direct.Manager', {
                 disabled: true,
                 docked: 'top',
                 height: '30%',
-                html: '<br><div style="text-align:center;"><h3 style="color:#00529D"><b>Welcome to Local Buzz</h3><br><h5 style="color:#00529D">Find the Latest Buzz around you!</h3></div>',
+                html: '<br><div style="font-family:Arial;text-align:center;"><h3 style="color:#00529D"><b>Welcome to Local Buzz</h3><br><h5 style="color:#00529D">Find the Latest Buzz around you!</h3></div>',
                 id: 'nameTxt4',
                 itemId: 'nameTxt2',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;color:#00529D!important;',
@@ -64958,7 +64958,7 @@ Ext.define('Ext.direct.Manager', {
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
             }
-            this.down('#businessInfo').setHtml('<div style="overflow:scroll!important">' + businessInfo + '</div>');
+            this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + businessInfo + '</div>');
             this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
             //this.down('#phoneNumber').setText(record.get('phoneNumber'));
             this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;text-decoration:none!important">' + record.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
@@ -65056,12 +65056,12 @@ Ext.define('Ext.direct.Manager', {
             '<img class="photo" src="resources/img/localbuzzicon.png" />',
             '</tpl> ',
             ' <div class="w3-container">',
-            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;"><b>{dealName}</b></p>',
-            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500"><b>{businessName}</b></p>',
-            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;">{dealStartDate} - {dealEndDate}</p>',
+            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
+            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
+            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
             '    </div>',
             '<div>',
-            '<p style="font-size:3vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;">{dealDescription}</p>',
+            '<p style="font-size:3vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;font-family:Arial">{dealDescription}</p>',
             '',
             '',
             '</div>',
@@ -66125,12 +66125,12 @@ Ext.define('Ext.direct.Manager', {
             '</tpl>',
             ' ',
             ' <div class="w3-container">',
-            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;"><b>{dealName}</b></p>',
-            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500"><b>{businessName}</b></p>',
-            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;">{dealStartDate} - {dealEndDate}</p>',
+            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
+            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
+            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
             '    </div>',
             '<div>',
-            '<p style="font-size:3vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;">{dealDescription}</p>',
+            '<p style="font-size:3vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;font-family:Arial">{dealDescription}</p>',
             '',
             '',
             '</div>',
@@ -66465,7 +66465,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'toolbar',
                         cls: 'toolbarCls',
                         docked: 'top',
-                        html: '<h2 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px">Local Buzz</h2>'
+                        html: '<h2 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px;font-family:Arial">Local Buzz</h2>'
                     },
                     {
                         xtype: 'latestbuzz'
@@ -66552,7 +66552,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'toolbar',
                         cls: 'toolbarCls',
                         docked: 'top',
-                        html: '<h1 style=" color:#00529D;font-size:6vw;text-align:center;padding-top:10px">My Favorites</h1>',
+                        html: '<h1 style=" color:#00529D;font-size:6vw;text-align:center;padding-top:10px;font-family:Arial">My Favorites</h1>',
                         style: 'background:white;color:#00529D;',
                         ui: 'plain'
                     },
@@ -66873,7 +66873,7 @@ Ext.define('Ext.direct.Manager', {
                     map: gmap,
                     icon: icons[category].icon
                 });
-            var content = '<h4 id ="businessname">' + businessName + '</h4><div><label id="labelStore" style="color:green;font-size:4vw;text-decoration:underline">' + count + ' Active Buzz</label></div>';
+            var content = '<h4 style="font-family:Arial" id ="businessname">' + businessName + '</h4><div><label id="labelStore" style="color:green;font-size:4vw;text-decoration:underline;font-family:Arial">' + count + ' Active Buzz</label></div>';
             addInfoWindow(marker, content, record, businessName);
         }
         //click on marker event
