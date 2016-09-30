@@ -26,7 +26,7 @@ $list-header-bg-color: $base-color;
 }
 
 .toolbarCls {
-    background:#fff !important;
+    background-image:url(resources/img/whitetexture.png)!important;
     border-bottom:1px solid #C0C0C0 !important;
 }
 
