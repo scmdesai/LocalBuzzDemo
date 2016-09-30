@@ -65488,8 +65488,9 @@ Ext.define('Ext.direct.Manager', {
         var record = Ext.getStore('LocalStore').getAt(0);
         //console.log(businessName.customerId);
         Ext.getCmp('dealpictureBackBtn').hide();
-        Ext.get('enlargebtn').hide();
-        Ext.get('share').hide();
+        Ext.getCmp('enlargebtn').hide();
+        Ext.getCmp('share').hide();
+        Ext.getCmp('nameTxt8').hide();
         var pic = Ext.getCmp('dealPicture');
         //vat txt = '<div><img src="{dealPictureURL}" style="margin:5px 5px 5px 5px;height:160;width:100%;" /></div> +<div style="font-size:6vw;color:green">{dealName}</div>+<div style="font-size:5vw;color:black">{dealDescription}</div>+<div style="font-size:3vw;color:red;margin:5px 5px 5px 5px;">Valid from {dealStartDate} through {dealEndDate}</div>';
         //window.plugins.socialsharing.share('Hi!Check out the latest deal from ' + record.get('businessName')+'\n'+record.get('dealName') + '\n' +record.get('dealDescription')+ '\nValid through' +record.get('dealEndDate'),null,record.get('dealDescription'),null );
@@ -65524,8 +65525,9 @@ Ext.define('Ext.direct.Manager', {
                     window.plugins.socialsharing.share(null, 'Hi! Check out this latest buzz from Local Buzz!', res.URI, null);
                 }
             }, 50);
-            Ext.get('share').show();
-            Ext.get('enlargebtn').show();
+            Ext.getCmp('share').show();
+            Ext.getCmp('enlargebtn').show();
+            Ext.getCmp('nameTxt8').show();
             var view = Ext.Viewport.getComponent('DealPicture');
             view.setRecord(record);
             Ext.Viewport.setActiveItem(view);
@@ -65537,8 +65539,9 @@ Ext.define('Ext.direct.Manager', {
                     //Ext.Msg.alert(res.filePath,null,null,null); //should be path/to/myScreenshot.jpg
                     window.plugins.socialsharing.share(null, 'Hi! Check out this latest buzz from Local Buzz!', res.filePath, null);
                     Ext.getCmp('dealpictureBackBtn').show();
-                    Ext.get('share').show();
-                    Ext.get('enlargebtn').show();
+                    Ext.getCmp('share').show();
+                    Ext.getCmp('enlargebtn').show();
+                    Ext.getCmp('nameTxt8').show();
                 }
             }, 'jpg', 50, 'myScreenShot');
         }
