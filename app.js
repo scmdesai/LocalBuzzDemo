@@ -64198,7 +64198,7 @@ Ext.define('Ext.direct.Manager', {
                 inputCls: 'searchfield1',
                 name: 'zipcodeLookUp',
                 maxLength: 5,
-                placeHolder: '   Enter 5 digit zipcode',
+                placeHolder: 'Enter 5 digit zipcode',
                 minValue: 0
             },
             {
@@ -64627,7 +64627,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'storeImage',
                 left: '2%',
                 margin: '5 5 5 0',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background:#fafefb',
+                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background-image:url(resources/img/whitetexture.png);',
                 width: '96vw'
             },
             {
@@ -64638,7 +64638,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
                 padding: '2 2 2 2',
-                style: 'font-size:0.8em;',
+                style: 'font-size:0.8em;background-image:url(resources/img/whitetexture.png);',
                 top: '37vh',
                 width: '98%',
                 layout: 'fit',
@@ -65051,7 +65051,7 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            ' <div class="w3-card-4" style="background:#fafafb;">',
+            ' <div class="w3-card-4" style="background:url(resources/img/whitetexture.png)!important;">',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
@@ -65599,7 +65599,7 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         margin: '5 5 5 5',
         padding: '5 5 5 5',
-        style: 'overflow: hidden;background:#fff;',
+        style: 'overflow: hidden;background: url(resources/img/whitetexture.png)',
         styleHtmlContent: true,
         ui: '',
         scrollable: false,
@@ -65698,7 +65698,7 @@ Ext.define('Ext.direct.Manager', {
                         height: '100%',
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
-                        style: 'font-family:Arial;',
+                        minHeight: '100%',
                         styleHtmlContent: true,
                         ui: 'plain',
                         text: '',
@@ -65722,8 +65722,6 @@ Ext.define('Ext.direct.Manager', {
                         id: 'share',
                         itemId: 'share',
                         margin: '5 10 10 10',
-                        padding: '0 5 25 5',
-                        style: 'font-family:Arial;',
                         styleHtmlContent: true,
                         ui: 'plain',
                         width: '5vh'
@@ -66012,7 +66010,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;"" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:none"/><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:url(resources/img/whitetexture.png)!important;"/><br><div style="font-size:6vw;;font-family:Arial">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background-image:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
@@ -66119,7 +66117,7 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            '<div class="w3-card-4" style="background:#fafafb;" >',
+            '<div class="w3-card-4" style="background:url(resources/img/whitetexture.png);" >',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
@@ -66508,6 +66506,7 @@ Ext.define('Ext.direct.Manager', {
                                 style: ' padding: 0.2em;',
                                 styleHtmlContent: true,
                                 clearIcon: false,
+                                inputCls: 'searchfield',
                                 name: 'searchfield',
                                 autoComplete: true,
                                 autoCorrect: false,
@@ -66968,7 +66967,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel',
         itemId: 'DealsPanel',
         padding: '5 5 5 5',
-        style: 'background:#fff',
+        style: 'background: url(resources/img/whitetexture.png)',
         items: [
             {
                 xtype: 'toolbar',
@@ -66982,7 +66981,6 @@ Ext.define('Ext.direct.Manager', {
                         style: 'font-family:Arial;',
                         styleHtmlContent: true,
                         ui: 'plain',
-                        text: 'Back',
                         listeners: [
                             {
                                 fn: function(component, eOpts) {
@@ -67094,7 +67092,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealsPanel1',
         itemId: 'DealsPanel1',
         padding: '5 5 5 5',
-        style: 'background:#fff',
+        style: 'background: url(resources/img/whitetexture.png)',
         scrollable: false,
         layout: {
             type: 'vbox',
