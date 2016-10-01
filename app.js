@@ -65714,7 +65714,7 @@ Ext.define('Ext.direct.Manager', {
                         html: '<b>Business Name</b>',
                         id: 'nameTxt9',
                         itemId: 'nameTxt',
-                        padding: '5 0 0 5',
+                        padding: '10 0 0 5',
                         style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                         width: '65%'
                     },
