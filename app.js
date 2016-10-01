@@ -65740,6 +65740,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'icon-back-button',
                         docked: 'left',
                         height: '100%',
+                        hidden: true,
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
                         minHeight: '100%',
