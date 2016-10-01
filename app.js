@@ -65028,7 +65028,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'listofdeals',
         itemId: 'listofdeals',
-        style: 'background-image:#fff',
+        style: 'background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
@@ -65052,7 +65052,7 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            ' <div class="w3-card-4" style="background:url(resources/img/whitetexture.png)!important;">',
+            ' <div class="w3-card-4" style="background:#fff;">',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
@@ -66040,7 +66040,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: url(resources/img/whitetexture.png)" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:url(resources/img/whitetexture.png)!important;"/><div style="background:url(resources/img/whitetexture.png)!important;font-size:5vw;;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:4vw;;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: #fff;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:#fff;"/><div style="background:#fff;font-size:5vw;;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:4vw;;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
@@ -66124,7 +66124,7 @@ Ext.define('Ext.direct.Manager', {
         html: '',
         id: 'latestbuzz',
         itemId: 'latestbuzz',
-        style: 'background:#fff',
+        style: 'background:url(resources/img/whitetexture.png);',
         allowDeselect: true,
         emptyText: '<h3 class="emptyText">No active buzz at this time.</h3>',
         selectedCls: 'list-item-selected',
@@ -66147,14 +66147,14 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            '<div class="w3-card-4" style="background:url(resources/img/whitetexture.png);" >',
+            '<div class="w3-card-4" style="background:#fff;" >',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
             '<img class="photo" src="resources/img/localbuzzicon.png" />',
             '</tpl>',
             ' ',
-            ' <div class="w3-container" style="background:url(resources/img/whitetexture.png);">',
+            ' <div class="w3-container" style="background:#fff">',
             '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
             '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
             '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
