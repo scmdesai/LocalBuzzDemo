@@ -67319,7 +67319,7 @@ Ext.define('Ext.direct.Manager', {
     },
     onDealImageShow: function(component, eOpts) {
         var myScroll = new IScroll('#wrapper', {
-                zoom: true,
+                zoom: false,
                 scrollX: true,
                 scrollY: true,
                 mouseWheel: true,
