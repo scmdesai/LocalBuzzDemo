@@ -64558,7 +64558,7 @@ Ext.define('Ext.direct.Manager', {
         height: '100%',
         id: 'Info',
         itemId: 'Info',
-        style: 'border:1px solid #00529D;background:#fff',
+        style: 'border:1px solid #00529D;background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         layout: 'fit',
         scrollable: true,
@@ -64568,7 +64568,7 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'toolbarCls',
                 docked: 'top',
                 hidden: false,
-                style: 'background:#fff',
+                style: 'background:url(resources/img/whitetexture.png);',
                 items: [
                     {
                         xtype: 'button',
@@ -64639,7 +64639,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
                 padding: '2 2 2 2',
-                style: 'font-size:0.8em;background:#fff',
+                style: 'font-size:0.8em;background:url(resources/img/whitetexture.png);',
                 top: '37vh',
                 width: '98%',
                 layout: 'fit',
@@ -64653,7 +64653,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'website12',
                 itemId: 'website12',
                 margin: '0 15 0 15',
-                style: 'background:#fff',
+                style: 'background:url(resources/img/whitetexture.png);',
                 styleHtmlContent: true,
                 clearIcon: false,
                 name: 'website',
@@ -64765,7 +64765,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'phoneNumber',
                         margin: '2 0 0 0',
                         padding: '5 5 10 5',
-                        style: 'background:#fff',
+                        style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-phone'
@@ -64794,7 +64794,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'email',
                         margin: '5 0 0 0',
                         padding: '5 5 10 5',
-                        style: 'background:#fff',
+                        style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-email-white'
@@ -64815,7 +64815,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'website1',
                         margin: '5 0 0 0',
                         padding: '5 5 10 5',
-                        style: 'background:#fff',
+                        style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-globe-white'
@@ -64844,7 +64844,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'address',
                         margin: '5 0 0 0',
                         padding: '5 5 10 5',
-                        style: 'background:#fff',
+                        style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
                         width: '98%',
                         iconCls: 'icon-location'
@@ -65052,13 +65052,13 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            ' <div class="w3-card-4" style="background:#fff;">',
+            ' <div class="w3-card-4" style="background:#f6fbfc;">',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
             '<img class="photo" src="resources/img/localbuzzicon.png" />',
             '</tpl> ',
-            ' <div class="w3-container">',
+            ' <div class="w3-container" style="background:#f6fbfc;">',
             '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
             '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
             '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
@@ -65655,7 +65655,7 @@ Ext.define('Ext.direct.Manager', {
         itemId: 'dealPicture',
         margin: '',
         padding: '5 5 5 5',
-        style: 'background:#fff',
+        style: 'background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         width: '100%',
         tpl: [
@@ -65698,7 +65698,7 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'toolbarCls',
                 docked: 'top',
                 hidden: false,
-                style: 'background-color:white',
+                style: 'background:url(resources/img/whitetexture.png);',
                 items: [
                     {
                         xtype: 'spacer',
@@ -65785,7 +65785,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
                 padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:transparent',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:url(resources/img/whitetexture.png);',
                 width: '98%'
             },
             {
@@ -65799,7 +65799,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'dealimage',
                 itemId: 'dealimage',
                 left: '2%',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background: url(resources/img/whitetexture.png)',
+                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background: #fff',
                 width: '96vw',
                 listeners: [
                     {
@@ -66040,7 +66040,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: #fff;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:#fff;"/><div style="background:#fff;font-size:5vw;;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:4vw;;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: #f6fbfc;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:#f6fbfc;"/><div style="background:#f6fbfc;font-size:5vw;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:4vw;;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
@@ -66070,7 +66070,7 @@ Ext.define('Ext.direct.Manager', {
             //console.log('Deal Picture showing' + record.get('dealName'));
             var name = record.get('itemName');
             var businessName = record.get('businessName');
-            this.down('#nameTxt1').setHtml(record.get('businessName'));
+            this.down('#nameTxt9').setHtml(record.get('businessName'));
             if (record.get('dealImageURL')) {
                 this.down('#nameTxt6').setHtml(record.get('dealName'));
                 this.down('#nameTxt7').setHtml('Valid from ' + record.get('dealStartDate') + '-' + record.get('dealEndDate'));
@@ -66147,14 +66147,14 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            '<div class="w3-card-4" style="background:#fff;" >',
+            '<div class="w3-card-4" style="background:#f6fbfc;" >',
             '<tpl if= "dealImageURL">',
             '<img class="photo" src="{dealImageURL}"  />',
             '<tpl else>',
             '<img class="photo" src="resources/img/localbuzzicon.png" />',
             '</tpl>',
             ' ',
-            ' <div class="w3-container" style="background:#fff">',
+            ' <div class="w3-container" style="background:##f6fbfc">',
             '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
             '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
             '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
@@ -66361,7 +66361,7 @@ Ext.define('Ext.direct.Manager', {
     config: {
         cls: 'tpl-l0uxnqjl',
         height: '100%',
-        style: 'background:#fff',
+        style: 'background:url(resources/img/whitetexture.png);',
         disableSelection: true,
         emptyText: '<h4 class="emptyText">Find stores registered with Local Buzz here!</h4>',
         store: 'MyJsonPStore',
@@ -66409,7 +66409,7 @@ Ext.define('Ext.direct.Manager', {
 (Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
-        style: 'background:#fff',
+        style: 'background:url(resources/img/whitetexture.png);',
         emptyText: '<h4 class="emptyText">You can see your favorite business here!</h4>',
         inline: true,
         store: 'MyJsonPStore',
@@ -66476,7 +66476,7 @@ Ext.define('Ext.direct.Manager', {
                 iconCls: 'icon-localbuzzicon_latest',
                 id: 'LatestBuzz',
                 itemId: 'LatestBuzz',
-                style: 'background:#fff',
+                style: 'background:url(resources/img/whitetexture.png);',
                 ui: 'dark',
                 modal: false,
                 listeners: [
@@ -66495,8 +66495,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'toolbar',
                         cls: 'toolbarCls',
                         docked: 'top',
-                        html: '<h2 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px;font-family:Arial">Local Buzz</h2>',
-                        style: 'background:#fff'
+                        html: '<h2 style=" color:#00529D;font-size:8vw;text-align:center;padding-top:10px;font-family:Arial">Local Buzz</h2>'
                     },
                     {
                         xtype: 'latestbuzz'
@@ -66518,7 +66517,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'toolbar',
                         cls: 'toolbarCls',
                         docked: 'top',
-                        style: 'background:#fff',
+                        style: 'background:url(resources/img/whitetexture.png);',
                         items: [
                             {
                                 xtype: 'spacer',
@@ -66583,7 +66582,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'toolbarCls',
                         docked: 'top',
                         html: '<h1 style=" color:#00529D;font-size:6vw;text-align:center;padding-top:10px;font-family:Arial">My Favorites</h1>',
-                        style: 'background:#fff;color:#00529D;',
+                        style: 'background:url(resources/img/whitetexture.png);color:#00529D;',
                         ui: 'plain'
                     },
                     {
@@ -66717,7 +66716,7 @@ Ext.define('Ext.direct.Manager', {
             id: 'mytabbar',
             itemId: 'mytabbar',
             padding: '5 5 5 5',
-            style: 'font-size:4vw;border-top:1px solid #c0c0c0;background:#fff',
+            style: 'font-size:4vw;border-top:1px solid #c0c0c0;background:url(resources/img/whitetexture.png);',
             ui: 'plain',
             modal: false,
             activeTab: 0,
@@ -67000,6 +66999,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'toolbar',
                 cls: 'toolbarCls',
                 docked: 'top',
+                style: 'background:url(resources/img/whitetexture.png);',
                 items: [
                     {
                         xtype: 'button',
@@ -67252,7 +67252,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'DealImage',
         itemId: 'DealImage',
         margin: '10 10 10 0',
-        style: 'border:1px solid #00529D;background:#fff;',
+        style: 'border:1px solid #00529D;background:url(resources/img/whitetexture.png);',
         width: '95%',
         scrollable: true,
         tpl: [
@@ -67274,6 +67274,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'toolbar',
                 cls: 'toolbarCls',
                 docked: 'top',
+                style: 'background:url(resources/img/whitetexture.png);',
                 ui: 'plain',
                 items: [
                     {
