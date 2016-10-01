@@ -65698,7 +65698,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'toolbar',
                 cls: 'toolbarCls',
                 docked: 'top',
-                hidden: false,
+                hidden: true,
                 style: 'background-color:white;background-image:url(resources/img/whitetexture.png);',
                 items: [
                     {
@@ -65764,7 +65764,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'icon-share',
                         docked: 'right',
                         height: '100%',
-                        hidden: true,
+                        hidden: false,
                         id: 'share',
                         itemId: 'share',
                         margin: '5 10 10 10',
