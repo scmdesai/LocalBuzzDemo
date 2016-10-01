@@ -64176,6 +64176,7 @@ Ext.define('Ext.direct.Manager', {
                     pattern: '^d{5}$'
                 },
                 clearIcon: false,
+                inputCls: 'searchfield1',
                 name: 'zipcodeLookUp',
                 maxLength: 5,
                 placeHolder: ' Enter 5 digit zipcode'
@@ -65674,8 +65675,47 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'toolbarCls',
                 docked: 'top',
                 height: '8vh',
+                hidden: true,
                 style: 'background-image:url(resources/img/whitetexture.png);',
                 items: [
+                    {
+                        xtype: 'spacer',
+                        maxWidth: '30vh'
+                    },
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        height: '',
+                        html: '<b>Business Name</b>',
+                        id: 'nameTxt1',
+                        itemId: 'nameTxt1',
+                        padding: '0 0 0 15',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                        width: '65%'
+                    }
+                ]
+            },
+            {
+                xtype: 'toolbar',
+                cls: 'toolbarCls',
+                docked: 'top',
+                hidden: false,
+                style: 'background-image:url(resources/img/whitetexture.png);',
+                items: [
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        height: '8vh',
+                        html: '<b>Business Name</b>',
+                        id: 'nameTxt9',
+                        itemId: 'nameTxt',
+                        margin: '5 0 0 25',
+                        padding: '0 0 0 15',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                        width: '65%'
+                    },
                     {
                         xtype: 'button',
                         handler: function(button, e) {
@@ -65695,6 +65735,7 @@ Ext.define('Ext.direct.Manager', {
                         },
                         centered: false,
                         cls: 'icon-back-button',
+                        docked: 'left',
                         height: '100%',
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
@@ -65725,22 +65766,6 @@ Ext.define('Ext.direct.Manager', {
                         styleHtmlContent: true,
                         ui: 'plain',
                         width: '5vh'
-                    },
-                    {
-                        xtype: 'spacer',
-                        maxWidth: '30vh'
-                    },
-                    {
-                        xtype: 'component',
-                        cls: 'contact-name',
-                        disabled: true,
-                        height: '',
-                        html: '<b>Business Name</b>',
-                        id: 'nameTxt1',
-                        itemId: 'nameTxt1',
-                        padding: '0 0 0 15',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
-                        width: '65%'
                     }
                 ]
             },
@@ -66432,7 +66457,7 @@ Ext.define('Ext.direct.Manager', {
         id: 'tabbar',
         itemId: 'tabbar',
         minHeight: '',
-        style: 'background: url(resources/img/whitetexture.png)',
+        style: 'background: url(resources/img/whitetexture.png);',
         modal: true,
         layout: {
             type: 'card',
@@ -66498,15 +66523,12 @@ Ext.define('Ext.direct.Manager', {
                             {
                                 xtype: 'textfield',
                                 flex: 4,
-                                cls: 'searchfield',
-                                height: '10vh',
+                                cls: 'searchfield1',
+                                height: '11vh',
                                 id: 'searchfield',
                                 itemId: 'searchfield',
-                                margin: '5 15 5 5',
-                                style: ' padding: 0.2em;',
                                 styleHtmlContent: true,
                                 clearIcon: false,
-                                inputCls: 'searchfield',
                                 name: 'searchfield',
                                 autoComplete: true,
                                 autoCorrect: false,
@@ -66690,7 +66712,7 @@ Ext.define('Ext.direct.Manager', {
             id: 'mytabbar',
             itemId: 'mytabbar',
             padding: '5 5 5 5',
-            style: 'font-size:4vw;border-top:1px solid #eee;background-image:url(resources/img/whitetexture.png);',
+            style: 'font-size:4vw;border-top:1px solid #c0c0c0;background-image:url(resources/img/whitetexture.png);',
             ui: 'plain',
             modal: false,
             activeTab: 0,
