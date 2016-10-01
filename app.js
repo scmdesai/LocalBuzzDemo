@@ -65680,11 +65680,6 @@ Ext.define('Ext.direct.Manager', {
                 style: 'background-image:url(resources/img/whitetexture.png);',
                 items: [
                     {
-                        xtype: 'spacer',
-                        hidden: true,
-                        maxWidth: '30vh'
-                    },
-                    {
                         xtype: 'component',
                         cls: 'contact-name',
                         disabled: true,
@@ -65704,8 +65699,14 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'toolbarCls',
                 docked: 'top',
                 hidden: false,
-                style: 'background-image:url(resources/img/whitetexture.png);',
+                style: 'background-color:white;background-image:url(resources/img/whitetexture.png);',
                 items: [
+                    {
+                        xtype: 'spacer',
+                        hidden: false,
+                        maxWidth: '30vh',
+                        width: 100
+                    },
                     {
                         xtype: 'component',
                         cls: 'contact-name',
@@ -65714,8 +65715,7 @@ Ext.define('Ext.direct.Manager', {
                         html: '<b>Business Name</b>',
                         id: 'nameTxt9',
                         itemId: 'nameTxt',
-                        margin: '5 0 0 25',
-                        padding: '0 0 0 15',
+                        padding: '5 0 0 5',
                         style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                         width: '65%'
                     },
