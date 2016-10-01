@@ -65657,6 +65657,7 @@ Ext.define('Ext.direct.Manager', {
         margin: '',
         padding: '5 5 5 5',
         style: 'background-image:url(resources/img/whitetexture.png);',
+        styleHtmlContent: true,
         width: '100%',
         tpl: [
             '<!--<tpl if="dealImageURL">',
@@ -65680,6 +65681,7 @@ Ext.define('Ext.direct.Manager', {
                 items: [
                     {
                         xtype: 'spacer',
+                        hidden: true,
                         maxWidth: '30vh'
                     },
                     {
@@ -65687,6 +65689,7 @@ Ext.define('Ext.direct.Manager', {
                         cls: 'contact-name',
                         disabled: true,
                         height: '',
+                        hidden: true,
                         html: '<b>Business Name</b>',
                         id: 'nameTxt1',
                         itemId: 'nameTxt1',
