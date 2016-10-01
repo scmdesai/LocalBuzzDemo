@@ -65648,7 +65648,6 @@ Ext.define('Ext.direct.Manager', {
         'dealPicture'
     ],
     config: {
-        cls: 'icon-share',
         fullscreen: false,
         height: '100%',
         html: '',
@@ -65698,7 +65697,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'toolbar',
                 cls: 'toolbarCls',
                 docked: 'top',
-                hidden: true,
+                hidden: false,
                 style: 'background-color:white;background-image:url(resources/img/whitetexture.png);',
                 items: [
                     {
