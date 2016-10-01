@@ -64961,17 +64961,27 @@ Ext.define('Ext.direct.Manager', {
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
             }
-            this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + businessInfo + '</div>');
-            this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
-            //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-            this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;text-decoration:none!important">' + record.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
-            this.down('#email1').setValue(record.get('emailAddress'));
-            this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('emailAddress') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
-            this.down('#website121').setValue(record.get('websiteDisplayName'));
-            this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('websiteDisplayName') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
-            this.down('#address1').setValue(record.get('address'));
-            this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
-            this.down('#website12').setValue(record.get('website'));
+            if (record.get('businessInfo')) {
+                this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + businessInfo + '</div>');
+            }
+            if (record.get('phoneNumber')) {
+                this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
+                //this.down('#phoneNumber').setText(record.get('phoneNumber'));
+                this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;text-decoration:none!important">' + record.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+            }
+            if (record.get('emailAddress')) {
+                this.down('#email1').setValue(record.get('emailAddress'));
+                this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('emailAddress') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+            }
+            if (record.get('websiteDisplayName')) {
+                this.down('#website121').setValue(record.get('websiteDisplayName'));
+                this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('websiteDisplayName') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+                this.down('#website12').setValue(record.get('website'));
+            }
+            if (record.get('address')) {
+                this.down('#address1').setValue(record.get('address'));
+                this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+            }
             // console.log(store.getData());
             if (isFavorite === true) {
                 this.down('#favbutton').setCls('fill-star');
@@ -65791,7 +65801,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
                 padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw;background:url(resources/img/whitetexture.png);',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;',
                 width: '98%'
             },
             {
@@ -65920,7 +65930,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
-                        style: 'font-family:Arial;font-size:4vw;',
+                        style: 'font-family:Arial;color:black;',
                         width: '98%',
                         listeners: [
                             {
@@ -66007,7 +66017,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:3.5vw;background:fff'
+                        style: 'word-wrap:break-word;font-family:Arial;color:black;'
                     },
                     {
                         xtype: 'component',
@@ -66046,7 +66056,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: #f6fbfc;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:#f6fbfc;"/><div style="background:#f6fbfc;font-size:5vw;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;background: #f6fbfc;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;background:#f6fbfc;"/><div style="background:#f6fbfc;font-size:4.5vw;font-family:Arial">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
