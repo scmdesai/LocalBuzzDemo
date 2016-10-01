@@ -65801,7 +65801,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt4',
                 margin: '5 5 5 5',
                 padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-size:4.5vw',
                 width: '98%'
             },
             {
@@ -65930,7 +65930,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '5 5 5 5',
                         minHeight: '8vh',
-                        style: 'font-family:Arial;color:black;',
+                        style: 'font-family:Arial;color:black;font-size:3.5vw',
                         width: '98%',
                         listeners: [
                             {
@@ -66017,7 +66017,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'word-wrap:break-word;font-family:Arial;color:black;'
+                        style: 'word-wrap:break-word;font-family:Arial;color:black;font-size:3vw;'
                     },
                     {
                         xtype: 'component',
