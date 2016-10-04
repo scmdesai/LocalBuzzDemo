@@ -64634,6 +64634,7 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 cls: 'w3-card-4',
+                docked: 'top',
                 id: 'businessInfo',
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
@@ -64646,7 +64647,6 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'container',
-                height: '30vh',
                 hidden: false,
                 margin: '5 0 0 5',
                 top: '46vh',
