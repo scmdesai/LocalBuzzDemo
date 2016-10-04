@@ -64640,7 +64640,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
                 padding: '2 2 2 2',
-                style: 'font-size:0.8em;background:url(resources/img/whitetexture.png);',
+                style: 'font-size:1em;background:url(resources/img/whitetexture.png);',
                 styleHtmlContent: true,
                 top: '37vh',
                 width: '98%',
@@ -64962,6 +64962,8 @@ Ext.define('Ext.direct.Manager', {
             }
             if (record.get('businessInfo')) {
                 this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + businessInfo + '</div>');
+            } else {
+                Ext.getCmp('businessInfo').hide();
             }
             if (record.get('phoneNumber')) {
                 this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
