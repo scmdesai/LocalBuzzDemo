@@ -65791,18 +65791,12 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'component',
-                cls: 'contact-name',
-                disabled: true,
+                xtype: 'container',
                 docked: 'top',
-                height: '9vh',
-                hidden: false,
                 id: 'nameTxt6',
-                itemId: 'nameTxt4',
-                margin: '5 5 5 5',
-                padding: '5 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-size:4.5vw',
-                width: '98%'
+                itemId: 'nameTxt6',
+                width: '100%',
+                layout: 'fit'
             },
             {
                 xtype: 'component',
@@ -65811,6 +65805,7 @@ Ext.define('Ext.direct.Manager', {
                     'w3-card-4'
                 ],
                 disabled: true,
+                docked: 'top',
                 height: '40vh',
                 id: 'dealimage',
                 itemId: 'dealimage',
@@ -65912,26 +65907,19 @@ Ext.define('Ext.direct.Manager', {
             },
             {
                 xtype: 'container',
-                docked: 'bottom',
-                height: '39vh',
+                docked: 'top',
                 style: 'background:fff',
+                top: '41vh',
+                width: '100%',
                 layout: {
                     type: 'vbox',
                     align: 'stretchmax'
                 },
                 items: [
                     {
-                        xtype: 'component',
-                        cls: 'contact-name',
-                        disabled: true,
-                        docked: 'top',
-                        hidden: false,
+                        xtype: 'container',
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
-                        margin: '5 5 5 5',
-                        minHeight: '8vh',
-                        style: 'font-family:Arial;color:black;font-size:3.5vw',
-                        width: '98%',
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
@@ -66012,7 +66000,6 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'component',
                         cls: 'contact-name',
                         disabled: true,
-                        docked: 'top',
                         hidden: false,
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
