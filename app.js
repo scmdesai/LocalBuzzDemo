@@ -65714,6 +65714,7 @@ Ext.define('Ext.direct.Manager', {
                 cls: 'toolbarCls',
                 docked: 'top',
                 hidden: false,
+                margin: '0 0 5 0',
                 style: 'background:url(resources/img/whitetexture.png);',
                 items: [
                     {
@@ -65795,6 +65796,7 @@ Ext.define('Ext.direct.Manager', {
                 docked: 'top',
                 id: 'nameTxt6',
                 itemId: 'nameTxt6',
+                margin: '10 5 5 5',
                 width: '100%',
                 layout: 'fit'
             },
@@ -65802,7 +65804,9 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'component',
                 cls: [
                     'dealimage',
-                    'w3-card-4'
+                    'w3-card-4',
+                    'w3-container',
+                    'w3-theme-l5'
                 ],
                 disabled: true,
                 docked: 'top',
@@ -65864,7 +65868,22 @@ Ext.define('Ext.direct.Manager', {
                                             if (url) {
                                                 dealDescription.link(url);
                                                 if (url.indexOf("http") < 0) {
-                                                    window.open("http://" + url, '_system', 'location=yes');
+                                                    //window.open("http://"+ url, '_system', 'location=yes');
+                                                    var url_temp1 = "http://" + url;
+                                                    //window.open("http://"+ url, '_system', 'location=yes');
+                                                    Ext.Ajax.request({
+                                                        method: 'GET',
+                                                        url: url_temp,
+                                                        success: function(response) {
+                                                            //window.open(url, '_system', 'location=yes');
+                                                            console.log('Success');
+                                                            window.open(url_temp1, '_system', 'location=yes');
+                                                        },
+                                                        failure: function(response) {
+                                                            //window.open(url, '_system', 'location=yes');
+                                                            console.log('Failure');
+                                                        }
+                                                    });
                                                 } else {
                                                     window.open(url, '_system', 'location=yes');
                                                 }
@@ -65890,7 +65909,22 @@ Ext.define('Ext.direct.Manager', {
                                                 if (url1) {
                                                     dealDescription.link(url1);
                                                     if (url1.indexOf("http") < 0) {
-                                                        window.open("http://" + url1, '_system', 'location=yes');
+                                                        //window.open("http://"+ url1, '_system', 'location=yes');
+                                                        var url_temp = "http://" + url1;
+                                                        //window.open("http://"+ url, '_system', 'location=yes');
+                                                        Ext.Ajax.request({
+                                                            method: 'GET',
+                                                            url: url_temp,
+                                                            success: function(response) {
+                                                                //window.open(url, '_system', 'location=yes');
+                                                                console.log('Success');
+                                                                window.open(url_temp, '_system', 'location=yes');
+                                                            },
+                                                            failure: function(response) {
+                                                                //window.open(url, '_system', 'location=yes');
+                                                                console.log('Failure');
+                                                            }
+                                                        });
                                                     } else {
                                                         window.open(url1, '_system', 'location=yes');
                                                     }
@@ -65920,6 +65954,7 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'container',
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
+                        margin: '10 5 5 5',
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
@@ -65956,7 +65991,22 @@ Ext.define('Ext.direct.Manager', {
                                                 if (url) {
                                                     dealDescription.link(url);
                                                     if (url.indexOf("http") < 0) {
-                                                        window.open("http://" + url, '_system', 'location=yes');
+                                                        //window.open("http://"+ url, '_system', 'location=yes');
+                                                        var url_temp1 = "http://" + url;
+                                                        //window.open("http://"+ url, '_system', 'location=yes');
+                                                        Ext.Ajax.request({
+                                                            method: 'GET',
+                                                            url: url_temp,
+                                                            success: function(response) {
+                                                                //window.open(url, '_system', 'location=yes');
+                                                                console.log('Success');
+                                                                window.open(url_temp1, '_system', 'location=yes');
+                                                            },
+                                                            failure: function(response) {
+                                                                //window.open(url, '_system', 'location=yes');
+                                                                console.log('Failure');
+                                                            }
+                                                        });
                                                     } else {
                                                         window.open(url, '_system', 'location=yes');
                                                     }
@@ -65982,7 +66032,22 @@ Ext.define('Ext.direct.Manager', {
                                                     if (url11) {
                                                         dealDescription.link(url11);
                                                         if (url11.indexOf("http") < 0) {
-                                                            window.open("http://" + url11, '_system', 'location=yes');
+                                                            //window.open("http://"+ url11, '_system', 'location=yes');
+                                                            var url_temp = "http://" + url11;
+                                                            //window.open("http://"+ url, '_system', 'location=yes');
+                                                            Ext.Ajax.request({
+                                                                method: 'GET',
+                                                                url: url_temp,
+                                                                success: function(response) {
+                                                                    //window.open(url, '_system', 'location=yes');
+                                                                    console.log('Success');
+                                                                    window.open(url_temp, '_system', 'location=yes');
+                                                                },
+                                                                failure: function(response) {
+                                                                    //window.open(url, '_system', 'location=yes');
+                                                                    console.log('Failure');
+                                                                }
+                                                            });
                                                         } else {
                                                             window.open(url11, '_system', 'location=yes');
                                                         }
@@ -66007,16 +66072,10 @@ Ext.define('Ext.direct.Manager', {
                         style: 'word-wrap:break-word;font-family:Arial;color:black;font-size:3vw;'
                     },
                     {
-                        xtype: 'component',
-                        cls: 'contact-name',
-                        disabled: true,
-                        height: '3vh',
-                        html: '<p style="font-size:3vw;text-align:center"> Published through Local Buzz',
-                        id: 'nameTxt2',
-                        itemId: 'nameTxt2',
-                        margin: '10 5 5 5',
-                        right: '0%',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:6vw;'
+                        xtype: 'container',
+                        html: '<p style="font-size:3vw;text-align:right;color:#00529D"> Published through Local Buzz',
+                        margin: '10 5 5 0',
+                        layout: 'fit'
                     },
                     {
                         xtype: 'button',
