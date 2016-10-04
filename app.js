@@ -65943,7 +65943,6 @@ Ext.define('Ext.direct.Manager', {
             {
                 xtype: 'container',
                 docked: 'top',
-                style: 'background:fff',
                 top: '41vh',
                 width: '100%',
                 layout: {
@@ -65956,6 +65955,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
                         margin: '10 5 5 5',
+                        style: 'font-family:Arial;font-size:3.8vw;background:url(resources/img/whitetexture.png);color:black;',
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
@@ -66070,7 +66070,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'font-family:Arial;font-size:3.8vw;background:url(resources/img/whitetexture.png);color:black;'
+                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:black;'
                     },
                     {
                         xtype: 'container',
