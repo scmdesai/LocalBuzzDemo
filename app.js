@@ -65760,7 +65760,6 @@ Ext.define('Ext.direct.Manager', {
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
                         minHeight: '100%',
-                        padding: '5 0 0 10',
                         styleHtmlContent: true,
                         ui: 'plain',
                         text: '',
@@ -65797,7 +65796,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'nameTxt6',
                 itemId: 'nameTxt6',
                 margin: '10 5 5 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:4vw;background:url(resources/img/whitetexture.png);color:black;font-weight:bold;',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-weight:bold;',
                 styleHtmlContent: true,
                 width: '100%',
                 layout: 'fit'
