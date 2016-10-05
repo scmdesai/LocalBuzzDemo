@@ -65787,6 +65787,7 @@ Ext.define('Ext.direct.Manager', {
                 id: 'nameTxt6',
                 itemId: 'nameTxt6',
                 margin: '10 5 5 5',
+                padding: '0 0 0 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-weight:bold;',
                 width: '100%',
                 layout: 'fit'
@@ -65945,8 +65946,8 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
                         margin: '10 5 5 5',
+                        padding: '0 0 0 5',
                         style: 'font-family:Arial;font-size:4vw;background:url(resources/img/whitetexture.png);color:black;font-weight:normal',
-                        styleHtmlContent: true,
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
