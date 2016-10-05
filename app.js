@@ -65947,6 +65947,7 @@ Ext.define('Ext.direct.Manager', {
                         itemId: 'nameTxt3',
                         margin: '10 5 5 5',
                         style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:black;',
+                        styleHtmlContent: true,
                         listeners: [
                             {
                                 fn: function(element, eOpts) {
