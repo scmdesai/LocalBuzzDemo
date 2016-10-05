@@ -66062,12 +66062,11 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'font-family:Arial;font-size:3.3vw;background:url(resources/img/whitetexture.png);color:black;',
-                        styleHtmlContent: true
+                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:black;'
                     },
                     {
                         xtype: 'container',
-                        html: '<p style="font-size:3vw;text-align:right;color:#00529D"> Published through Local Buzz',
+                        html: '<p style="font-size:3vw;text-align:right;color:#00529D;font-weight:bold"> Published through Local Buzz',
                         margin: '10 5 5 0',
                         layout: 'fit'
                     },
