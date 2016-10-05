@@ -64561,7 +64561,6 @@ Ext.define('Ext.direct.Manager', {
         style: 'border:1px solid #00529D;background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         layout: 'fit',
-        scrollable: true,
         items: [
             {
                 xtype: 'toolbar',
@@ -65664,6 +65663,7 @@ Ext.define('Ext.direct.Manager', {
         style: 'background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         width: '100%',
+        scrollable: false,
         tpl: [
             '<!--<tpl if="dealImageURL">',
             '<div><img src="{dealImageURL}" style="margin: 0px 5px 0px 5px;height:250px;width:95%;border:none;"/></div>',
@@ -65788,7 +65788,6 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt6',
                 margin: '10 5 5 5',
                 style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-weight:bold;',
-                styleHtmlContent: true,
                 width: '100%',
                 layout: 'fit'
             },
@@ -65946,7 +65945,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt3',
                         itemId: 'nameTxt3',
                         margin: '10 5 5 5',
-                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:black;',
+                        style: 'font-family:Arial;font-size:4vw;background:url(resources/img/whitetexture.png);color:black;font-weight:normal',
                         styleHtmlContent: true,
                         listeners: [
                             {
@@ -66137,7 +66136,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h5><b>About ' + businessName + '</b></h5>');
+            this.down('#nameTxt8').setHtml('<h5 style="font-family:Arial"><b>About ' + businessName + '</b></h5>');
         }
     }
 }, 0, [
