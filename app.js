@@ -64615,43 +64615,31 @@ Ext.define('Ext.direct.Manager', {
                 ]
             },
             {
-                xtype: 'component',
-                cls: [
-                    'dealimage',
-                    'w3-card-4'
-                ],
-                disabled: true,
+                xtype: 'container',
                 docked: 'top',
                 height: '35vh',
-                hidden: false,
                 id: 'storeImage',
-                itemId: 'storeImage',
-                left: '2%',
-                margin: '5 5 5 0',
-                style: 'color:#00529D;word-wrap:break-word;font-family:Arial;font-size:6vw;background-image:url(resources/img/whitetexture.png);',
-                width: '96vw'
+                itemId: 'storeImage'
             },
             {
                 xtype: 'container',
                 cls: 'w3-card-4',
                 docked: 'top',
-                height: '12vh',
                 id: 'businessInfo',
                 itemId: 'businessInfo',
                 margin: '0 5 0 5',
                 padding: '2 2 2 2',
                 style: 'font-size:1em;background:url(resources/img/whitetexture.png);',
                 styleHtmlContent: true,
-                top: '37vh',
                 width: '98%',
                 layout: 'fit',
                 scrollable: true
             },
             {
                 xtype: 'container',
+                docked: 'top',
                 hidden: false,
                 margin: '5 0 0 5',
-                top: '46vh',
                 width: '98%',
                 layout: 'fit',
                 scrollable: true,
@@ -64814,7 +64802,7 @@ Ext.define('Ext.direct.Manager', {
                 xtype: 'textfield',
                 cls: 'icon-globe',
                 disabled: false,
-                hidden: false,
+                hidden: true,
                 id: 'website12',
                 itemId: 'website12',
                 margin: '0 15 0 15',
