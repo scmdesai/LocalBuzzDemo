@@ -65708,24 +65708,6 @@ Ext.define('Ext.direct.Manager', {
                 style: 'background:url(resources/img/whitetexture.png);',
                 items: [
                     {
-                        xtype: 'spacer',
-                        hidden: false,
-                        maxWidth: '30vh',
-                        width: 100
-                    },
-                    {
-                        xtype: 'component',
-                        cls: 'contact-name',
-                        disabled: true,
-                        height: '8vh',
-                        html: '<b>Business Name</b>',
-                        id: 'nameTxt9',
-                        itemId: 'nameTxt',
-                        padding: '10 0 0 5',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
-                        width: '65%'
-                    },
-                    {
                         xtype: 'button',
                         handler: function(button, e) {
                             Ext.Viewport.getActiveItem().destroy();
@@ -65744,13 +65726,13 @@ Ext.define('Ext.direct.Manager', {
                         },
                         centered: false,
                         cls: 'icon-back-button',
-                        docked: 'left',
                         height: '100%',
                         hidden: false,
                         id: 'dealpictureBackBtn',
                         itemId: 'dealpictureBackBtn',
                         margin: '5 0 0 0',
                         minHeight: '100%',
+                        style: 'font-family:Arial',
                         styleHtmlContent: true,
                         ui: 'plain',
                         text: '',
@@ -65765,6 +65747,24 @@ Ext.define('Ext.direct.Manager', {
                                 order: 'after'
                             }
                         ]
+                    },
+                    {
+                        xtype: 'spacer',
+                        hidden: false,
+                        maxWidth: '30vh',
+                        width: 100
+                    },
+                    {
+                        xtype: 'component',
+                        cls: 'contact-name',
+                        disabled: true,
+                        height: '8vh',
+                        html: '<b>Business Name</b>',
+                        id: 'nameTxt9',
+                        itemId: 'nameTxt',
+                        padding: '10 0 0 5',
+                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                        width: '65%'
                     },
                     {
                         xtype: 'button',
@@ -66074,7 +66074,8 @@ Ext.define('Ext.direct.Manager', {
                         height: '8vh',
                         id: 'nameTxt8',
                         itemId: 'nameTxt8',
-                        margin: '10 5 0 5',
+                        margin: '10 0 0 0',
+                        styleHtmlContent: true,
                         ui: 'confirm'
                     }
                 ]
