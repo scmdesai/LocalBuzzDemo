@@ -238,6 +238,35 @@ $list-header-bg-color: $base-color;
 
 }
 
+.photo1 {
+    /*border: 1px solid #999; */
+    margin:1vh 5px 4vh 5px;
+    width: 20vw;
+    height: 14vh;
+    float: left;
+    background:none;
+    padding:1vh 5px 1vh 5px;
+
+}
+
+.photo2 {
+    /*border: 1px solid #999; */
+    
+    margin: 0;
+   padding: 0;
+    width: 5vw;
+    height: 5vh;
+    background:none;
+    
+
+}
+
+
+#titlebar{
+    text-align:center;
+}
+
+
 
 
 
