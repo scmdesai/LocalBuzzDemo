@@ -65763,7 +65763,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt9',
                         itemId: 'nameTxt',
                         padding: '10 0 0 5',
-                        style: 'word-wrap:break-word;font-family:Arial;font-size:5.5vw',
+                        style: 'color:#e69500;word-wrap:break-word;font-family:Arial;font-size:5.5vw',
                         width: '65%'
                     },
                     {
@@ -65788,7 +65788,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'nameTxt6',
                 margin: '10 5 5 5',
                 padding: '0 0 0 5',
-                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:black;font-weight:bold;',
+                style: 'word-wrap:break-word;font-family:Arial;font-size:4.5vw;background:url(resources/img/whitetexture.png);color:green;',
                 width: '100%',
                 layout: 'fit'
             },
@@ -66062,7 +66062,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:black;'
+                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:blue'
                     },
                     {
                         xtype: 'container',
@@ -66096,7 +66096,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;"/><div style="font-size:4.5vw;font-family:Arial;font-weight:bold;">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial">' + record.get('dealDescription') + '</div><br><div style="font-size:3.3vw;font-family:Arial;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;"/><div style="font-size:4.5vw;font-family:Arial;color:green;">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial;color:black;">' + record.get('dealDescription') + '</div><br><div style="font-size:3.3vw;font-family:Arial;colr:blue;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
