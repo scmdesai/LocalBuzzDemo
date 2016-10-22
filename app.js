@@ -13,7 +13,6 @@ if (!Ext.dataview.element) Ext.dataview.element = {};
 if (!Ext.device) Ext.device = {};
 if (!Ext.device.camera) Ext.device.camera = {};
 if (!Ext.device.communicator) Ext.device.communicator = {};
-if (!Ext.direct) Ext.direct = {};
 if (!Ext.dom) Ext.dom = {};
 if (!Ext.env) Ext.env = {};
 if (!Ext.event) Ext.event = {};
@@ -40,11 +39,11 @@ if (!Ext.util.paintmonitor) Ext.util.paintmonitor = {};
 if (!Ext.util.sizemonitor) Ext.util.sizemonitor = {};
 if (!Ext.util.translatable) Ext.util.translatable = {};
 if (!Ext.viewport) Ext.viewport = {};
-var LocalBuzzDemo = LocalBuzzDemo || {};
-if (!LocalBuzzDemo.controller) LocalBuzzDemo.controller = {};
-if (!LocalBuzzDemo.model) LocalBuzzDemo.model = {};
-if (!LocalBuzzDemo.store) LocalBuzzDemo.store = {};
-if (!LocalBuzzDemo.view) LocalBuzzDemo.view = {};
+var LocalBuzz = LocalBuzz || {};
+if (!LocalBuzz.controller) LocalBuzz.controller = {};
+if (!LocalBuzz.model) LocalBuzz.model = {};
+if (!LocalBuzz.store) LocalBuzz.store = {};
+if (!LocalBuzz.view) LocalBuzz.view = {};
 var dealPicture = dealPicture || {};
 /* 
  * Helper code for compiler optimization
@@ -49786,229 +49785,6 @@ function() {
 // Ext.reg('simplestore', Ext.data.SimpleStore);
 
 /**
- * Ext.Direct aims to streamline communication between the client and server by providing a single interface that
- * reduces the amount of common code typically required to validate data and handle returned data packets (reading data,
- * error conditions, etc).
- *
- * The Ext.direct namespace includes several classes for a closer integration with the server-side. The Ext.data
- * namespace also includes classes for working with Ext.data.Stores which are backed by data from an Ext.Direct method.
- *
- * # Specification
- *
- * For additional information consult the [Ext.Direct Specification](http://sencha.com/products/extjs/extdirect).
- *
- * # Providers
- *
- * Ext.Direct uses a provider architecture, where one or more providers are used to transport data to and from the
- * server. There are several providers that exist in the core at the moment:
- *
- * - {@link Ext.direct.JsonProvider JsonProvider} for simple JSON operations
- * - {@link Ext.direct.PollingProvider PollingProvider} for repeated requests
- * - {@link Ext.direct.RemotingProvider RemotingProvider} exposes server side on the client.
- *
- * A provider does not need to be invoked directly, providers are added via {@link Ext.direct.Manager}.{@link #addProvider}.
- *
- * # Router
- *
- * Ext.Direct utilizes a "router" on the server to direct requests from the client to the appropriate server-side
- * method. Because the Ext.Direct API is completely platform-agnostic, you could completely swap out a Java based server
- * solution and replace it with one that uses C# without changing the client side JavaScript at all.
- *
- * # Server side events
- *
- * Custom events from the server may be handled by the client by adding listeners, for example:
- *
- *     {"type":"event","name":"message","data":"Successfully polled at: 11:19:30 am"}
- *
- *     // add a handler for a 'message' event sent by the server
- *     Ext.direct.Manager.on('message', function(e){
- *         out.append(String.format('<p><i>{0}</i></p>', e.data));
- *         out.el.scrollTo('t', 100000, true);
- *     });
- *
- * @singleton
- * @alternateClassName Ext.Direct
- */
-Ext.define('Ext.direct.Manager', {
-    singleton: true,
-    mixins: {
-        observable: Ext.mixin.Observable
-    },
-    alternateClassName: 'Ext.Direct',
-    exceptions: {
-        TRANSPORT: 'xhr',
-        PARSE: 'parse',
-        LOGIN: 'login',
-        SERVER: 'exception'
-    },
-    /**
-     * @event event
-     * Fires after an event.
-     * @param {Ext.direct.Event} e The Ext.direct.Event type that occurred.
-     * @param {Ext.direct.Provider} provider The {@link Ext.direct.Provider Provider}.
-     */
-    /**
-     * @event exception
-     * Fires after an event exception.
-     * @param {Ext.direct.Event} e The event type that occurred.
-     */
-    constructor: function() {
-        var me = this;
-        me.transactions = Ext.create('Ext.util.Collection', this.getKey);
-        me.providers = Ext.create('Ext.util.Collection', this.getKey);
-    },
-    getKey: function(item) {
-        return item.getId();
-    },
-    /**
-     * Adds an Ext.Direct Provider and creates the proxy or stub methods to execute server-side methods. If the provider
-     * is not already connected, it will auto-connect.
-     *
-     *     Ext.direct.Manager.addProvider({
-     *         type: "remoting",       // create a {@link Ext.direct.RemotingProvider}
-     *         url: "php/router.php", // url to connect to the Ext.Direct server-side router.
-     *         actions: {              // each property within the actions object represents a Class
-     *             TestAction: [       // array of methods within each server side Class
-     *             {
-     *                 name: "doEcho", // name of method
-     *                 len: 1
-     *             },{
-     *                 name: "multiply",
-     *                 len: 1
-     *             },{
-     *                 name: "doForm",
-     *                 formHandler: true,  // handle form on server with Ext.Direct.Transaction
-     *                 len: 1
-     *             }]
-     *         },
-     *         namespace: "myApplication" // namespace to create the Remoting Provider in
-     *     });
-     *
-     * @param {Ext.direct.Provider/Object...} provider
-     * Accepts any number of Provider descriptions (an instance or config object for
-     * a Provider). Each Provider description instructs Ext.Direct how to create
-     * client-side stub methods.
-     * @return {Object}
-     */
-    addProvider: function(provider) {
-        var me = this,
-            args = Ext.toArray(arguments),
-            i = 0,
-            ln;
-        if (args.length > 1) {
-            for (ln = args.length; i < ln; ++i) {
-                me.addProvider(args[i]);
-            }
-            return;
-        }
-        // if provider has not already been instantiated
-        if (!provider.isProvider) {
-            provider = Ext.create('direct.' + provider.type + 'provider', provider);
-        }
-        me.providers.add(provider);
-        provider.on('data', me.onProviderData, me);
-        if (!provider.isConnected()) {
-            provider.connect();
-        }
-        return provider;
-    },
-    /**
-     * Retrieves a {@link Ext.direct.Provider provider} by the **{@link Ext.direct.Provider#id id}** specified when the
-     * provider is {@link #addProvider added}.
-     * @param {String/Ext.direct.Provider} id The id of the provider, or the provider instance.
-     * @return {Object}
-     */
-    getProvider: function(id) {
-        return id.isProvider ? id : this.providers.get(id);
-    },
-    /**
-     * Removes the provider.
-     * @param {String/Ext.direct.Provider} provider The provider instance or the id of the provider.
-     * @return {Ext.direct.Provider/null} The provider, `null` if not found.
-     */
-    removeProvider: function(provider) {
-        var me = this,
-            providers = me.providers;
-        provider = provider.isProvider ? provider : providers.get(provider);
-        if (provider) {
-            provider.un('data', me.onProviderData, me);
-            providers.remove(provider);
-            return provider;
-        }
-        return null;
-    },
-    /**
-     * Adds a transaction to the manager.
-     * @private
-     * @param {Ext.direct.Transaction} transaction The transaction to add
-     * @return {Ext.direct.Transaction} transaction
-     */
-    addTransaction: function(transaction) {
-        this.transactions.add(transaction);
-        return transaction;
-    },
-    /**
-     * Removes a transaction from the manager.
-     * @private
-     * @param {String/Ext.direct.Transaction} transaction The transaction/id of transaction to remove
-     * @return {Ext.direct.Transaction} transaction
-     */
-    removeTransaction: function(transaction) {
-        transaction = this.getTransaction(transaction);
-        this.transactions.remove(transaction);
-        return transaction;
-    },
-    /**
-     * Gets a transaction
-     * @private
-     * @param {String/Ext.direct.Transaction} transaction The transaction/id of transaction to get
-     * @return {Ext.direct.Transaction}
-     */
-    getTransaction: function(transaction) {
-        return Ext.isObject(transaction) ? transaction : this.transactions.get(transaction);
-    },
-    onProviderData: function(provider, event) {
-        var me = this,
-            i = 0,
-            ln, name;
-        if (Ext.isArray(event)) {
-            for (ln = event.length; i < ln; ++i) {
-                me.onProviderData(provider, event[i]);
-            }
-            return;
-        }
-        name = event.getName();
-        if (name && name != 'event' && name != 'exception') {
-            me.fireEvent(name, event);
-        } else if (event.getStatus() === false) {
-            me.fireEvent('exception', event);
-        }
-        me.fireEvent('event', event, provider);
-    },
-    /**
-     * Parses a direct function. It may be passed in a string format, for example:
-     * "MyApp.Person.read".
-     * @protected
-     * @param {String/Function} fn The direct function
-     * @return {Function} The function to use in the direct call. Null if not found
-     */
-    parseMethod: function(fn) {
-        if (Ext.isString(fn)) {
-            var parts = fn.split('.'),
-                i = 0,
-                ln = parts.length,
-                current = window;
-            while (current && i < ln) {
-                current = current[parts[i]];
-                ++i;
-            }
-            fn = Ext.isFunction(current) ? current : null;
-        }
-        return fn || null;
-    }
-});
-
-/**
  * @singleton
  *
  * This class is used to create JsonP requests. JsonP is a mechanism that allows for making requests for data cross
@@ -59290,351 +59066,6 @@ Ext.define('Ext.direct.Manager', {
 ], 0));
 
 /**
- * The checkbox field is an enhanced version of the native browser checkbox and is great for enabling your user to
- * choose one or more items from a set (for example choosing toppings for a pizza order). It works like any other
- * {@link Ext.field.Field field} and is usually found in the context of a form:
- *
- * ## Example
- *
- *     @example miniphone preview
- *     var form = Ext.create('Ext.form.Panel', {
- *         fullscreen: true,
- *         items: [
- *             {
- *                 xtype: 'checkboxfield',
- *                 name : 'tomato',
- *                 label: 'Tomato',
- *                 value: 'tomato',
- *                 checked: true
- *             },
- *             {
- *                 xtype: 'checkboxfield',
- *                 name : 'salami',
- *                 label: 'Salami'
- *             },
- *             {
- *                 xtype: 'toolbar',
- *                 docked: 'bottom',
- *                 items: [
- *                     { xtype: 'spacer' },
- *                     {
- *                         text: 'getValues',
- *                         handler: function() {
- *                             var form = Ext.ComponentQuery.query('formpanel')[0],
- *                                 values = form.getValues();
- *
- *                             Ext.Msg.alert(null,
- *                                 "Tomato: " + ((values.tomato) ? "yes" : "no") +
- *                                 "<br />Salami: " + ((values.salami) ? "yes" : "no")
- *                             );
- *                         }
- *                     },
- *                     { xtype: 'spacer' }
- *                 ]
- *             }
- *         ]
- *     });
- *
- *
- * The form above contains two check boxes - one for Tomato, one for Salami. We configured the Tomato checkbox to be
- * checked immediately on load, and the Salami checkbox to be unchecked. We also specified an optional text
- * {@link #value} that will be sent when we submit the form. We can get this value using the Form's
- * {@link Ext.form.Panel#getValues getValues} function, or have it sent as part of the data that is sent when the
- * form is submitted:
- *
- *     form.getValues(); //contains a key called 'tomato' if the Tomato field is still checked
- *     form.submit(); //will send 'tomato' in the form submission data
- *     
- * For more information regarding forms and fields, please review [Using Forms in Sencha Touch Guide](../../../components/forms.html)
- */
-(Ext.cmd.derive('Ext.field.Checkbox', Ext.field.Field, {
-    alternateClassName: 'Ext.form.Checkbox',
-    qsaLeftRe: /[\[]/g,
-    qsaRightRe: /[\]]/g,
-    isCheckbox: true,
-    /**
-     * @event change
-     * Fires just before the field blurs if the field value has changed.
-     * @param {Ext.field.Checkbox} this This field.
-     * @param {Boolean} newValue The new value.
-     * @param {Boolean} oldValue The original value.
-     */
-    /**
-     * @event check
-     * Fires when the checkbox is checked.
-     * @param {Ext.field.Checkbox} this This checkbox.
-     * @param {Ext.EventObject} e This event object.
-     */
-    /**
-     * @event uncheck
-     * Fires when the checkbox is unchecked.
-     * @param {Ext.field.Checkbox} this This checkbox.
-     * @param {Ext.EventObject} e This event object.
-     */
-    config: {
-        /**
-         * @cfg
-         * @inheritdoc
-         */
-        ui: 'checkbox',
-        /**
-         * @cfg {String} value The string value to submit if the item is in a checked state.
-         * @accessor
-         */
-        value: '',
-        /**
-         * @cfg {Boolean} checked `true` if the checkbox should render initially checked.
-         * @accessor
-         */
-        checked: false,
-        /**
-         * @cfg {Number} tabIndex
-         * @hide
-         */
-        tabIndex: -1,
-        /**
-         * @cfg
-         * @inheritdoc
-         */
-        component: {
-            xtype: 'input',
-            type: 'checkbox',
-            useMask: true,
-            cls: 'x-input-checkbox'
-        }
-    },
-    /**
-         * @cfg {Boolean} labelMaskTap
-         * @private
-         */
-    platformConfig: [
-        {
-            theme: [
-                'Windows',
-                'Blackberry',
-                'Blackberry103',
-                'Tizen'
-            ],
-            labelAlign: 'left'
-        }
-    ],
-    // @private
-    initialize: function() {
-        var me = this,
-            component = me.getComponent();
-        Ext.field.Field.prototype.initialize.call(this);
-        component.on({
-            scope: me,
-            order: 'before',
-            masktap: 'onMaskTap'
-        });
-        component.doMaskTap = Ext.emptyFn;
-        me.label.on({
-            scope: me,
-            tap: 'onMaskTap'
-        });
-    },
-    // @private
-    doInitValue: function() {
-        var me = this,
-            initialConfig = me.getInitialConfig();
-        // you can have a value or checked config, but checked get priority
-        if (initialConfig.hasOwnProperty('value')) {
-            me.originalState = initialConfig.value;
-        }
-        if (initialConfig.hasOwnProperty('checked')) {
-            me.originalState = initialConfig.checked;
-        }
-        Ext.field.Field.prototype.doInitValue.apply(this, arguments);
-    },
-    // @private
-    updateInputType: function(newInputType) {
-        var component = this.getComponent();
-        if (component) {
-            component.setType(newInputType);
-        }
-    },
-    // @private
-    updateName: function(newName) {
-        var component = this.getComponent();
-        if (component) {
-            component.setName(newName);
-        }
-    },
-    /**
-     * Returns the field checked value.
-     * @return {Mixed} The field value.
-     */
-    getChecked: function() {
-        // we need to get the latest value from the {@link #input} and then update the value
-        this._checked = this.getComponent().getChecked();
-        return this._checked;
-    },
-    /**
-     * Returns the submit value for the checkbox which can be used when submitting forms.
-     * @return {Boolean/String} value The value of {@link #value} or `true`, if {@link #checked}.
-     */
-    getSubmitValue: function() {
-        return (this.getChecked()) ? Ext.isEmpty(this._value) ? true : this._value : null;
-    },
-    setChecked: function(newChecked) {
-        this.updateChecked(newChecked);
-        this._checked = newChecked;
-    },
-    updateChecked: function(newChecked) {
-        this.getComponent().setChecked(newChecked);
-        // only call onChange (which fires events) if the component has been initialized
-        if (this.initialized) {
-            this.onChange();
-        }
-    },
-    // @private
-    onMaskTap: function(component, e) {
-        var me = this,
-            dom = me.getComponent().input.dom;
-        if (me.getDisabled()) {
-            return false;
-        }
-        //we must manually update the input dom with the new checked value
-        dom.checked = !dom.checked;
-        me.onChange(e);
-        //return false so the mask does not disappear
-        return false;
-    },
-    /**
-     * Fires the `check` or `uncheck` event when the checked value of this component changes.
-     * @private
-     */
-    onChange: function(e) {
-        var me = this,
-            oldChecked = me._checked,
-            newChecked = me.getChecked();
-        // only fire the event when the value changes
-        if (oldChecked != newChecked) {
-            if (newChecked) {
-                me.fireEvent('check', me, e);
-            } else {
-                me.fireEvent('uncheck', me, e);
-            }
-            me.fireEvent('change', me, newChecked, oldChecked);
-        }
-    },
-    /**
-     * @method
-     * Method called when this {@link Ext.field.Checkbox} has been checked.
-     */
-    doChecked: Ext.emptyFn,
-    /**
-     * @method
-     * Method called when this {@link Ext.field.Checkbox} has been unchecked.
-     */
-    doUnChecked: Ext.emptyFn,
-    /**
-     * Returns the checked state of the checkbox.
-     * @return {Boolean} `true` if checked, `false` otherwise.
-     */
-    isChecked: function() {
-        return this.getChecked();
-    },
-    /**
-     * Set the checked state of the checkbox to `true`.
-     * @return {Ext.field.Checkbox} This checkbox.
-     */
-    check: function() {
-        return this.setChecked(true);
-    },
-    /**
-     * Set the checked state of the checkbox to `false`.
-     * @return {Ext.field.Checkbox} This checkbox.
-     */
-    uncheck: function() {
-        return this.setChecked(false);
-    },
-    getSameGroupFields: function() {
-        var me = this,
-            component = me.up('formpanel') || me.up('fieldset'),
-            name = me.getName(),
-            replaceLeft = me.qsaLeftRe,
-            replaceRight = me.qsaRightRe,
-            //handle baseCls with multiple class values
-            baseCls = me.getBaseCls().split(' ').join('.'),
-            components = [],
-            elements, element, i, ln;
-        if (!component) {
-            component = Ext.Viewport;
-        }
-        // This is to handle ComponentQuery's lack of handling [name=foo[bar]] properly
-        name = name.replace(replaceLeft, '\\[');
-        name = name.replace(replaceRight, '\\]');
-        elements = Ext.query('[name=' + name + ']', component.element.dom);
-        ln = elements.length;
-        for (i = 0; i < ln; i++) {
-            element = elements[i];
-            element = Ext.fly(element).up('.' + baseCls);
-            if (element && element.id) {
-                components.push(Ext.getCmp(element.id));
-            }
-        }
-        return components;
-    },
-    /**
-     * Returns an array of values from the checkboxes in the group that are checked.
-     * @return {Array}
-     */
-    getGroupValues: function() {
-        var values = [];
-        this.getSameGroupFields().forEach(function(field) {
-            if (field.getChecked()) {
-                values.push(field.getValue());
-            }
-        });
-        return values;
-    },
-    /**
-     * Set the status of all matched checkboxes in the same group to checked.
-     * @param {Array} values An array of values.
-     * @return {Ext.field.Checkbox} This checkbox.
-     */
-    setGroupValues: function(values) {
-        this.getSameGroupFields().forEach(function(field) {
-            field.setChecked((values.indexOf(field.getValue()) !== -1));
-        });
-        return this;
-    },
-    /**
-     * Resets the status of all matched checkboxes in the same group to checked.
-     * @return {Ext.field.Checkbox} This checkbox.
-     */
-    resetGroupValues: function() {
-        this.getSameGroupFields().forEach(function(field) {
-            field.setChecked(field.originalState);
-        });
-        return this;
-    },
-    reset: function() {
-        this.setChecked(this.originalState);
-        return this;
-    }
-}, 0, [
-    "checkboxfield"
-], [
-    "component",
-    "field",
-    "checkboxfield"
-], {
-    "component": true,
-    "field": true,
-    "checkboxfield": true
-}, [
-    "widget.checkboxfield"
-], 0, [
-    Ext.field,
-    'Checkbox',
-    Ext.form,
-    'Checkbox'
-], 0));
-
-/**
  * The Number field creates an HTML5 number input and is usually created inside a form. Because it creates an HTML
  * number input field, most browsers will show a specialized virtual keyboard for entering numbers. The Number field
  * only accepts numerical input and also provides additional spinner UI that increases or decreases the current value
@@ -59805,1259 +59236,6 @@ Ext.define('Ext.direct.Manager', {
     Ext.form,
     'Number'
 ], 0));
-
-/**
- * The Form panel presents a set of form fields and provides convenient ways to load and save data. Usually a form
- * panel just contains the set of fields you want to display, ordered inside the items configuration like this:
- *
- *     @example
- *     var form = Ext.create('Ext.form.Panel', {
- *         fullscreen: true,
- *         items: [
- *             {
- *                 xtype: 'textfield',
- *                 name: 'name',
- *                 label: 'Name'
- *             },
- *             {
- *                 xtype: 'emailfield',
- *                 name: 'email',
- *                 label: 'Email'
- *             },
- *             {
- *                 xtype: 'passwordfield',
- *                 name: 'password',
- *                 label: 'Password'
- *             }
- *         ]
- *     });
- *
- * Here we just created a simple form panel which could be used as a registration form to sign up to your service. We
- * added a plain {@link Ext.field.Text text field} for the user's Name, an {@link Ext.field.Email email field} and
- * finally a {@link Ext.field.Password password field}. In each case we provided a {@link Ext.field.Field#name name}
- * config on the field so that we can identify it later on when we load and save data on the form.
- *
- * ##Loading data
- *
- * Using the form we created above, we can load data into it in a few different ways, the easiest is to use
- * {@link #setValues}:
- *
- *     form.setValues({
- *         name: 'Ed',
- *         email: 'ed@sencha.com',
- *         password: 'secret'
- *     });
- *
- * It's also easy to load {@link Ext.data.Model Model} instances into a form - let's say we have a User model and want
- * to load a particular instance into our form:
- *
- *     Ext.define('MyApp.model.User', {
- *         extend: 'Ext.data.Model',
- *         config: {
- *             fields: ['name', 'email', 'password']
- *         }
- *     });
- *
- *     var ed = Ext.create('MyApp.model.User', {
- *         name: 'Ed',
- *         email: 'ed@sencha.com',
- *         password: 'secret'
- *     });
- *
- *     form.setRecord(ed);
- *
- * ##Retrieving form data
- *
- * Getting data out of the form panel is simple and is usually achieve via the {@link #getValues} method:
- *
- *     var values = form.getValues();
- *
- *     //values now looks like this:
- *     {
- *         name: 'Ed',
- *         email: 'ed@sencha.com',
- *         password: 'secret'
- *     }
- *
- * It's also possible to listen to the change events on individual fields to get more timely notification of changes
- * that the user is making. Here we expand on the example above with the User model, updating the model as soon as
- * any of the fields are changed:
- *
- *     var form = Ext.create('Ext.form.Panel', {
- *         listeners: {
- *             '> field': {
- *                 change: function(field, newValue, oldValue) {
- *                     ed.set(field.getName(), newValue);
- *                 }
- *             }
- *         },
- *         items: [
- *             {
- *                 xtype: 'textfield',
- *                 name: 'name',
- *                 label: 'Name'
- *             },
- *             {
- *                 xtype: 'emailfield',
- *                 name: 'email',
- *                 label: 'Email'
- *             },
- *             {
- *                 xtype: 'passwordfield',
- *                 name: 'password',
- *                 label: 'Password'
- *             }
- *         ]
- *     });
- *
- * The above used a new capability of Sencha Touch 2.0, which enables you to specify listeners on child components of any
- * container. In this case, we attached a listener to the {@link Ext.field.Text#change change} event of each form
- * field that is a direct child of the form panel. Our listener gets the name of the field that fired the change event,
- * and updates our {@link Ext.data.Model Model} instance with the new value. For example, changing the email field
- * in the form will update the Model's email field.
- *
- * ##Submitting forms
- *
- * There are a few ways to submit form data. In our example above we have a Model instance that we have updated, giving
- * us the option to use the Model's {@link Ext.data.Model#save save} method to persist the changes back to our server,
- * without using a traditional form submission. Alternatively, we can send a normal browser form submit using the
- * {@link #method} method:
- *
- *     form.submit({
- *         url: 'url/to/submit/to',
- *         method: 'POST',
- *         success: function() {
- *             alert('form submitted successfully!');
- *         }
- *     });
- *
- * In this case we provided the `url` to submit the form to inside the submit call - alternatively you can just set the
- * {@link #url} configuration when you create the form. We can specify other parameters (see {@link #method} for a
- * full list), including callback functions for success and failure, which are called depending on whether or not the
- * form submission was successful. These functions are usually used to take some action in your app after your data
- * has been saved to the server side.
- *
- * For more information regarding forms and fields, please review [Using Forms in Sencha Touch Guide](../../../components/forms.html)
- */
-(Ext.cmd.derive('Ext.form.Panel', Ext.Panel, {
-    alternateClassName: 'Ext.form.FormPanel',
-    /**
-     * @event submit
-     * @preventable doSubmit
-     * Fires upon successful (Ajax-based) form submission.
-     * @param {Ext.form.Panel} this This FormPanel.
-     * @param {Object} result The result object as returned by the server.
-     * @param {Ext.EventObject} e The event object.
-     */
-    /**
-     * @event beforesubmit
-     * @preventable doBeforeSubmit
-     * Fires immediately preceding any Form submit action.
-     * Implementations may adjust submitted form values or options prior to execution.
-     * A return value of `false` from this listener will abort the submission
-     * attempt (regardless of `standardSubmit` configuration).
-     * @param {Ext.form.Panel} this This FormPanel.
-     * @param {Object} values A hash collection of the qualified form values about to be submitted.
-     * @param {Object} options Submission options hash (only available when `standardSubmit` is `false`).
-     * @param {Ext.EventObject} e The event object if the form was submitted via a HTML5 form submit event.
-     */
-    /**
-     * @event exception
-     * Fires when either the Ajax HTTP request reports a failure OR the server returns a `success:false`
-     * response in the result payload.
-     * @param {Ext.form.Panel} this This FormPanel.
-     * @param {Object} result Either a failed Ext.data.Connection request object or a failed (logical) server.
-     * response payload.
-     */
-    config: {
-        /**
-         * @cfg {String} baseCls
-         * @inheritdoc
-         */
-        baseCls: 'x-form',
-        /**
-         * @cfg {Boolean} standardSubmit
-         * Whether or not we want to perform a standard form submit.
-         * @accessor
-         */
-        standardSubmit: false,
-        /**
-         * @cfg {String} url
-         * The default url for submit actions.
-         * @accessor
-         */
-        url: null,
-        /**
-         * @cfg (String} enctype
-         * The enctype attribute for the form, specifies how the form should be encoded when submitting
-         */
-        enctype: null,
-        /**
-         * @cfg {Object} baseParams
-         * Optional hash of params to be sent (when `standardSubmit` configuration is `false`) on every submit.
-         * @accessor
-         */
-        baseParams: null,
-        /**
-         * @cfg {Object} submitOnAction
-         * When this is set to `true`, the form will automatically submit itself whenever the `action`
-         * event fires on a field in this form. The action event usually fires whenever you press
-         * go or enter inside a textfield.
-         * @accessor
-         */
-        submitOnAction: false,
-        /**
-         * @cfg {Ext.data.Model} record The model instance of this form. Can by dynamically set at any time.
-         * @accessor
-         */
-        record: null,
-        /**
-         * @cfg {String} method
-         * The method which this form will be submitted. `post` or `get`.
-         */
-        method: 'post',
-        /**
-         * @cfg {Object} scrollable
-         * Possible values are true, false, and null. The true value indicates that
-         * users can scroll the panel. The false value disables scrolling, but developers
-         * can enable it in the app. The null value indicates that the object cannot be
-         * scrolled and that scrolling cannot be enabled for this object.
-         *
-         * Example:
-         *      title: 'Sliders',
-         *      xtype: 'formpanel',
-         *      iconCls: Ext.filterPlatform('blackberry') ? 'list' : null,
-         *      scrollable: true,
-         *      items: [ ...
-         * @inheritdoc
-         */
-        scrollable: {
-            translatable: {
-                translationMethod: 'scrollposition'
-            }
-        },
-        /**
-         * @cfg {Boolean} trackResetOnLoad
-         * If set to true, {@link #reset}() resets to the last loaded or {@link #setValues}() data instead of
-         * when the form was first created.
-         */
-        trackResetOnLoad: false,
-        /**
-         * @cfg {Object} api
-         * If specified, load and submit actions will be loaded and submitted via Ext.Direct.  Methods which have been imported by
-         * {@link Ext.direct.Manager} can be specified here to load and submit forms. API methods may also be
-         * specified as strings and will be parsed into the actual functions when the first submit or load has occurred. Such as the following:
-         *
-         *     api: {
-         *         load: App.ss.MyProfile.load,
-         *         submit: App.ss.MyProfile.submit
-         *     }
-         *
-         *     api: {
-         *         load: 'App.ss.MyProfile.load',
-         *         submit: 'App.ss.MyProfile.submit'
-         *     }
-         *
-         * Load actions can use {@link #paramOrder} or {@link #paramsAsHash} to customize how the load method
-         * is invoked.  Submit actions will always use a standard form submit. The `formHandler` configuration
-         * (see Ext.direct.RemotingProvider#action) must be set on the associated server-side method which has
-         * been imported by {@link Ext.direct.Manager}.
-         */
-        api: null,
-        /**
-         * @cfg {String/String[]} paramOrder
-         * A list of params to be executed server side. Only used for the {@link #api} `load`
-         * configuration.
-         *
-         * Specify the params in the order in which they must be executed on the
-         * server-side as either (1) an Array of String values, or (2) a String of params
-         * delimited by either whitespace, comma, or pipe. For example,
-         * any of the following would be acceptable:
-         *
-         *     paramOrder: ['param1','param2','param3']
-         *     paramOrder: 'param1 param2 param3'
-         *     paramOrder: 'param1,param2,param3'
-         *     paramOrder: 'param1|param2|param'
-         */
-        paramOrder: null,
-        /**
-         * @cfg {Boolean} paramsAsHash
-         * Only used for the {@link #api} `load` configuration. If true, parameters will be sent as a
-         * single hash collection of named arguments. Providing a {@link #paramOrder} nullifies this
-         * configuration.
-         */
-        paramsAsHash: null,
-        /**
-         * @cfg {Number} timeout
-         * Timeout for form actions in seconds.
-         */
-        timeout: 30,
-        /**
-         * @cfg {Boolean} multipartDetection
-         * If this is enabled the form will automatically detect the need to use 'multipart/form-data' during submission.
-         */
-        multipartDetection: true,
-        /**
-         * @cfg {Boolean} enableSubmissionForm
-         * The submission form is generated but never added to the dom. It is a submittable version of your form panel, allowing for fields
-         * that are not simple textfields to be properly submitted to servers. It will also send values that are easier to parse
-         * with server side code.
-         *
-         * If this is false we will attempt to subject the raw form inside the form panel.
-         */
-        enableSubmissionForm: true
-    },
-    getElementConfig: function() {
-        var config = Ext.Panel.prototype.getElementConfig.call(this);
-        config.tag = "form";
-        // Added a submit input for standard form submission. This cannot have "display: none;" or it will not work
-        config.children.push({
-            tag: 'input',
-            type: 'submit',
-            style: 'visibility: hidden; width: 0; height: 0; position: absolute; right: 0; bottom: 0;'
-        });
-        return config;
-    },
-    // @private
-    initialize: function() {
-        var me = this;
-        Ext.Panel.prototype.initialize.call(this);
-        me.element.on({
-            submit: 'onSubmit',
-            scope: me
-        });
-    },
-    applyEnctype: function(newValue) {
-        var form = this.element.dom || null;
-        if (form) {
-            if (newValue) {
-                form.setAttribute("enctype", newValue);
-            } else {
-                form.setAttribute("enctype");
-            }
-        }
-    },
-    updateRecord: function(newRecord) {
-        var fields, values, name;
-        if (newRecord && (fields = newRecord.fields)) {
-            values = this.getValues();
-            for (name in values) {
-                if (values.hasOwnProperty(name) && fields.containsKey(name)) {
-                    newRecord.set(name, values[name]);
-                }
-            }
-        }
-        return this;
-    },
-    /**
-     * Loads matching fields from a model instance into this form.
-     * @param {Ext.data.Model} record The model instance.
-     * @return {Ext.form.Panel} This form.
-     */
-    setRecord: function(record) {
-        var me = this;
-        if (record && record.data) {
-            me.setValues(record.data);
-        }
-        me._record = record;
-        return this;
-    },
-    // @private
-    onSubmit: function(e) {
-        var me = this;
-        if (e && !me.getStandardSubmit()) {
-            e.stopEvent();
-        } else {
-            // Stop the submit event on the original for if we are swapping a form in
-            if (me.getEnableSubmissionForm()) {
-                e.stopEvent();
-            }
-            this.submit(null, e);
-        }
-    },
-    updateSubmitOnAction: function(newSubmitOnAction) {
-        if (newSubmitOnAction) {
-            this.on({
-                action: 'onFieldAction',
-                scope: this
-            });
-        } else {
-            this.un({
-                action: 'onFieldAction',
-                scope: this
-            });
-        }
-    },
-    // @private
-    onFieldAction: function(field) {
-        if (this.getSubmitOnAction()) {
-            field.blur();
-            this.submit();
-        }
-    },
-    /**
-     * Performs a Ajax-based submission of form values (if {@link #standardSubmit} is false) or otherwise
-     * executes a standard HTML Form submit action.
-     *
-     * **Notes**
-     *
-     *  1. Only the first parameter is implemented. Put all other parameters inside the first
-     *  parameter:
-     *
-     *     submit({params: "" ,headers: "" etc.})
-     *
-     *  2. Submit example:
-     *
-     *     myForm.submit({
-     *       url: 'PostMyData/To',
-     *       method: 'Post',
-     *       success: function() { Ext.Msg.alert("success"); },
-     *       failure: function() { Ext.Msg.alert("error"); }
-     *     });
-     *
-     *  3. Parameters and values only submit for a POST and not for a GET.
-     *
-     * @param {Object} options
-     * The configuration when submitting this form.
-     *
-     * The following are the configurations when submitting via Ajax only:
-     *
-     * @param {String} options.url
-     * The url for the action (defaults to the form's {@link #url}).
-     *
-     * @param {String} options.method
-     * The form method to use (defaults to the form's {@link #method}, or POST if not defined).
-     *
-     * @param {Object} options.headers
-     * Request headers to set for the action.
-     *
-     * @param {Boolean} [options.autoAbort=false]
-     * `true` to abort any pending Ajax request prior to submission.
-     * __Note:__ Has no effect when `{@link #standardSubmit}` is enabled.
-     *
-     * @param {Number} options.timeout
-     * The number is seconds the loading will timeout in.
-     *
-     * The following are the configurations when loading via Ajax or Direct:
-     *
-     * @param {String/Object} options.params
-     * The params to pass when submitting this form (defaults to this forms {@link #baseParams}).
-     * Parameters are encoded as standard HTTP parameters using {@link Ext#urlEncode}.
-     *
-     * @param {Boolean} [options.submitDisabled=false]
-     * `true` to submit all fields regardless of disabled state.
-     * __Note:__ Has no effect when `{@link #standardSubmit}` is enabled.
-     *
-     * @param {String/Object} [options.waitMsg]
-     * If specified, the value which is passed to the loading {@link #masked mask}. See {@link #masked} for
-     * more information.
-     *
-     * @param {Function} options.success
-     * The callback that will be invoked after a successful response. A response is successful if
-     * a response is received from the server and is a JSON object where the `success` property is set
-     * to `true`, `{"success": true}`.
-     *
-     * The function is passed the following parameters and can be used for submitting via Ajax or Direct:
-     *
-     * @param {Ext.form.Panel} options.success.form
-     * The {@link Ext.form.Panel} that requested the action.
-     *
-     * @param {Object/Ext.direct.Event} options.success.result
-     * The result object returned by the server as a result of the submit request. If the submit is sent using Ext.Direct,
-     * this will return the {@link Ext.direct.Event} instance, otherwise will return an Object.
-     *
-     * @param {Object} options.success.data
-     * The parsed data returned by the server.
-     *
-     * @param {Function} options.failure
-     * The callback that will be invoked after a failed transaction attempt.
-     *
-     * The function is passed the following parameters and can be used for submitting via Ajax or Direct:
-     *
-     * @param {Ext.form.Panel} options.failure.form
-     * The {@link Ext.form.Panel} that requested the submit.
-     *
-     * @param {Ext.form.Panel} options.failure.result
-     * The failed response or result object returned by the server which performed the operation.
-     *
-     * @param {Object} options.success.data
-     * The parsed data returned by the server.
-     *
-     * @param {Object} options.scope
-     * The scope in which to call the callback functions (The `this` reference for the callback functions).
-     *
-     * @return {Ext.data.Connection} The request object if the {@link #standardSubmit} config is false.
-     * If the standardSubmit config is true, then the return value is undefined.
-     */
-    submit: function(options, e) {
-        options = options || {};
-        var me = this,
-            formValues = me.getValues(me.getStandardSubmit() || !options.submitDisabled),
-            form = me.element.dom || {};
-        if (this.getEnableSubmissionForm()) {
-            form = this.createSubmissionForm(form, formValues);
-        }
-        options = Ext.apply({
-            url: me.getUrl() || form.action,
-            submit: false,
-            form: form,
-            method: me.getMethod() || form.method || 'post',
-            autoAbort: false,
-            params: null,
-            waitMsg: null,
-            headers: null,
-            success: null,
-            failure: null
-        }, options || {});
-        return me.fireAction('beforesubmit', [
-            me,
-            formValues,
-            options,
-            e
-        ], 'doBeforeSubmit');
-    },
-    createSubmissionForm: function(form, values) {
-        var fields = this.getFields(),
-            name, input, field, fileinputElement, inputComponent;
-        if (form.nodeType === 1) {
-            form = form.cloneNode(false);
-            for (name in values) {
-                input = document.createElement("input");
-                input.setAttribute("type", "text");
-                input.setAttribute("name", name);
-                input.setAttribute("value", values[name]);
-                form.appendChild(input);
-            }
-        }
-        for (name in fields) {
-            if (fields.hasOwnProperty(name)) {
-                field = fields[name];
-                if (field.isFile) {
-                    if (!form.$fileswap) {
-                        form.$fileswap = [];
-                    }
-                    inputComponent = field.getComponent().input;
-                    fileinputElement = inputComponent.dom;
-                    input = fileinputElement.cloneNode(true);
-                    fileinputElement.parentNode.insertBefore(input, fileinputElement.nextSibling);
-                    form.appendChild(fileinputElement);
-                    form.$fileswap.push({
-                        original: fileinputElement,
-                        placeholder: input
-                    });
-                } else if (field.isPassword) {
-                    if (field.getComponent().getType !== "password") {
-                        field.setRevealed(false);
-                    }
-                }
-            }
-        }
-        return form;
-    },
-    doBeforeSubmit: function(me, formValues, options) {
-        var form = options.form || {},
-            multipartDetected = false;
-        if (this.getMultipartDetection() === true) {
-            this.getFieldsAsArray().forEach(function(field) {
-                if (field.isFile === true) {
-                    multipartDetected = true;
-                    return false;
-                }
-            });
-            if (multipartDetected) {
-                form.setAttribute("enctype", "multipart/form-data");
-            }
-        }
-        if (options.enctype) {
-            form.setAttribute("enctype", options.enctype);
-        }
-        if (me.getStandardSubmit()) {
-            if (options.url && Ext.isEmpty(form.action)) {
-                form.action = options.url;
-            }
-            // Spinner fields must have their components enabled *before* submitting or else the value
-            // will not be posted.
-            var fields = this.query('spinnerfield'),
-                ln = fields.length,
-                i, field;
-            for (i = 0; i < ln; i++) {
-                field = fields[i];
-                if (!field.getDisabled()) {
-                    field.getComponent().setDisabled(false);
-                }
-            }
-            form.method = (options.method || form.method).toLowerCase();
-            form.submit();
-        } else {
-            var api = me.getApi(),
-                url = options.url || me.getUrl(),
-                scope = options.scope || me,
-                waitMsg = options.waitMsg,
-                failureFn = function(response, responseText) {
-                    if (Ext.isFunction(options.failure)) {
-                        options.failure.call(scope, me, response, responseText);
-                    }
-                    me.fireEvent('exception', me, response);
-                },
-                successFn = function(response, responseText) {
-                    if (Ext.isFunction(options.success)) {
-                        options.success.call(options.scope || me, me, response, responseText);
-                    }
-                    me.fireEvent('submit', me, response);
-                },
-                submit;
-            if (options.waitMsg) {
-                if (typeof waitMsg === 'string') {
-                    waitMsg = {
-                        xtype: 'loadmask',
-                        message: waitMsg
-                    };
-                }
-                me.setMasked(waitMsg);
-            }
-            if (api) {
-                submit = api.submit;
-                if (typeof submit === 'string') {
-                    submit = Ext.direct.Manager.parseMethod(submit);
-                    if (submit) {
-                        api.submit = submit;
-                    }
-                }
-                if (submit) {
-                    return submit(this.element, function(data, response, success) {
-                        me.setMasked(false);
-                        if (success) {
-                            if (data.success) {
-                                successFn(response, data);
-                            } else {
-                                failureFn(response, data);
-                            }
-                        } else {
-                            failureFn(response, data);
-                        }
-                    }, this);
-                }
-            } else {
-                var request = Ext.merge({}, {
-                        url: url,
-                        timeout: this.getTimeout() * 1000,
-                        form: form,
-                        scope: me
-                    }, options);
-                delete request.success;
-                delete request.failure;
-                request.params = Ext.merge(me.getBaseParams() || {}, options.params);
-                request.header = Ext.apply({
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                }, options.headers || {});
-                request.callback = function(callbackOptions, success, response) {
-                    var responseText = response.responseText,
-                        responseXML = response.responseXML,
-                        statusResult = Ext.Ajax.parseStatus(response.status, response);
-                    if (form.$fileswap) {
-                        var original, placeholder;
-                        Ext.each(form.$fileswap, function(item) {
-                            original = item.original;
-                            placeholder = item.placeholder;
-                            placeholder.parentNode.insertBefore(original, placeholder.nextSibling);
-                            placeholder.parentNode.removeChild(placeholder);
-                        });
-                        form.$fileswap = null;
-                        delete form.$fileswap;
-                    }
-                    me.setMasked(false);
-                    if (response.success === false) {
-                        success = false;
-                    }
-                    if (success) {
-                        if (statusResult && responseText && responseText.length == 0) {
-                            success = true;
-                        } else {
-                            if (!Ext.isEmpty(response.responseBytes)) {
-                                success = statusResult.success;
-                            } else {
-                                if (Ext.isString(responseText) && response.request.options.responseType === "text") {
-                                    response.success = true;
-                                } else if (Ext.isString(responseText)) {
-                                    try {
-                                        response = Ext.decode(responseText);
-                                    } catch (e) {
-                                        response.success = false;
-                                        response.error = e;
-                                        response.message = e.message;
-                                    }
-                                } else if (Ext.isSimpleObject(responseText)) {
-                                    response = responseText;
-                                    Ext.applyIf(response, {
-                                        success: true
-                                    });
-                                }
-                                if (!Ext.isEmpty(responseXML)) {
-                                    response.success = true;
-                                }
-                                success = !!response.success;
-                            }
-                        }
-                        if (success) {
-                            successFn(response, responseText);
-                        } else {
-                            failureFn(response, responseText);
-                        }
-                    } else {
-                        failureFn(response, responseText);
-                    }
-                };
-                if (Ext.feature.has.XHR2 && request.xhr2) {
-                    delete request.form;
-                    var formData = new FormData(form);
-                    if (request.params) {
-                        Ext.iterate(request.params, function(name, value) {
-                            if (Ext.isArray(value)) {
-                                Ext.each(value, function(v) {
-                                    formData.append(name, v);
-                                });
-                            } else {
-                                formData.append(name, value);
-                            }
-                        });
-                        delete request.params;
-                    }
-                    request.data = formData;
-                }
-                return Ext.Ajax.request(request);
-            }
-        }
-    },
-    /**
-     * Performs an Ajax or Ext.Direct call to load values for this form.
-     *
-     * @param {Object} options
-     * The configuration when loading this form.
-     *
-     * The following are the configurations when loading via Ajax only:
-     *
-     * @param {String} options.url
-     * The url for the action (defaults to the form's {@link #url}).
-     *
-     * @param {String} options.method
-     * The form method to use (defaults to the form's {@link #method}, or GET if not defined).
-     *
-     * @param {Object} options.headers
-     * Request headers to set for the action.
-     *
-     * @param {Number} options.timeout
-     * The number is seconds the loading will timeout in.
-     *
-     * The following are the configurations when loading via Ajax or Direct:
-     *
-     * @param {Boolean} [options.autoAbort=false]
-     * `true` to abort any pending Ajax request prior to loading.
-     *
-     * @param {String/Object} options.params
-     * The params to pass when submitting this form (defaults to this forms {@link #baseParams}).
-     * Parameters are encoded as standard HTTP parameters using {@link Ext#urlEncode}.
-     *
-     * @param {String/Object} [options.waitMsg]
-     * If specified, the value which is passed to the loading {@link #masked mask}. See {@link #masked} for
-     * more information.
-     *
-     * @param {Function} options.success
-     * The callback that will be invoked after a successful response. A response is successful if
-     * a response is received from the server and is a JSON object where the `success` property is set
-     * to `true`, `{"success": true}`.
-     *
-     * The function is passed the following parameters and can be used for loading via Ajax or Direct:
-     *
-     * @param {Ext.form.Panel} options.success.form
-     * The {@link Ext.form.Panel} that requested the load.
-     *
-     * @param {Object/Ext.direct.Event} options.success.result
-     * The result object returned by the server as a result of the load request. If the loading was done via Ext.Direct,
-     * will return the {@link Ext.direct.Event} instance, otherwise will return an Object.
-     *
-     * @param {Object} options.success.data
-     * The parsed data returned by the server.
-     *
-     * @param {Function} options.failure
-     * The callback that will be invoked after a failed transaction attempt.
-     *
-     * The function is passed the following parameters and can be used for loading via Ajax or Direct:
-     *
-     * @param {Ext.form.Panel} options.failure.form
-     * The {@link Ext.form.Panel} that requested the load.
-     *
-     * @param {Ext.form.Panel} options.failure.result
-     * The failed response or result object returned by the server which performed the operation.
-     *
-     * @param {Object} options.success.data
-     * The parsed data returned by the server.
-     *
-     * @param {Object} options.scope
-     * The scope in which to call the callback functions (The `this` reference for the callback functions).
-     *
-     * @return {Ext.data.Connection} The request object.
-     */
-    load: function(options) {
-        options = options || {};
-        var me = this,
-            api = me.getApi(),
-            url = me.getUrl() || options.url,
-            waitMsg = options.waitMsg,
-            successFn = function(response, data) {
-                me.setValues(data.data);
-                if (Ext.isFunction(options.success)) {
-                    options.success.call(options.scope || me, me, response, data);
-                }
-                me.fireEvent('load', me, response);
-            },
-            failureFn = function(response, data) {
-                if (Ext.isFunction(options.failure)) {
-                    options.failure.call(scope, me, response, data);
-                }
-                me.fireEvent('exception', me, response);
-            },
-            load, method, args;
-        if (options.waitMsg) {
-            if (typeof waitMsg === 'string') {
-                waitMsg = {
-                    xtype: 'loadmask',
-                    message: waitMsg
-                };
-            }
-            me.setMasked(waitMsg);
-        }
-        if (api) {
-            load = api.load;
-            if (typeof load === 'string') {
-                load = Ext.direct.Manager.parseMethod(load);
-                if (load) {
-                    api.load = load;
-                }
-            }
-            if (load) {
-                method = load.directCfg.method;
-                args = method.getArgs(me.getParams(options.params), me.getParamOrder(), me.getParamsAsHash());
-                args.push(function(data, response, success) {
-                    me.setMasked(false);
-                    if (success) {
-                        successFn(response, data);
-                    } else {
-                        failureFn(response, data);
-                    }
-                }, me);
-                return load.apply(window, args);
-            }
-        } else if (url) {
-            return Ext.Ajax.request({
-                url: url,
-                timeout: (options.timeout || this.getTimeout()) * 1000,
-                method: options.method || 'GET',
-                autoAbort: options.autoAbort,
-                headers: Ext.apply({
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                }, options.headers || {}),
-                callback: function(callbackOptions, success, response) {
-                    var responseText = response.responseText,
-                        statusResult = Ext.Ajax.parseStatus(response.status, response);
-                    me.setMasked(false);
-                    if (success) {
-                        if (statusResult && responseText.length == 0) {
-                            success = true;
-                        } else {
-                            response = Ext.decode(responseText);
-                            success = !!response.success;
-                        }
-                        if (success) {
-                            successFn(response, responseText);
-                        } else {
-                            failureFn(response, responseText);
-                        }
-                    } else {
-                        failureFn(response, responseText);
-                    }
-                }
-            });
-        }
-    },
-    //@private
-    getParams: function(params) {
-        return Ext.apply({}, params, this.getBaseParams());
-    },
-    /**
-     * Sets the values of form fields in bulk. Example usage:
-     *
-     *     myForm.setValues({
-     *         name: 'Ed',
-     *         crazy: true,
-     *         username: 'edspencer'
-     *     });
-     *
-     * If there groups of checkbox fields with the same name, pass their values in an array. For example:
-     *
-     *     myForm.setValues({
-     *         name: 'Jacky',
-     *         crazy: false,
-     *         hobbies: [
-     *             'reading',
-     *             'cooking',
-     *             'gaming'
-     *         ]
-     *     });
-     *
-     * @param {Object} values field name => value mapping object.
-     * @return {Ext.form.Panel} This form.
-     */
-    setValues: function(values) {
-        var fields = this.getFields(),
-            me = this,
-            name, field, value, ln, i, f;
-        values = values || {};
-        for (name in values) {
-            if (values.hasOwnProperty(name)) {
-                field = fields[name];
-                value = values[name];
-                if (field) {
-                    // If there are multiple fields with the same name. Checkboxes, radio fields and maybe event just normal fields..
-                    if (Ext.isArray(field)) {
-                        ln = field.length;
-                        // Loop through each of the fields
-                        for (i = 0; i < ln; i++) {
-                            f = field[i];
-                            if (f.isRadio) {
-                                // If it is a radio field just use setGroupValue which will handle all of the radio fields
-                                f.setGroupValue(value);
-                                break;
-                            } else if (f.isCheckbox) {
-                                if (Ext.isArray(value)) {
-                                    f.setChecked((value.indexOf(f._value) != -1));
-                                } else {
-                                    f.setChecked((value == f._value));
-                                }
-                            } else {
-                                // If it is a bunch of fields with the same name, check if the value is also an array, so we can map it
-                                // to each field
-                                if (Ext.isArray(value)) {
-                                    f.setValue(value[i]);
-                                }
-                            }
-                        }
-                    } else {
-                        if (field.isRadio || field.isCheckbox) {
-                            // If the field is a radio or a checkbox
-                            field.setChecked(value);
-                        } else {
-                            // If just a normal field
-                            field.setValue(value);
-                        }
-                    }
-                    if (me.getTrackResetOnLoad()) {
-                        field.resetOriginalValue();
-                    }
-                }
-            }
-        }
-        return this;
-    },
-    /**
-     * Returns an object containing the value of each field in the form, keyed to the field's name.
-     * For groups of checkbox fields with the same name, it will be arrays of values. For example:
-     *
-     *     {
-     *         name: "Jacky Nguyen", // From a TextField
-     *         favorites: [
-     *             'pizza',
-     *             'noodle',
-     *             'cake'
-     *         ]
-     *     }
-     *
-     * @param {Boolean} [enabled] `true` to return only enabled fields.
-     * @param {Boolean} [all] `true` to return all fields even if they don't have a
-     * {@link Ext.field.Field#name name} configured.
-     * @return {Object} Object mapping field name to its value.
-     */
-    getValues: function(enabled, all) {
-        var fields = this.getFields(),
-            values = {},
-            isArray = Ext.isArray,
-            field, value, addValue, bucket, name, ln, i;
-        // Function which you give a field and a name, and it will add it into the values
-        // object accordingly
-        addValue = function(field, name) {
-            if (!all && (!name || name === 'null') || field.isFile) {
-                return;
-            }
-            if (field.isCheckbox) {
-                value = field.getSubmitValue();
-            } else {
-                value = field.getValue();
-            }
-            if (!(enabled && field.getDisabled())) {
-                // RadioField is a special case where the value returned is the fields valUE
-                // ONLY if it is checked
-                if (field.isRadio) {
-                    if (field.isChecked()) {
-                        values[name] = value;
-                    }
-                } else {
-                    // Check if the value already exists
-                    bucket = values[name];
-                    if (!Ext.isEmpty(bucket)) {
-                        // if it does and it isn't an array, we need to make it into an array
-                        // so we can push more
-                        if (!isArray(bucket)) {
-                            bucket = values[name] = [
-                                bucket
-                            ];
-                        }
-                        // Check if it is an array
-                        if (isArray(value)) {
-                            // Concat it into the other values
-                            bucket = values[name] = bucket.concat(value);
-                        } else {
-                            // If it isn't an array, just pushed more values
-                            bucket.push(value);
-                        }
-                    } else {
-                        values[name] = value;
-                    }
-                }
-            }
-        };
-        // Loop through each of the fields, and add the values for those fields.
-        for (name in fields) {
-            if (fields.hasOwnProperty(name)) {
-                field = fields[name];
-                if (isArray(field)) {
-                    ln = field.length;
-                    for (i = 0; i < ln; i++) {
-                        addValue(field[i], name);
-                    }
-                } else {
-                    addValue(field, name);
-                }
-            }
-        }
-        return values;
-    },
-    /**
-     * Resets all fields in the form back to their original values.
-     * @return {Ext.form.Panel} This form.
-     */
-    reset: function() {
-        this.getFieldsAsArray().forEach(function(field) {
-            field.reset();
-        });
-        return this;
-    },
-    /**
-     * A convenient method to disable all fields in this form.
-     * @return {Ext.form.Panel} This form.
-     */
-    doSetDisabled: function(newDisabled) {
-        this.getFieldsAsArray().forEach(function(field) {
-            field.setDisabled(newDisabled);
-        });
-        return this;
-    },
-    /**
-     * @private
-     */
-    getFieldsAsArray: function() {
-        var fields = [],
-            getFieldsFrom = function(item) {
-                if (item.isField) {
-                    fields.push(item);
-                }
-                if (item.isContainer) {
-                    item.getItems().each(getFieldsFrom);
-                }
-            };
-        this.getItems().each(getFieldsFrom);
-        return fields;
-    },
-    /**
-     * Returns all {@link Ext.field.Field field} instances inside this form.
-     * @param {Boolean} byName return only fields that match the given name, otherwise return all fields.
-     * @return {Object/Array} All field instances, mapped by field name; or an array if `byName` is passed.
-     */
-    getFields: function(byName) {
-        var fields = {},
-            itemName;
-        var getFieldsFrom = function(item) {
-                if (item.isField) {
-                    itemName = item.getName();
-                    if ((byName && itemName == byName) || typeof byName == 'undefined') {
-                        if (fields.hasOwnProperty(itemName)) {
-                            if (!Ext.isArray(fields[itemName])) {
-                                fields[itemName] = [
-                                    fields[itemName]
-                                ];
-                            }
-                            fields[itemName].push(item);
-                        } else {
-                            fields[itemName] = item;
-                        }
-                    }
-                }
-                if (item.isContainer) {
-                    item.items.each(getFieldsFrom);
-                }
-            };
-        this.getItems().each(getFieldsFrom);
-        return (byName) ? (fields[byName] || []) : fields;
-    },
-    /**
-     * Returns an array of fields in this formpanel.
-     * @return {Ext.field.Field[]} An array of fields in this form panel.
-     * @private
-     */
-    getFieldsArray: function() {
-        var fields = [];
-        var getFieldsFrom = function(item) {
-                if (item.isField) {
-                    fields.push(item);
-                }
-                if (item.isContainer) {
-                    item.items.each(getFieldsFrom);
-                }
-            };
-        this.items.each(getFieldsFrom);
-        return fields;
-    },
-    getFieldsFromItem: Ext.emptyFn,
-    /**
-     * Shows a generic/custom mask over a designated Element.
-     * @param {String/Object} cfg Either a string message or a configuration object supporting
-     * the following options:
-     *
-     *     {
-     *         message : 'Please Wait',
-     *         cls : 'form-mask'
-     *     }
-     *
-     * @param {Object} target
-     * @return {Ext.form.Panel} This form
-     * @deprecated 2.0.0 Please use {@link #setMasked} instead.
-     */
-    showMask: function(cfg, target) {
-        cfg = Ext.isObject(cfg) ? cfg.message : cfg;
-        if (cfg) {
-            this.setMasked({
-                xtype: 'loadmask',
-                message: cfg
-            });
-        } else {
-            this.setMasked(true);
-        }
-        return this;
-    },
-    /**
-     * Hides a previously shown wait mask (See {@link #showMask}).
-     * @return {Ext.form.Panel} this
-     * @deprecated 2.0.0 Please use {@link #unmask} or {@link #setMasked} instead.
-     */
-    hideMask: function() {
-        this.setMasked(false);
-        return this;
-    },
-    /**
-     * Returns the currently focused field
-     * @return {Ext.field.Field} The currently focused field, if one is focused or `null`.
-     * @private
-     */
-    getFocusedField: function() {
-        var fields = this.getFieldsArray(),
-            ln = fields.length,
-            field, i;
-        for (i = 0; i < ln; i++) {
-            field = fields[i];
-            if (field.isFocused) {
-                return field;
-            }
-        }
-        return null;
-    },
-    /**
-     * @return {Boolean/Ext.field.Field} The next field if one exists, or `false`.
-     * @private
-     */
-    getNextField: function() {
-        var fields = this.getFieldsArray(),
-            focusedField = this.getFocusedField(),
-            index;
-        if (focusedField) {
-            index = fields.indexOf(focusedField);
-            if (index !== fields.length - 1) {
-                index++;
-                return fields[index];
-            }
-        }
-        return false;
-    },
-    /**
-     * Tries to focus the next field in the form, if there is currently a focused field.
-     * @return {Boolean/Ext.field.Field} The next field that was focused, or `false`.
-     * @private
-     */
-    focusNextField: function() {
-        var field = this.getNextField();
-        if (field) {
-            field.focus();
-            return field;
-        }
-        return false;
-    },
-    /**
-     * @private
-     * @return {Boolean/Ext.field.Field} The next field if one exists, or `false`.
-     */
-    getPreviousField: function() {
-        var fields = this.getFieldsArray(),
-            focusedField = this.getFocusedField(),
-            index;
-        if (focusedField) {
-            index = fields.indexOf(focusedField);
-            if (index !== 0) {
-                index--;
-                return fields[index];
-            }
-        }
-        return false;
-    },
-    /**
-     * Tries to focus the previous field in the form, if there is currently a focused field.
-     * @return {Boolean/Ext.field.Field} The previous field that was focused, or `false`.
-     * @private
-     */
-    focusPreviousField: function() {
-        var field = this.getPreviousField();
-        if (field) {
-            field.focus();
-            return field;
-        }
-        return false;
-    }
-}, 0, [
-    "formpanel"
-], [
-    "component",
-    "container",
-    "panel",
-    "formpanel"
-], {
-    "component": true,
-    "container": true,
-    "panel": true,
-    "formpanel": true
-}, [
-    "widget.formpanel"
-], 0, [
-    Ext.form,
-    'Panel',
-    Ext.form,
-    'FormPanel'
-], function() {}));
 
 /**
  * @private
@@ -63741,7 +61919,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.model.Contact', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzz.model.Contact', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -63804,7 +61982,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
+    LocalBuzz.model,
     'Contact'
 ], 0));
 
@@ -63822,7 +62000,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.model.Deal', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzz.model.Deal', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -63885,7 +62063,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
+    LocalBuzz.model,
     'Deal'
 ], 0));
 
@@ -63903,7 +62081,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.model.UserPreferences', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzz.model.UserPreferences', Ext.data.Model, {
     config: {
         idProperty: '',
         fields: [
@@ -63919,7 +62097,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
+    LocalBuzz.model,
     'UserPreferences'
 ], 0));
 
@@ -63937,16 +62115,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.MyDealsStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzz.store.MyDealsStore', Ext.data.Store, {
     config: {
-        model: 'LocalBuzzDemo.model.Deal',
+        model: 'LocalBuzz.model.Deal',
         storeId: 'MyDealsStore',
         proxy: {
             type: 'jsonp',
             simpleSortMode: true,
             sortParam: '{dealEndDate:DESC}',
             timeout: 300000,
-            url: 'http://services.appsonmobile.com/demoDeals',
+            url: 'http://services.appsonmobile.com/demodeals',
             reader: {
                 type: 'json'
             }
@@ -63956,7 +62134,7 @@ Ext.define('Ext.direct.Manager', {
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
+    LocalBuzz.store,
     'MyDealsStore'
 ], 0));
 
@@ -63974,12 +62152,12 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.UserPreferences', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzz.store.UserPreferences', Ext.data.Store, {
     config: {
         autoLoad: true,
         autoSync: true,
         clearOnPageLoad: false,
-        model: 'LocalBuzzDemo.model.UserPreferences',
+        model: 'LocalBuzz.model.UserPreferences',
         remoteFilter: true,
         storeId: 'UserPreferences',
         proxy: {
@@ -63989,7 +62167,7 @@ Ext.define('Ext.direct.Manager', {
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
+    LocalBuzz.store,
     'UserPreferences'
 ], 0));
 
@@ -64007,13 +62185,13 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.LocalStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzz.store.LocalStore', Ext.data.Store, {
     config: {
-        model: 'LocalBuzzDemo.model.Deal',
+        model: 'LocalBuzz.model.Deal',
         storeId: 'LocalStore'
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
+    LocalBuzz.store,
     'LocalStore'
 ], 0));
 
@@ -64031,7 +62209,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.model.UserLocation', Ext.data.Model, {
+(Ext.cmd.derive('LocalBuzz.model.UserLocation', Ext.data.Model, {
     config: {
         fields: [
             {
@@ -64046,7 +62224,7 @@ Ext.define('Ext.direct.Manager', {
         ]
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.model,
+    LocalBuzz.model,
     'UserLocation'
 ], 0));
 
@@ -64064,16 +62242,16 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.UserLocation', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzz.store.UserLocation', Ext.data.Store, {
     config: {
-        model: 'LocalBuzzDemo.model.UserLocation',
+        model: 'LocalBuzz.model.UserLocation',
         storeId: 'UserLocation',
         proxy: {
             type: 'localstorage'
         }
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.store,
+    LocalBuzz.store,
     'UserLocation'
 ], 0));
 
@@ -64091,15 +62269,15 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.store.MyJsonPStore', Ext.data.Store, {
+(Ext.cmd.derive('LocalBuzz.store.MyJsonPStore', Ext.data.Store, {
     config: {
         groupField: 'category',
-        model: 'LocalBuzzDemo.model.Contact',
+        model: 'LocalBuzz.model.Contact',
         storeId: 'MyJsonPStore',
         proxy: {
             type: 'jsonp',
             timeout: 300000,
-            url: 'http://services.appsonmobile.com/demoStores',
+            url: 'http://services.appsonmobile.com/demostores',
             reader: {
                 type: 'json'
             }
@@ -64120,7 +62298,7 @@ Ext.define('Ext.direct.Manager', {
             Ext.Array.include(customerIds, rec.get('customerId'));
         });
         dealParams = customerIds.join();
-        //console.log(dealParams);
+        console.log(dealParams);
         var dealStore = Ext.getStore('MyDealsStore');
         if (customerIds.length > 0) {
             dealStore.load({
@@ -64135,7 +62313,7 @@ Ext.define('Ext.direct.Manager', {
 }, 0, 0, 0, 0, [
     "store.MyJsonPStore"
 ], 0, [
-    LocalBuzzDemo.store,
+    LocalBuzz.store,
     'MyJsonPStore'
 ], 0));
 
@@ -64153,10 +62331,18 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.WelcomeScreen', Ext.form.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.WelcomeScreen', Ext.Panel, {
     config: {
+        height: '100%',
+        id: 'welcomeScreen',
+        itemId: 'welcomeScreen',
         style: 'background-image:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
+        scrollable: true,
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
+        },
         items: [
             {
                 xtype: 'textfield',
@@ -64166,7 +62352,7 @@ Ext.define('Ext.direct.Manager', {
                 itemId: 'zipcodeLookUp',
                 left: '18%',
                 padding: '5 5 5 5',
-                style: 'border:1px solid black',
+                style: 'border:1px solid black;background-image:url(resources/img/whitetexture.png);',
                 top: '32%',
                 width: '60%',
                 component: {
@@ -64340,6 +62526,16 @@ Ext.define('Ext.direct.Manager', {
                 delegate: '#zipcodeLookUp'
             },
             {
+                fn: 'onZipcodeLookUpFocus',
+                event: 'focus',
+                delegate: '#zipcodeLookUp'
+            },
+            {
+                fn: 'onZipcodeLookUpBlur',
+                event: 'blur',
+                delegate: '#zipcodeLookUp'
+            },
+            {
                 fn: 'onZipcodeLookUpAction1',
                 event: 'action',
                 delegate: '#zipcodeLookUp1'
@@ -64351,6 +62547,8 @@ Ext.define('Ext.direct.Manager', {
         ]
     },
     onZipcodeLookUpAction: function(textfield, e, eOpts) {
+        this.getParent().getScrollable().getScroller().scrollTo(0, 0);
+        console.log(textfield.getValue());
         var postalCode = textfield.getValue();
         if (postalCode.toString().match('^[0-9]{5}?$')) {
             console.log(postalCode);
@@ -64432,6 +62630,13 @@ Ext.define('Ext.direct.Manager', {
         {
             Ext.Msg.alert('Error', 'Please enter valid zipcode', null, null);
         }
+    },
+    onZipcodeLookUpFocus: function(textfield, e, eOpts) {
+        var height = window.innerHeight;
+        this.getParent().getScrollable().getScroller().scrollTo(0, height * 0.32);
+    },
+    onZipcodeLookUpBlur: function(textfield, e, eOpts) {
+        this.getParent().getScrollable().getScroller().scrollTo(0, 0);
     },
     onZipcodeLookUpAction1: function(textfield, e, eOpts) {
         var postalCode = textfield.getValue();
@@ -64526,15 +62731,13 @@ Ext.define('Ext.direct.Manager', {
 }, 0, 0, [
     "component",
     "container",
-    "panel",
-    "formpanel"
+    "panel"
 ], {
     "component": true,
     "container": true,
-    "panel": true,
-    "formpanel": true
+    "panel": true
 }, 0, 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'WelcomeScreen'
 ], 0));
 
@@ -64552,7 +62755,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Info', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.Info', Ext.Panel, {
     config: {
         docked: 'top',
         height: '100%',
@@ -64692,7 +62895,7 @@ Ext.define('Ext.direct.Manager', {
                         style: 'font-family:Arial;font-size:5vw',
                         ui: 'confirm',
                         width: '98%',
-                        text: 'Get The Latest Buzz!'
+                        text: 'Get Latest Buzz!'
                     },
                     {
                         xtype: 'button',
@@ -64714,7 +62917,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '5 5 10 5',
                         style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
-                        width: '98%',
+                        width: 'auto',
                         iconCls: 'icon-phone'
                     },
                     {
@@ -64743,7 +62946,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '5 5 10 5',
                         style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
-                        width: '98%',
+                        width: 'auto',
                         iconCls: 'icon-email-white'
                     },
                     {
@@ -64764,7 +62967,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '5 5 10 5',
                         style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
-                        width: '98%',
+                        width: 'auto',
                         iconCls: 'icon-globe-white'
                     },
                     {
@@ -64793,7 +62996,7 @@ Ext.define('Ext.direct.Manager', {
                         padding: '5 5 10 5',
                         style: 'background:url(resources/img/whitetexture.png);',
                         styleHtmlContent: true,
-                        width: '98%',
+                        width: 'auto',
                         iconCls: 'icon-location'
                     }
                 ]
@@ -64930,11 +63133,13 @@ Ext.define('Ext.direct.Manager', {
     setRecord: function(record) {
         (arguments.callee.$previous || Ext.Panel.prototype.setRecord).apply(this, arguments);
         if (record) {
+            console.log(record);
             var name = record.get('businessName');
             var isFavorite = record.get('isFavorite');
             var customerId = record.get('customerId');
             var businessInfo = record.get('businessInfo');
             //console.log(businessInfo);
+            var storeInfo = Ext.getStore('MyJsonPStore');
             var store = Ext.getStore('UserPreferences');
             if (store.getAllCount() !== 0) {
                 store.each(function(rec) {
@@ -64944,32 +63149,72 @@ Ext.define('Ext.direct.Manager', {
                 });
             }
             //console.log(customerId + isFavorite );
+            var rec;
+            // if(!record.get('phoneNumber')) {
+            rec = storeInfo.findRecord('customerId', customerId);
+            //}
             this.down('#nameTxt').setHtml(name);
             if (record.get('pictureURL')) {
                 this.down('#storeImage').setHtml('<img src = "' + record.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
+            } else {
+                this.down('#storeImage').setHtml('<img src = "' + rec.get('pictureURL') + '" style="height:35vh;width:100%;"/>');
             }
             if (record.get('businessInfo')) {
                 this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + businessInfo + '</div>');
             } else {
-                Ext.getCmp('businessInfo').hide();
+                if (rec.get('businessInfo')) {
+                    this.down('#businessInfo').setHtml('<div style="overflow:scroll!important;font-family:Arial">' + rec.get('businessInfo') + '</div>');
+                } else {
+                    Ext.getCmp('businessInfo').hide();
+                }
             }
             if (record.get('phoneNumber')) {
                 this.down('#phoneNumber1').setValue(record.get('phoneNumber'));
                 //this.down('#phoneNumber').setText(record.get('phoneNumber'));
-                this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;text-decoration:none!important">' + record.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+                this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;text-decoration:none!important">' + record.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+            } else {
+                console.log(rec);
+                if (rec.get('phoneNumber')) {
+                    this.down('#phoneNumber1').setValue(rec.get('phoneNumber'));
+                    this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;text-decoration:none!important">' + rec.get('phoneNumber') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+                } else {
+                    this.down('#phoneNumber').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;color:#c0c0c0;">Not Listed</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:3vw"></span>');
+                }
             }
             if (record.get('emailAddress')) {
                 this.down('#email1').setValue(record.get('emailAddress'));
-                this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('emailAddress') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+                this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw">' + record.get('emailAddress') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+            } else {
+                if (rec.get('emailAddress')) {
+                    this.down('#email1').setValue(rec.get('emailAddress'));
+                    this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw">' + rec.get('emailAddress') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+                } else {
+                    this.down('#email').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;color:#c0c0c0;">Not Listed</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:3vw"></span>');
+                }
             }
             if (record.get('websiteDisplayName')) {
                 this.down('#website121').setValue(record.get('websiteDisplayName'));
-                this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em">' + record.get('websiteDisplayName') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+                this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw">' + record.get('websiteDisplayName') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
                 this.down('#website12').setValue(record.get('website'));
+            } else {
+                if (rec.get('websiteDisplayName')) {
+                    this.down('#website121').setValue(rec.get('websiteDisplayName'));
+                    this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw">' + rec.get('websiteDisplayName') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+                    this.down('#website12').setValue(rec.get('website'));
+                } else {
+                    this.down('#website1').setHtml('<span style="left:12vw;bottom:1vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;color:#c0c0c0;">Not Listed</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:3vw"></span>');
+                }
             }
             if (record.get('address')) {
                 this.down('#address1').setValue(record.get('address'));
-                this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:1em;white-spacing:normal;word-break:break-all;">' + record.get('address') + '</span><span style="float:right;color:#2f4f4f;font-weight:bold!important">></span>');
+                this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.2vw;white-spacing:normal;word-break:break-all!important;"><br><br>' + record.get('address') + '<br></span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+            } else {
+                if (rec.get('address')) {
+                    this.down('#address1').setValue(rec.get('address'));
+                    this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.2vw;white-spacing:normal;word-break:break-all!important;"><br><br>' + rec.get('address') + '<br></span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:4vw">></span>');
+                } else {
+                    this.down('#address').setHtml('<span style="left:12vw;bottom:2vh;position:absolute;text-align: left;font-weight:normal!important;font-family:Arial;font-size:3.5vw;color:#c0c0c0;">Not Listed</span><span style="float:right;color:#2f4f4f;font-weight:bold!important;font-size:3vw"></span>');
+                }
             }
             // console.log(store.getData());
             if (isFavorite === true) {
@@ -64985,7 +63230,6 @@ Ext.define('Ext.direct.Manager', {
             var ds = Ext.StoreManager.lookup('MyDealsStore');
             ds.clearFilter();
             ds.filter('customerId', customerId);
-            console.log(customerId + ' has ' + ds.getCount() + ' records');
         }
     }
 }, 0, [
@@ -65003,9 +63247,10 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactinfo"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'Info'
 ], 0));
+// console.log(customerId + ' has ' + ds.getCount()+' records' );
 
 /*
  * File: app/view/ListOfDeals.js
@@ -65021,7 +63266,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.ListOfDeals', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzz.view.ListOfDeals', Ext.dataview.List, {
     config: {
         height: '100%',
         html: '',
@@ -65051,27 +63296,27 @@ Ext.define('Ext.direct.Manager', {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            ' <div class="w3-card-4">',
-            '<tpl if= "dealImageURL">',
-            '<img class="photo" src="{dealImageURL}"  />',
-            '<tpl else>',
-            '<img class="photo" src="resources/img/localbuzzicon.png" />',
-            '</tpl> ',
-            ' <div class="w3-container">',
-            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
-            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
-            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
-            '    </div>',
-            '<div>',
-            '<p style="font-size:3.2vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;font-family:Arial">{dealDescription}</p>',
+            '<div class="w3-card-4">',
+            '    <tpl if= "dealImageURL">',
+            '        <img class="photo" src="{dealImageURL}"  />',
+            '        <tpl else>',
+            '            <img class="photo" src="resources/img/localbuzzicon.png" />',
+            '        </tpl> ',
+            '        <div class="w3-container">',
+            '            <p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
+            '            <p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
+            '            <p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
+            '        </div>',
+            '        <div>',
+            '            <p style="font-size:3.2vw;text-align:left;word-break: break-word;padding:0px 5px 0px 5px;font-family:Arial">{dealDescription}</p>',
             '',
             '',
-            '</div>',
-            '<tpl if= "dealImageURL">',
-            '<tpl else>',
-            '<br>',
-            '</tpl>',
-            '</div>',
+            '        </div>',
+            '        <tpl if= "dealImageURL">',
+            '            <tpl else>',
+            '                <br>',
+            '            </tpl>',
+            '            </div>',
             '',
             '',
             '',
@@ -65173,7 +63418,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.listofdeals"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'ListOfDeals'
 ], 0));
 
@@ -65191,7 +63436,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.controller.LocalBuzzDemo', Ext.app.Controller, {
+(Ext.cmd.derive('LocalBuzz.controller.LocalBuzzDemo', Ext.app.Controller, {
     config: {
         stores: [
             'MyJsonPStore',
@@ -65568,7 +63813,7 @@ Ext.define('Ext.direct.Manager', {
         Ext.Viewport.setActiveItem(Ext.Viewport.getComponent('tabbar'));
     }
 }, 0, 0, 0, 0, 0, 0, [
-    LocalBuzzDemo.controller,
+    LocalBuzz.controller,
     'LocalBuzzDemo'
 ], 0));
 /*var ds = Ext.StoreManager.lookup('MyJsonPStore');
@@ -65599,7 +63844,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Picture', Ext.Container, {
+(Ext.cmd.derive('LocalBuzz.view.Picture', Ext.Container, {
     config: {
         overflow: 'hidden',
         height: '100%',
@@ -65630,7 +63875,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.contactpic"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'Picture'
 ], 0));
 
@@ -65648,7 +63893,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.DealPicture', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.DealPicture', Ext.Panel, {
     alternateClassName: [
         'dealPicture'
     ],
@@ -65663,7 +63908,6 @@ Ext.define('Ext.direct.Manager', {
         style: 'background:url(resources/img/whitetexture.png);',
         styleHtmlContent: true,
         width: '100%',
-        scrollable: false,
         tpl: [
             '<!--<tpl if="dealImageURL">',
             '<div><img src="{dealImageURL}" style="margin: 0px 5px 0px 5px;height:250px;width:95%;border:none;"/></div>',
@@ -66062,7 +64306,7 @@ Ext.define('Ext.direct.Manager', {
                         id: 'nameTxt7',
                         itemId: 'nameTxt5',
                         margin: '10 5 5 5',
-                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:blue'
+                        style: 'font-family:Arial;font-size:3.5vw;background:url(resources/img/whitetexture.png);color:#00529D;'
                     },
                     {
                         xtype: 'container',
@@ -66096,7 +64340,7 @@ Ext.define('Ext.direct.Manager', {
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><div style="font-size:6vw;">' + record.get('dealName') + '</div><div><img src="'+record.get('dealImageURL')+'" style="height:39vh;width:98%;display:inline;border:none;"/><p id="enlargebtn" class="icon-enlarge" style="background:none;position:absolute;bottom: 1.5em; right: 1.5em"></p></div><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
             this.down('#nameTxt3').show();
         } else {
-            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;"/><div style="font-size:4.5vw;font-family:Arial;color:green;">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial;color:black;">' + record.get('dealDescription') + '</div><br><div style="font-size:3.3vw;font-family:Arial;color:blue;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
+            this.down('#dealimage').setHtml('<div style="padding:5px 5px 5px 5px;" ><img src="resources/img/localbuzzicon.png" align="right" style="border:none;margin: 5px 5px 5px 5px;"/><div style="font-size:4.5vw;font-family:Arial;color:green;">' + record.get('dealName') + '</div><br><div style="font-size:3.5vw;font-family:Arial;color:black;">' + record.get('dealDescription') + '</div><br><div style="font-size:3.3vw;font-family:Arial;color:#00529D;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '<br></div><br></div>');
             //this.down('#dealimage').setHtml('<div><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/></div><br><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div>');
             //this.down('#dealimage').setHtml('<div style="background:url(resources/img/buzz-background.png);width:98%;height:38vh"><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div><div>');
             // this.down('#dealimage').setHtml('<div class="quote-container"><blockquote class="note yellow"><img src="resources/img/localbuzzicon.png" align="right" style="margin: 5px 5px 5px 5px"/><div style="font-size:6vw;">' + record.get('dealName') + '</div><br><br><div style="font-size:4vw;">' + record.get('dealDescription') + '</div><br><div style="font-size:3vw;">Valid ' + record.get('dealStartDate') + ' - ' + record.get('dealEndDate') + '</div></blockquote></div>');
@@ -66136,7 +64380,7 @@ Ext.define('Ext.direct.Manager', {
             //store.filter('businessName', businessName);
             var rec = store.findRecord('businessName', businessName);
             //var rec = store.getAt(0);
-            this.down('#nameTxt8').setHtml('<h5 style="font-family:Arial"><b>About ' + businessName + '</b></h5>');
+            this.down('#nameTxt8').setHtml('<h5 style="font-family:Arial;font-size:5vw"><b>About ' + businessName + '</b></h5>');
         }
     }
 }, 0, [
@@ -66154,7 +64398,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.dealPicture"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'DealPicture',
     0,
     'dealPicture'
@@ -66174,7 +64418,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.LatestBuzz', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzz.view.LatestBuzz', Ext.dataview.List, {
     config: {
         height: '100%',
         html: '',
@@ -66204,27 +64448,27 @@ Ext.define('Ext.direct.Manager', {
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
             '<div class="w3-card-4"  >',
-            '<tpl if= "dealImageURL">',
-            '<img class="photo" src="{dealImageURL}"  />',
-            '<tpl else>',
-            '<img  class="photo1" src="resources/img/localbuzzicon.png" />',
-            '</tpl>',
-            ' ',
-            ' <div class="w3-container">',
-            '<p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
-            '<p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
-            '<p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
-            '</div>',
-            '<div>',
-            '<p style="font-size:3.2vw;text-align:left;word-break: break-word;padding:0px 0px 0px 5px;font-family:Arial">{dealDescription}</p>',
+            '    <tpl if= "dealImageURL">',
+            '        <img class="photo" src="{dealImageURL}"  />',
+            '        <tpl else>',
+            '            <img  class="photo1" src="resources/img/localbuzzicon.png" />',
+            '        </tpl>',
+            '',
+            '        <div class="w3-container">',
+            '            <p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
+            '            <p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
+            '            <p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
+            '        </div>',
+            '        <div>',
+            '            <p style="font-size:3.2vw;text-align:left;word-break: break-word;padding:0px 5px 0px 5px;font-family:Arial">{dealDescription}</p>',
             '',
             '',
-            '</div>',
-            '<tpl if= "dealImageURL">',
-            '<tpl else>',
-            '<br>',
-            '</tpl>',
-            '</div>',
+            '        </div>',
+            '        <tpl if= "dealImageURL">',
+            '            <tpl else>',
+            '                <br>',
+            '            </tpl>',
+            '            </div>',
             '',
             '',
             '',
@@ -66395,7 +64639,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.latestbuzz"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'LatestBuzz'
 ], 0));
 
@@ -66413,9 +64657,8 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.List', Ext.dataview.List, {
+(Ext.cmd.derive('LocalBuzz.view.List', Ext.dataview.List, {
     config: {
-        cls: 'tpl-l0uxnqjl',
         height: '100%',
         style: 'background:url(resources/img/whitetexture.png);',
         disableSelection: true,
@@ -66444,7 +64687,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.list1"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'List'
 ], 0));
 
@@ -66462,7 +64705,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.FavoriteView', Ext.dataview.DataView, {
+(Ext.cmd.derive('LocalBuzz.view.FavoriteView', Ext.dataview.DataView, {
     config: {
         itemId: 'favoriteview',
         style: 'background:url(resources/img/whitetexture.png);',
@@ -66470,10 +64713,10 @@ Ext.define('Ext.direct.Manager', {
         inline: true,
         store: 'MyJsonPStore',
         itemTpl: [
+            '<div style="padding-left:10px;padding-right:10px:padding-top:5px;">',
+            '    <div class="w3-card-4 w3-display-container" style= "margin:5px 5px 5px 5px;padding:10px 5px 5px 20px;"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100px" height="120px" style="border:1px solid black;"/>',
+            '        <div class="w3-text-black w3-left-align" style="width:120px;word-break:break-word;font-size:0.7em;font-family:Arial;font-weight:normal">{businessName}</div>',
             '',
-            '<div class="w3-card-4 w3-display-container" style= "margin:5px 5px 5px 5px;padding:10px 5px 5px 20px;"><img src="{pictureURL:empty(\'resources/img/defaultContactPic.png\')}" width="100px" height="120px" style="border:1px solid black;"/>',
-            '<div class="w3-container w3-text-black" style="width:120px;word-break:break-word;font-size:0.7em;font-family:Arial;font-weight:normal">{businessName}</div>',
-            '    </div>',
             '',
             ''
         ]
@@ -66493,7 +64736,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.favoriteview"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'FavoriteView'
 ], 0));
 
@@ -66511,7 +64754,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.Main', Ext.tab.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.Main', Ext.tab.Panel, {
     config: {
         cls: 'toolbar-icon-color',
         height: '100%',
@@ -66551,8 +64794,9 @@ Ext.define('Ext.direct.Manager', {
                         xtype: 'toolbar',
                         cls: 'toolbarCls',
                         docked: 'top',
-                        html: '<p id="titlebar" style="color:#00529D;font-size:8vw;font-family:Arial">Local Buzz<img src="resources/img/localbuzzicon.png" align="top" class="photo2"></p>',
-                        padding: '5 0 0 0 '
+                        html: '<p id="titlebar" style="color:#00529D;font-size:8vw;font-family:Arial">Local Buzz</p>',
+                        padding: '5 0 0 0 ',
+                        style: 'background:none;'
                     },
                     {
                         xtype: 'latestbuzz'
@@ -66960,7 +65204,7 @@ Ext.define('Ext.direct.Manager', {
                     map: gmap,
                     icon: icons[category].icon
                 });
-            var content = '<h4 style="font-family:Arial" id ="businessname">' + businessName + '</h4><div><label id="labelStore" style="color:green;font-size:4vw;text-decoration:underline;font-family:Arial">' + count + ' Active Buzz</label></div>';
+            var content = '<h4 style="font-family:Arial;font-size:4vw;" id ="businessname">' + businessName + '</h4><div><label id="labelStore" style="color:green;font-size:4vw;text-decoration:underline;font-family:Arial">' + count + ' Active Buzz</label></div>';
             addInfoWindow(marker, content, record, businessName);
         }
         //click on marker event
@@ -67026,7 +65270,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.Main"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'Main'
 ], 0));
 
@@ -67044,7 +65288,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.DealsPanel', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel',
@@ -67151,7 +65395,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'DealsPanel'
 ], 0));
 //var store = Ext.getStore('MyDealsStore');
@@ -67171,7 +65415,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.DealsPanel1', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.DealsPanel1', Ext.Panel, {
     config: {
         height: '100%',
         id: 'DealsPanel1',
@@ -67284,7 +65528,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealsPanel1"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'DealsPanel1'
 ], 0));
 //var store = Ext.getStore('MyDealsStore');
@@ -67304,7 +65548,7 @@ Ext.define('Ext.direct.Manager', {
  *
  * Do NOT hand edit this file.
  */
-(Ext.cmd.derive('LocalBuzzDemo.view.DealImage', Ext.Panel, {
+(Ext.cmd.derive('LocalBuzz.view.DealImage', Ext.Panel, {
     config: {
         height: '70%',
         id: 'DealImage',
@@ -67382,7 +65626,7 @@ Ext.define('Ext.direct.Manager', {
 }, [
     "widget.DealImage"
 ], 0, [
-    LocalBuzzDemo.view,
+    LocalBuzz.view,
     'DealImage'
 ], 0));
 
@@ -67405,9 +65649,6 @@ Ext.Loader.setConfig({});
 Ext.application({
     viewport: {
         docked: 'top',
-        defaults: {
-            scrollable: true
-        },
         scrollable: true,
         xclass: 'Ext.viewport.Viewport'
     },
@@ -67442,7 +65683,7 @@ Ext.application({
         'LocalBuzzDemo'
     ],
     icon: 'icon.png',
-    name: 'LocalBuzzDemo',
+    name: 'LocalBuzz',
     launch: function() {
         var postalCode;
         Ext.util.Format.empty = function(value, defaultValue) {
@@ -67468,6 +65709,7 @@ Ext.application({
             //BackButtonPanel.setHeight('50px');
             BackButtonPanel.setWidth('100%');
             BackButtonPanel.setCls('backButtonPanel');
+            //BackButtonPanel.addCls('w3-black');
             var intval = setInterval(function() {
                     exitApp = false;
                 }, 3000);
@@ -67590,12 +65832,12 @@ Ext.application({
             function onError() {
                 Ext.Msg.alert('Location service is disabled', 'Allow Local Buzz to access your location', null, null);
             }*/
-        Ext.create('LocalBuzzDemo.view.WelcomeScreen', {
+        Ext.create('LocalBuzz.view.WelcomeScreen', {
             fullscreen: true
         });
     }
 });
 
 // @tag full-page
-// @require H:\Apps\Sencha Architect Apps\LocalBuzzReleaseDemo\app.js
+// @require H:\Apps\Sencha Architect Apps\LocalBuzzRelease\app.js
 
