@@ -64331,14 +64331,16 @@ function() {
                                 var itemName = record.get('itemName');
                                 Ext.Ajax.request({
                                     method: 'GET',
-                                    url: "http://services.appsonmobile.com/getOfferCode/01",
+                                    url: "http://services.appsonmobile.com/getOfferCode/" + itemName,
                                     success: function(response) {
                                         //window.open(url, '_system', 'location=yes');
-                                        console.log('Success');
-                                        Ext.Msg.alert(response.msg, "Show this code to the cashier to redeem this offer");
+                                        //console.log('Success');
+                                        Ext.Msg.alert('Suceess', null, null, null);
                                     },
+                                    // Ext.Msg.alert(response.msg,"Show this code to the cashier to redeem this offer");
                                     failure: function(response) {
                                         //window.open(url, '_system', 'location=yes');
+                                        Ext.Msg.alert('Failure', null, null, null);
                                         console.log('Failure');
                                     }
                                 });
