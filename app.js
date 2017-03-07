@@ -64331,7 +64331,7 @@ function() {
                                 var itemName = record.get('itemName');
                                 Ext.Ajax.request({
                                     method: 'GET',
-                                    url: "http://services.appsonmobile.com/getOfferCode/itemName",
+                                    url: "http://services.appsonmobile.com/getOfferCode/01",
                                     success: function(response) {
                                         //window.open(url, '_system', 'location=yes');
                                         console.log('Success');
