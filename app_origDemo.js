@@ -62124,7 +62124,7 @@ function() {
             simpleSortMode: true,
             sortParam: '{dealEndDate:DESC}',
             timeout: 300000,
-            url: 'https://g0k1nw6p8h.execute-api.us-west-2.amazonaws.com/PROD/deals',
+            url: 'http://services.appsonmobile.com/demodeals',
             reader: {
                 type: 'json'
             }
@@ -62277,7 +62277,7 @@ function() {
         proxy: {
             type: 'jsonp',
             timeout: 300000,
-            url: 'https://g0k1nw6p8h.execute-api.us-west-2.amazonaws.com/PROD/stores',
+            url: 'http://services.appsonmobile.com/demostores',
             reader: {
                 type: 'json'
             }
@@ -64322,29 +64322,6 @@ function() {
                         margin: '10 5 0 5',
                         style: 'color:white',
                         ui: 'confirm'
-                    },
-                    {
-                        xtype: 'button',
-                        handler: function(button, e) {
-                            var record = Ext.getStore('LocalStore').getAt(0);
-                            if (record.get('itemName')) {
-                                var itemName = record.get('itemName');
-                                Ext.Ajax.request({
-                                    method: 'GET',
-                                    url: "http://services.appsonmobile.com/getOfferCode/itemName",
-                                    success: function(response) {
-                                        //window.open(url, '_system', 'location=yes');
-                                        console.log('Success');
-                                        Ext.Msg.alert(response.msg, "Show this code to the cashier to redeem this offer");
-                                    },
-                                    failure: function(response) {
-                                        //window.open(url, '_system', 'location=yes');
-                                        console.log('Failure');
-                                    }
-                                });
-                            }
-                        },
-                        text: 'Redeem this offer'
                     }
                 ]
             }
@@ -64470,11 +64447,7 @@ function() {
             '<div class= "dateValidity" > {dealStartDate} - {dealEndDate}</div></tpl>',
             '-->',
             '<!--<div style="border:2px dotted #c0c0c0;padding:1px 5px 5px 5px;margin:0px 5px 5px 5px;"/>-->',
-            '',
-            ' <div class="w3-header w3-display-topright w3-container ribbon"  >Test</div>',
-            '<div class=" w3-card-4 w3-padding"  >',
-            '   ',
-            '',
+            '<div class="w3-card-4"  >',
             '    <tpl if= "dealImageURL">',
             '        <img class="photo" src="{dealImageURL}"  />',
             '        <tpl else>',
@@ -64482,8 +64455,6 @@ function() {
             '        </tpl>',
             '',
             '        <div class="w3-container">',
-            '            ',
-            '            ',
             '            <p style="font-size:4.5vw;text-align:left;word-wrap: break-word;color:green;padding:5px 5px 5px 5px;font-family:Arial"><b>{dealName}</b></p>',
             '            <p style="font-size:4vw;text-align:left;padding:0px 5px 5px 5px;color:#e69500;font-family:Arial"><b>{businessName}</b></p>',
             '            <p style="font-size:2.8vw;color:#00529D;text-align:left;padding:5px 5px 5px 5px;font-family:Arial">{dealStartDate} - {dealEndDate}</p>',
@@ -64496,9 +64467,8 @@ function() {
             '        <tpl if= "dealImageURL">',
             '            <tpl else>',
             '                <br>',
-            '                ',
             '            </tpl>',
-            '',
+            '            </div>',
             '',
             '',
             '',
