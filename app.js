@@ -64330,8 +64330,11 @@ function() {
                             if (record.get('itemName')) {
                                 var itemName = record.get('itemName');
                                 Ext.Ajax.request({
-                                    method: 'GET',
+                                    method: 'POST',
                                     url: "http://services.appsonmobile.com/deals/getOfferCode/" + itemName,
+                                    params: {
+                                        "CustomerId": record.get('customerId')
+                                    },
                                     success: function(response) {
                                         //window.open(url, '_system', 'location=yes');
                                         //console.log('Success');
