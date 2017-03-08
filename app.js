@@ -64316,15 +64316,6 @@ function() {
                     },
                     {
                         xtype: 'button',
-                        height: '8vh',
-                        id: 'nameTxt8',
-                        itemId: 'nameTxt8',
-                        margin: '10 5 0 5',
-                        style: 'color:white',
-                        ui: 'confirm'
-                    },
-                    {
-                        xtype: 'button',
                         handler: function(button, e) {
                             var record = Ext.getStore('LocalStore').getAt(0);
                             if (record.get('itemName')) {
@@ -64339,7 +64330,7 @@ function() {
                                         //window.open(url, '_system', 'location=yes');
                                         //console.log('Success');
                                         //Ext.Msg.alert('Suceess',null,null,null);
-                                        Ext.Msg.alert(response.msg, "Show this code to the cashier to redeem this offer");
+                                        Ext.Msg.show(response.msg, "Show this code to the cashier to redeem this offer");
                                     },
                                     failure: function(response) {
                                         //window.open(url, '_system', 'location=yes');
@@ -64349,7 +64340,19 @@ function() {
                                 });
                             }
                         },
-                        text: 'Redeem this offer'
+                        height: '8vh',
+                        margin: '10 5 0 5',
+                        ui: 'action',
+                        text: 'Redeem offer'
+                    },
+                    {
+                        xtype: 'button',
+                        height: '8vh',
+                        id: 'nameTxt8',
+                        itemId: 'nameTxt8',
+                        margin: '10 5 0 5',
+                        style: 'color:white',
+                        ui: 'confirm'
                     }
                 ]
             }
