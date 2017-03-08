@@ -64330,7 +64330,7 @@ function() {
                                         //window.open(url, '_system', 'location=yes');
                                         //console.log('Success');
                                         //Ext.Msg.alert('Suceess',null,null,null);
-                                        Ext.Msg.alert(null, response.msg, null, null);
+                                        Ext.Msg.alert(null, response.msg.toString(), null, null);
                                     },
                                     failure: function(response) {
                                         //window.open(url, '_system', 'location=yes');
