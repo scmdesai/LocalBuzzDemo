@@ -64330,7 +64330,7 @@ function() {
                                         //window.open(url, '_system', 'location=yes');
                                         //console.log('Success');
                                         //Ext.Msg.alert('Suceess',null,null,null);
-                                        Ext.Msg.show(response.msg, "Show this code to the cashier to redeem this offer");
+                                        Ext.Msg.alert(null, response.msg + "\nShow this code to the cashier to redeem this offer");
                                     },
                                     failure: function(response) {
                                         //window.open(url, '_system', 'location=yes');
