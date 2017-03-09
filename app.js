@@ -64330,7 +64330,7 @@ function() {
                                         //window.open(url, '_system', 'location=yes');
                                         //console.log('Success');
                                         //Ext.Msg.alert('Suceess',null,null,null);
-                                        Ext.Msg.alert('Show this code at the register', response.msg);
+                                        Ext.Msg.alert(response.msg, 'Show this code at the register');
                                     },
                                     failure: function(response) {
                                         //window.open(url, '_system', 'location=yes');
